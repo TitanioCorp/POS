@@ -1,0 +1,66 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dashboardPOSFragment"
+        android:icon="@drawable/ic_shopping_cart"
+        android:title="Punto de venta"/>
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_section_2">
+
+        <item
+            android:id="@+id/dashboardProductFragment"
+            android:icon="@drawable/ic_product"
+            android:title="Artículos"/>
+
+        <item
+            android:id="@+id/dashboardCategoryFragment"
+            android:icon="@drawable/ic_category"
+            android:title="Categorias"/>
+
+        <item
+            android:id="@+id/dashboardCustomerFragment"
+            android:icon="@drawable/ic_account"
+            android:title="Clientes"/>
+
+        <item
+            android:id="@+id/dashboardProfitFragment"
+            android:icon="@drawable/ic_profit"
+            android:title="Ganancias"/>
+
+        <item
+            android:id="@+id/dashboardPurchaseFragment"
+            android:icon="@drawable/ic_history"
+            android:title="Transacciones"/>
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_section_3">
+        <item
+            android:id="@+id/dashboardWarehouseFragment"
+            android:icon="@drawable/ic_home"
+            android:title="Almacén"/>
+
+        <item
+            android:id="@+id/dashboardStockFragment"
+            android:icon="@drawable/ic_shopping_cart"
+            android:title="Compra de inventario"/>
+
+        <item
+            android:id="@+id/dashboardBillingFragment"
+            android:icon="@drawable/ic_event"
+            android:title="Cierre de caja"/>
+
+        <item
+            android:id="@+id/dashboardReportFragment"
+            android:icon="@drawable/ic_history"
+            android:title="Reportes"/>
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_section_4">
+        <item
+            android:id="@+id/settingsFragment"
+            android:icon="@drawable/ic_settings"
+            android:title="Configuraciones"/>
+    </group>
+</menu>

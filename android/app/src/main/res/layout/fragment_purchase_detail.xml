@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
+        <import type="com.titaniocorp.pos.util.MoneyUtilKt"/>
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="viewModel"
+            type="com.titaniocorp.pos.app.ui.purchase.detail.DetailPurchaseViewModel" />
+
+        <variable
+            name="purchase"
+            type="com.titaniocorp.pos.app.model.Purchase"/>
+
+        <variable
+            name="totalRefund"
+            type="Double" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="24dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="24dp" />
+
+            <TextView
+                android:id="@+id/text_label_valor_cobrar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Número de factura"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_valor_cobrar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{Long.toString(purchase.id)}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_label_valor_cobrar" />
+
+            <TextView
+                android:id="@+id/text_label_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Detalle de la venta"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_valor_cobrar" />
+
+            <TextView
+                android:id="@+id/text_label_products"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Artículos"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_label_detail" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_products"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_label_products"
+                tools:listitem="@layout/item_list_purchase_detail_product" />
+
+            <TextView
+                android:id="@+id/text_products"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_item_list"
+                android:paddingBottom="16dp"
+                android:text="@{@string/text_money(MoneyUtilKt.formatMoney(purchase.subtotal + purchase.tax))}"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_products" />
+
+            <TextView
+                android:id="@+id/text_label_refund"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Reembolsos"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_products" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_refunds"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_label_refund"
+                tools:listitem="@layout/item_list_purchase_detail_product" />
+
+            <TextView
+                android:id="@+id/text_refund"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_item_list"
+                android:paddingBottom="16dp"
+                android:text="@{@string/text_money(MoneyUtilKt.formatMoney(purchase.refund))}"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_refunds" />
+
+            <TextView
+                android:id="@+id/text_label_payments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Abonos"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_refund" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_payments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_label_payments"
+                tools:listitem="@layout/item_list_purchase_detail_payment" />
+
+            <TextView
+                android:id="@+id/text_payments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@{@string/text_money(MoneyUtilKt.formatMoney(viewModel.totalPayments))}"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_payments" />
+
+            <Button
+                android:id="@+id/button_add_payment"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:onClick="@{clickListener}"
+                android:text="Agregar abono"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_payments" />
+
+            <TextView
+                android:id="@+id/text_label_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Costo"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/button_add_payment" />
+
+            <TextView
+                android:id="@+id/text_cost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/text_money(MoneyUtilKt.formatMoney(purchase.cost))}"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintTop_toTopOf="@+id/text_label_cost" />
+
+            <TextView
+                android:id="@+id/text_label_profit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Ganancia"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_cost" />
+
+            <TextView
+                android:id="@+id/text_profit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/text_money(MoneyUtilKt.formatMoney(purchase.profit))}"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintTop_toTopOf="@+id/text_label_profit" />
+
+            <TextView
+                android:id="@+id/text_label_subtotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Subtotal"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_profit" />
+
+            <TextView
+                android:id="@+id/text_subtotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/text_money(MoneyUtilKt.formatMoney(purchase.subtotal))}"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toTopOf="@+id/text_label_subtotal" />
+
+            <TextView
+                android:id="@+id/text_label_total_refund"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Reembolso"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_subtotal" />
+
+            <TextView
+                android:id="@+id/text_total_refund"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/text_money(MoneyUtilKt.formatMoney(purchase.refund))}"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintTop_toTopOf="@+id/text_label_total_refund" />
+
+            <TextView
+                android:id="@+id/text_label_adjustment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Ajuste"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_total_refund" />
+
+            <TextView
+                android:id="@+id/text_adjustment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/text_money(MoneyUtilKt.formatMoney(purchase.adjustment))}"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintTop_toTopOf="@+id/text_label_adjustment" />
+
+            <TextView
+                android:id="@+id/text_label_tax"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Impuestos"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_adjustment" />
+
+            <TextView
+                android:id="@+id/text_tax"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/text_money(MoneyUtilKt.formatMoney(purchase.tax))}"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintTop_toTopOf="@+id/text_label_tax" />
+
+            <TextView
+                android:id="@+id/text_total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/text_money(MoneyUtilKt.formatMoney(purchase.total))}"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintTop_toBottomOf="@+id/text_tax" />
+
+            <TextView
+                android:id="@+id/text_label_total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/text_total"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toTopOf="@+id/text_total" />
+
+            <TextView
+                android:id="@+id/text_faltante"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="@{@string/text_money(MoneyUtilKt.formatMoney(viewModel.totalMissingPayment))}"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintTop_toBottomOf="@+id/text_total" />
+
+            <TextView
+                android:id="@+id/text_label_faltante"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Faltante por cobrar"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/text_faltante"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toTopOf="@+id/text_faltante" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

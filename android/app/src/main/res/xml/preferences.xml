@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+            app:key="@string/preference_key_language"
+            app:title="@string/title_preferences_language"
+            app:summary="@string/text_preferences_language"
+            app:icon="@drawable/ic_language"
+            app:entries="@array/languages_key"
+            app:entryValues="@array/languages_value"
+            app:defaultValue="en"/>
+
+    <EditTextPreference
+        android:key="PROFIT_PERCENT_PREFERENCE"
+        android:title="Ganancia Inicial"
+        app:icon="@drawable/ic_profit"
+        android:summary="Porcentaje inicial de ganancia"
+        android:dialogLayout="@layout/preferences_edit_text"/>
+
+    <EditTextPreference
+        android:key="TAX_PERCENT_PREFERENCE"
+        android:title="Porcentaje de Impuetos"
+        app:icon="@drawable/ic_profit"
+        android:summary="Porcentaje de impuestos"
+        android:dialogLayout="@layout/preferences_edit_text"/>
+</androidx.preference.PreferenceScreen>

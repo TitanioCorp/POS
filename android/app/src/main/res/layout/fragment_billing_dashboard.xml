@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
+        <import type="com.titaniocorp.pos.util.MoneyUtilKt"/>
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+        <variable
+            name="mViewModel"
+            type="com.titaniocorp.pos.app.ui.billing.DashboardBillingViewModel"/>
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackgroundPrimary"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="32dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="24dp"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="24dp" />
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Cierre de caja"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_title" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_section"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/text_date">
+
+                <TextView
+                    android:id="@+id/text_label_detail_purchases"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Detalle de ventas"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_cost"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_item_list"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.cost))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_detail_purchases" />
+
+                <TextView
+                    android:id="@+id/text_label_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Costo"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_cost"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/text_cost" />
+
+                <TextView
+                    android:id="@+id/text_label_profit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ganancia"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_profit"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_profit" />
+
+                <TextView
+                    android:id="@+id/text_profit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_item_list"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.profit))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toBottomOf="@+id/text_cost" />
+
+                <TextView
+                    android:id="@+id/text_label_refund"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reembolso"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_refund"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_refund" />
+
+                <TextView
+                    android:id="@+id/text_refund"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_item_list"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.refund))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toBottomOf="@+id/text_profit" />
+
+                <TextView
+                    android:id="@+id/text_label_adjustment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ajuste"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_adjustment"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_adjustment" />
+
+                <TextView
+                    android:id="@+id/text_adjustment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_item_list"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.adjustment))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toBottomOf="@+id/text_payments" />
+
+                <TextView
+                    android:id="@+id/text_payments"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_item_list"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.payments))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toBottomOf="@+id/text_refund" />
+
+                <TextView
+                    android:id="@+id/text_label_payments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Abonos"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_payments"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_payments" />
+
+                <TextView
+                    android:id="@+id/text_tax"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.tax))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toBottomOf="@+id/text_adjustment" />
+
+                <TextView
+                    android:id="@+id/text_label_tax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Impuestos"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_tax"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_tax" />
+
+                <TextView
+                    android:id="@+id/text_label_detail_others"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Otros"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_tax" />
+
+                <TextView
+                    android:id="@+id/text_buy_inventory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_item_list"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.stock))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_detail_others" />
+
+                <TextView
+                    android:id="@+id/text_label_buy_inventory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Compra de inventario"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_buy_inventory"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_buy_inventory" />
+
+                <TextView
+                    android:id="@+id/text_expenses"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_item_list"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.expenses))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toBottomOf="@+id/text_buy_inventory" />
+
+                <TextView
+                    android:id="@+id/text_label_expenses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Otros egresos"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_expenses"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_expenses" />
+
+                <TextView
+                    android:id="@+id/text_income"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.income))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toBottomOf="@+id/text_expenses" />
+
+                <TextView
+                    android:id="@+id/text_label_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Otros ingresos"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_income"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_income" />
+
+                <TextView
+                    android:id="@+id/text_label_detail_total"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Total"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_income" />
+
+                <TextView
+                    android:id="@+id/text_total_purchase"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_item_list"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.totalPurchase))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_detail_total"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_detail_total" />
+
+                <TextView
+                    android:id="@+id/text_label_total_purchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total ventas"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_total_purchase"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_total_purchase" />
+
+                <TextView
+                    android:id="@+id/text_total_expenses"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_item_list"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.totalExpenses))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_detail_total"
+                    app:layout_constraintTop_toBottomOf="@+id/text_total_purchase" />
+
+                <TextView
+                    android:id="@+id/text_label_total_expenses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Egresos"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_total_expenses"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_total_expenses" />
+
+                <TextView
+                    android:id="@+id/text_total_income"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_item_list"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.totalIncome))}"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_detail_total"
+                    app:layout_constraintTop_toBottomOf="@+id/text_total_expenses" />
+
+                <TextView
+                    android:id="@+id/text_label_total_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Ingresos"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_total_income"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_total_income" />
+
+                <TextView
+                    android:id="@+id/text_total_cash"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.formatMoney(mViewModel.billing.total))}"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/text_cost"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_detail_total"
+                    app:layout_constraintTop_toBottomOf="@+id/text_total_income" />
+
+                <TextView
+                    android:id="@+id/text_label_total_cash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_total_cash"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+                    app:layout_constraintTop_toTopOf="@+id/text_total_cash" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:text="Realizar cierre de caja"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                android:onClick="@{clickListener}"/>
+
+            <TextView
+                android:id="@+id/text_billing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No se ha registrado ningún cierre de caja hoy"
+                app:layout_constraintEnd_toEndOf="@+id/button"
+                app:layout_constraintStart_toStartOf="@+id/button"
+                app:layout_constraintTop_toBottomOf="@+id/button" />
+
+            <Button
+                android:id="@+id/button_generate_report"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:onClick="@{clickListener}"
+                android:text="Enviar reporte"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

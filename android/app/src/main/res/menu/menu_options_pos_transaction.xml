@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item android:id="@+id/action_open_calculator"
+        android:title="Calculadora"
+        android:icon="@drawable/ic_dialpad"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_save_purchase"
+        android:title="Enviar"
+        android:icon="@drawable/ic_accept"
+        app:showAsAction="ifRoom"/>
+</menu>

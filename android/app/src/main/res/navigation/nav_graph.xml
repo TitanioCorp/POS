@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardPOSFragment">
+
+    <fragment
+            android:id="@+id/settingsFragment"
+            android:name="com.titaniocorp.pos.app.ui.settings.SettingsFragment"
+            android:label="@string/title_settings_fragment"/>
+    <fragment
+            android:id="@+id/dashboardPOSFragment"
+            android:name="com.titaniocorp.pos.app.ui.pos.DashboardPOSFragment"
+            android:label="@string/app_name"
+        tools:layout="@layout/fragment_pos_dashboard">
+        <action
+                android:id="@+id/action_to_settingsFragment"
+                app:destination="@id/settingsFragment" />
+        <action
+                android:id="@+id/action_to_itemsDashboardFragment"
+                app:destination="@id/dashboardProductFragment" />
+        <action
+            android:id="@+id/to_transactionPOSFragment"
+            app:destination="@id/purchasePOSFragment" />
+        <action
+            android:id="@+id/to_dashboardProfitFragment"
+            app:destination="@id/dashboardProfitFragment" />
+        <action
+            android:id="@+id/to_addProductPOSFragment"
+            app:destination="@id/addProductPOSFragment" />
+        <action
+            android:id="@+id/to_dashboardCategoryFragment"
+            app:destination="@id/dashboardCategoryFragment" />
+        <action
+            android:id="@+id/to_dashboardCustomerFragment"
+            app:destination="@id/dashboardCustomerFragment" />
+        <action
+            android:id="@+id/to_dashboardPurchaseFragment"
+            app:destination="@id/dashboardPurchaseFragment" />
+        <action
+            android:id="@+id/to_dashboardBillingFragment"
+            app:destination="@id/dashboardBillingFragment" />
+        <action
+            android:id="@+id/to_dashboardStockFragment"
+            app:destination="@id/dashboardStockFragment" />
+        <action
+            android:id="@+id/to_dashboardWarehouseFragment"
+            app:destination="@id/dashboardWarehouseFragment" />
+        <action
+            android:id="@+id/to_dashboardReportFragment"
+            app:destination="@id/dashboardReportFragment" />
+
+
+    </fragment>
+    <fragment
+            android:id="@+id/dashboardProductFragment"
+            android:name="com.titaniocorp.pos.app.ui.product.DashboardProductFragment"
+            android:label="@string/app_name"
+        tools:layout="@layout/fragment_product_dashboard">
+        <action
+                android:id="@+id/action__to_detailProductFragment"
+                app:destination="@id/detailProductFragment" >
+        </action>
+    </fragment>
+    <fragment
+            android:id="@+id/detailProductFragment"
+            android:name="com.titaniocorp.pos.app.ui.product.detail.DetailProductFragment"
+            android:label="Nuevo artículo"
+        tools:layout="@layout/fragment_product_detail">
+        <action
+            android:id="@+id/to_dashboardProductFragment"
+            app:popUpTo="@id/dashboardProductFragment"
+            app:popUpToInclusive="false" />
+        <argument
+                android:name="productId"
+                app:argType="long"
+                android:defaultValue="0L" />
+    </fragment>
+    <fragment
+        android:id="@+id/purchasePOSFragment"
+        android:name="com.titaniocorp.pos.app.ui.pos.purchase.PurchasePOSFragment"
+        android:label="Nueva transacción"
+        tools:layout="@layout/fragment_pos_purchase">
+        <action
+            android:id="@+id/to_dashboardPOSFragment"
+            app:popUpTo="@id/dashboardPOSFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardProfitFragment"
+        android:name="com.titaniocorp.pos.app.ui.profit.DashboardProfitFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_profit_dashboard"/>
+    <fragment
+        android:id="@+id/addProductPOSFragment"
+        android:name="com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPOSFragment"
+        android:label="Agregar Producto"
+        tools:layout="@layout/fragment_pos_add_product">
+        <argument
+            android:name="ARG_POSITION"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/to_dashboardPOSFragment"
+            app:popUpTo="@id/dashboardPOSFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardCategoryFragment"
+        android:name="com.titaniocorp.pos.app.ui.category.DashboardCategoryFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_category_dashboard"/>
+    <fragment
+        android:id="@+id/dashboardCustomerFragment"
+        android:name="com.titaniocorp.pos.app.ui.customer.DashboardCustomerFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_customer_dashboard" />
+    <fragment
+        android:id="@+id/dashboardPurchaseFragment"
+        android:name="com.titaniocorp.pos.app.ui.purchase.DashboardPurchaseFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_purchase_dashboard" >
+        <action
+            android:id="@+id/to_detailPurchaseFragment"
+            app:destination="@id/detailPurchaseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailPurchaseFragment"
+        android:name="com.titaniocorp.pos.app.ui.purchase.detail.DetailPurchaseFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_purchase_detail">
+        <argument
+            android:name="purchaseId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardBillingFragment"
+        android:name="com.titaniocorp.pos.app.ui.billing.DashboardBillingFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_billing_dashboard">
+        <argument
+            android:name="startDate"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="endDate"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardStockFragment"
+        android:name="com.titaniocorp.pos.app.ui.stock.DashboardStockFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_stock_dashboard">
+        <action
+            android:id="@+id/to_addtockFragment"
+            app:destination="@id/addtockFragment" />
+        <action
+            android:id="@+id/to_detailStockFragment"
+            app:destination="@id/detailStockFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addtockFragment"
+        android:name="com.titaniocorp.pos.app.ui.stock.add.AddStockFragment"
+        android:label="Agregar compra de inventario"
+        tools:layout="@layout/fragment_stock_add"/>
+    <fragment
+        android:id="@+id/detailStockFragment"
+        android:name="com.titaniocorp.pos.app.ui.stock.detail.DetailStockFragment"
+        tools:layout="@layout/fragment_stock_detail">
+        <argument
+            android:name="ARG_STOCK_ID"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dashboardWarehouseFragment"
+        android:name="com.titaniocorp.pos.app.ui.warehouse.DashboardWarehouseFragment"
+        tools:layout="@layout/fragment_warehouse_dashboard">
+        <action
+            android:id="@+id/to_addPaymentWarehouseFragment"
+            app:destination="@id/addPaymentWarehouseFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addPaymentWarehouseFragment"
+        android:name="com.titaniocorp.pos.app.ui.warehouse.add.AddPaymentWarehouseFragment"
+        tools:layout="@layout/fragment_warehouse_payment_add"/>
+
+    <fragment
+        android:id="@+id/dashboardReportFragment"
+        android:name="com.titaniocorp.pos.app.ui.report.DashboardReportFragment"
+        tools:layout="@layout/fragment_report_dashboard">
+        <action
+            android:id="@+id/to_dashboardBillingFragment"
+            app:destination="@id/dashboardBillingFragment" />
+    </fragment>
+</navigation>

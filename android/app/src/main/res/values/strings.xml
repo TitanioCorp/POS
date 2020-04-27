@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name" translatable="false">TodoLlantas</string>
+
+    <!-- Preferences Key -->
+    <string name="preference_key_language" translatable="false">language</string>
+
+    <!-- Arrays -->
+    <string-array name="languages_key">
+        <item>Inglés</item>
+        <item>Español</item>
+    </string-array>
+
+    <string-array name="languages_value" translatable="false">
+        <item>en</item>
+        <item>es</item>
+    </string-array>
+
+    <string-array name="array_type_payments">
+        <item>Ingreso</item>
+        <item>Egreso</item>
+    </string-array>
+
+    <string-array name="array_type_report">
+        <item>Inventario</item>
+        <item>Ventas</item>
+    </string-array>
+
+    <!-- Title -->
+    <string name="title_settings_fragment">Configuraciones</string>
+    <string name="title_information">Información</string>
+    <string name="title_preferences_language">Idioma</string>
+    <string name="title_delete_product">¿Desea eliminar el producto?</string>
+
+    <!-- Text -->
+    <string name="text_results">Resultados</string>
+    <string name="text_loading">Cargando&#8230;</string>
+    <string name="text_title">Titulo</string>
+    <string name="text_empty">Vacío</string>
+    <string name="text_preferences_language">Defina el idioma de la aplicación</string>
+    <string name="text_money">$%1$s</string>
+    <string name="text_quantity">x %1$s</string>
+    <string name="text_new_price_init_profit">Ganancia inicial - %1$s%%</string>
+    <string name="text_success_add_product">Producto añadido correctamente.</string>
+    <string name="text_success_update_product">Producto modificado correctamente.</string>
+    <string name="text_success_deleted_product">Producto eliminado correctamente.</string>
+    <string name="text_really_deleted_product">Esta acción no se podrá deshacer.</string>
+
+
+    <!-- Success -->
+    <string name="success_title">Exitoso</string>
+
+    <!-- Content -->
+    <string name="image_description">Image Content Description</string>
+
+    <!-- Button -->
+    <string name="action_back">Atrás</string>
+    <string name="action_next">Siguiente</string>
+    <string name="action_filter">Filtrar</string>
+    <string name="action_accept">Aceptar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="action_delete_product">Eliminar producto</string>
+
+    <!-- Error -->
+    <string name="error_title_error">Error</string>
+    <string name="error_title_alert">Alerta</string>
+    <string name="error_title_information">Información</string>
+    <string name="error_title_validation_purchase">Error al guardar la factura</string>
+    <string name="error_title_validation_customer">Asigne un cliente</string>
+    <string name="error_title_quantity_price_purchase">La cantidad sobrepasa al stock</string>
+    <string name="error_title_zero_quantity_price">La cantidad no puede ser 0</string>
+    <string name="error_title_empty_profit_list">No hay ganancias creadas</string>
+
+    <string name="error_text_empty">Vacío</string>
+    <string name="error_text_default">Ha ocurrido un error, intente nuevamente</string>
+    <string name="error_text_no_internet">No hay conexión a internet</string>
+    <string name="error_text_query_database">La consulta ha la base de datos ha fallado</string>
+    <string name="error_text_data_empty">No hay datos que mostrar</string>
+
+    <string name="error_text_http_internal_error">Error interno del servidor</string>
+    <string name="error_text_http_not_found">Error interno del servidor</string>
+    <string name="error_text_form_validate">La validación de los datos ha fallado, intente nuevamente.</string>
+    <string name="error_text_form_category">Debe seleccionar la categoría antes de continuar.</string>
+
+    <!-- Validations -->
+    <string name="validate_text_default">Verifique los datos ingresados</string>
+    <string name="validate_text_empty_field">El campo no puede estar vacío</string>
+    <string name="validate_text_money_zero">La cantidad ingresada no pude ser 0</string>
+    <string name="validate_text_number_length">El numero no puede ser mayor a 9 digitos</string>
+    <string name="validate_text_long_number_length">El numero no puede ser mayor a 15 digitos</string>
+    <string name="validate_text_number_zero">La cantidad ingresada no pude ser 0</string>
+
+    <string name="validate_text_purchase_empty_prices">Debe añadir al menos 1 artículo</string>
+    <string name="validate_text_purchase_no_customer">Las transacciones crédito requieren un cliente</string>
+    <string name="validate_text_quantity_price_purchase">Esto es debido a que ya agrego una cantidad determinada del mismo articulo, verifique he intente nuevamente</string>
+    <string name="validate_text_zero_quantity_price">No se pueden agregar artículos con stock en 0</string>
+    <string name="validate_text_cannot_refund">No hay artículos disponibles para hacer reembolso</string>
+    <string name="validate_text_cannot_add_payment">No hay dinero por cobrar</string>
+    <string name="validate_text_empty_profit_list">Ve al módulo de ganancias y crea una</string>
+
+</resources>
