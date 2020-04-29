@@ -37,12 +37,13 @@ class DashboardPOSFragment: BaseFragment(),
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var binding: FragmentPosDashboardBinding
     val viewModel: POSViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pos_dashboard, container, false)
+        binding = FragmentPosDashboardBinding.inflate(inflater)
         return binding.root
     }
 
@@ -52,7 +53,7 @@ class DashboardPOSFragment: BaseFragment(),
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner
-            this.mViewModel = viewModel
+            mViewModel = viewModel
             clickListener = this@DashboardPOSFragment
 
             searchView.apply {
@@ -64,7 +65,7 @@ class DashboardPOSFragment: BaseFragment(),
             searchView.clearFocus()
 
             mSearchSrcTextView = searchView.findViewById(R.id.search_src_text)
-            mSearchSrcTextView?.setOnItemClickListener { parent, view, position, id ->
+            mSearchSrcTextView?.setOnItemClickListener { _, _, position, _ ->
                 val direction = DashboardPOSFragmentDirections.toAddProductPOSFragment(position)
                 findNavController().navigate(direction)
             }
@@ -99,7 +100,6 @@ class DashboardPOSFragment: BaseFragment(),
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean = false
-
     override fun onClickItem(position: Int) {}
 
     override fun onClickRemoveItem(position: Int) {
@@ -114,14 +114,6 @@ class DashboardPOSFragment: BaseFragment(),
     }
 
     private fun subcribeUi(adapter: DashboardPOSAdapter){
-        val toolbar = (activity as AppCompatActivity).appbar
-        binding.nestedScrollView.setOnScrollChangeListener(
-            NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
-                val shouldShowToolbar = scrollY > toolbar.height
-                toolbar.isActivated = shouldShowToolbar
-            }
-        )
-
         viewModel.searchedList.observe(viewLifecycleOwner, Observer {
             it.process(
                 {

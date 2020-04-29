@@ -30,6 +30,8 @@
     <string name="title_information">Información</string>
     <string name="title_preferences_language">Idioma</string>
     <string name="title_delete_product">¿Desea eliminar el producto?</string>
+    <string name="title_pos">Punto de venta</string>
+    <string name="title_subtitle_pos">Genera una nueva venta</string>
 
     <!-- Text -->
     <string name="text_results">Resultados</string>
@@ -44,7 +46,8 @@
     <string name="text_success_update_product">Producto modificado correctamente.</string>
     <string name="text_success_deleted_product">Producto eliminado correctamente.</string>
     <string name="text_really_deleted_product">Esta acción no se podrá deshacer.</string>
-
+    <string name="text_add_product">Agregar artículo</string>
+    <string name="text_empty_list">No hay ningún item agregado</string>
 
     <!-- Success -->
     <string name="success_title">Exitoso</string>

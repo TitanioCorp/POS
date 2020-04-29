@@ -10,7 +10,9 @@ import java.util.*
 
 @BindingAdapter("asMoney")
 fun bindAsMoney(textView: TextView, value: Double) {
-    textView.text = textView.context.getString(R.string.text_money, value.formatMoney())
+    with(textView){
+        text = context.getString(R.string.text_money, value.formatMoney())
+    }
 }
 
 @BindingAdapter("asQuantity")
