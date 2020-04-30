@@ -110,14 +110,12 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/linear_barcode"
+                            android:id="@+id/button_barcode"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
                             android:layout_marginEnd="32dp"
-                            android:background="@drawable/bg_subsection"
-                            android:onClick="@{clickListener}"
                             android:orientation="horizontal"
                             android:paddingStart="16dp"
                             android:paddingTop="16dp"
@@ -125,24 +123,23 @@
                             android:paddingBottom="16dp"
                             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                            app:layout_constraintTop_toBottomOf="@+id/search_linear">
+                            app:layout_constraintTop_toBottomOf="@+id/search_linear"
+                            android:background="@drawable/bg_subsection"
+                            android:onClick="@{clickListener}">
 
-                            <ImageButton
-                                android:id="@+id/button_barcode"
+                            <ImageView
+                                android:id="@+id/imageView"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:background="@android:color/transparent"
-                                android:contentDescription="@string/image_description"
-                                android:onClick="@{clickListener}"
+                                android:layout_height="wrap_content"
                                 app:srcCompat="@drawable/ic_barcode" />
 
                             <TextView
-                                android:id="@+id/textView4"
+                                android:id="@+id/text_barcode"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
                                 android:layout_weight="1"
-                                android:text="Código de barras" />
+                                android:text="@string/text_barcode" />
                         </LinearLayout>
 
                         <TextView
@@ -151,12 +148,12 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="16dp"
-                            android:text="Artículos agregados"
+                            android:text="@string/text_added_products"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                            app:layout_constraintTop_toBottomOf="@+id/linear_barcode" />
+                            app:layout_constraintTop_toBottomOf="@+id/button_barcode" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

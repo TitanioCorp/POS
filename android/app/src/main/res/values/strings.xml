@@ -48,6 +48,8 @@
     <string name="text_really_deleted_product">Esta acción no se podrá deshacer.</string>
     <string name="text_add_product">Agregar artículo</string>
     <string name="text_empty_list">No hay ningún item agregado</string>
+    <string name="text_added_products">Artículos agregados</string>
+    <string name="text_barcode">Código de barras</string>
 
     <!-- Success -->
     <string name="success_title">Exitoso</string>
