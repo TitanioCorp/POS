@@ -2,7 +2,7 @@ package com.titaniocorp.pos.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.titaniocorp.pos.app.model.Customer
+import com.titaniocorp.pos.app.model.CustomerEntity
 
 /**
  * Maneja las consultas a la base de datos de pelicula
@@ -14,22 +14,22 @@ import com.titaniocorp.pos.app.model.Customer
 interface CustomerDao {
     /* SELECT */
     @Query("SELECT * FROM customer WHERE customer_id = :id LIMIT 1")
-    suspend fun getById(id: Long): Customer
+    suspend fun getById(id: Long): CustomerEntity
 
     @Query("SELECT * FROM customer WHERE active = 1")
-    fun getAll(): LiveData<List<Customer>>
+    fun getAll(): LiveData<List<CustomerEntity>>
 
     @Query("SELECT * FROM customer WHERE active = 1")
-    suspend fun getSimpleAll(): List<Customer>
+    suspend fun getSimpleAll(): List<CustomerEntity>
 
     /* INSERT */
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(item: Customer): Long
+    suspend fun insert(item: CustomerEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(vararg items: Customer): List<Long>
+    suspend fun insertAll(vararg items: CustomerEntity): List<Long>
 
     /* UPDATE */
     @Update
-    suspend fun update(vararg item: Customer): Int
+    suspend fun update(vararg item: CustomerEntity): Int
 }

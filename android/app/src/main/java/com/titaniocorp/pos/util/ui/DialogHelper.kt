@@ -2,12 +2,12 @@ package com.titaniocorp.pos.util.ui
 
 import android.app.Activity
 import android.view.View
-import android.widget.CompoundButton
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.*
+import com.titaniocorp.pos.app.model.domain.Customer
 import com.titaniocorp.pos.databinding.DialogNewCategoryBinding
 import com.titaniocorp.pos.databinding.DialogNewPriceBinding
 import com.titaniocorp.pos.util.*

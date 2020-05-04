@@ -46,7 +46,7 @@ class POSViewModel @Inject constructor(
     }.toLiveEvent()
 
     val profits: LiveData<Resource<List<Profit>>> = profitRepository.getAll()
-    val customers: LiveData<Resource<List<Customer>>> = customerRepository.getAll()
+    val customers: LiveData<Resource<List<CustomerEntity>>> = customerRepository.getAll()
 
     //region Category
     suspend fun getCategory(id: Long): Resource<Category>{

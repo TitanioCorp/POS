@@ -22,7 +22,7 @@ import com.titaniocorp.pos.database.dao.*
         PaymentPurchase::class,
         PricePurchase::class,
         Billing::class,
-        Customer::class,
+        CustomerEntity::class,
         Stock::class,
         PriceStock::class,
         Payment::class,

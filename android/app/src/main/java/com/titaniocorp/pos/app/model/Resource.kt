@@ -25,3 +25,7 @@ data class Resource<out T>(val status: Status, val data: T?, val code: Int?, val
         }
     }
 }
+
+fun <T, O> Resource<T>.asDomainResource(map: () -> O?): Resource<O>{
+    return Resource(status, map(), code, message)
+}
