@@ -21,7 +21,7 @@ import com.titaniocorp.pos.database.dao.*
         PurchaseEntity::class,
         PaymentPurchase::class,
         PricePurchase::class,
-        Billing::class,
+        BillingEntity::class,
         CustomerEntity::class,
         Stock::class,
         PriceStock::class,
