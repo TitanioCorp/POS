@@ -25,7 +25,7 @@ class PurchaseRepository @Inject constructor(
     fun getById(id: Long): LiveData<Resource<Purchase>>{
         return object : Processor<Purchase, Purchase>(){
             override suspend fun query(): Purchase {
-                return purchaseDao.getById(id).also {
+                return purchaseDao.getById(id).asDomainModel().also {
                     it.payments.addAll(paymentPurchaseDao.getSimpleAll(it.id))
                     it.prices.addAll(pricePurchaseDao.getSimpleAll(it.id))
                 }
@@ -40,7 +40,9 @@ class PurchaseRepository @Inject constructor(
 
     fun getByIdAsLiveData(id: Long): LiveData<Resource<Purchase>>{
         return object : Processor<Purchase, LiveData<Purchase>>(){
-            override suspend fun query():  LiveData<Purchase> = purchaseDao.getByIdAsLiveData(id)
+            override suspend fun query():  LiveData<Purchase> = Transformations.map(purchaseDao.getByIdAsLiveData(id)){
+                it.asDomainModel()
+            }
             override fun validate(response: Purchase): Int = if(response.id > 0){
                 runBlocking(Dispatchers.IO){
                     response.payments.addAll(paymentPurchaseDao.getSimpleAll(id))
@@ -66,7 +68,7 @@ class PurchaseRepository @Inject constructor(
 
     fun getBetweenDates(startDate: Long, finishDate: Long): LiveData<Resource<List<Purchase>>>{
         return object : Processor<List<Purchase>, LiveData<List<Purchase>>>(){
-            override suspend fun query():  LiveData<List<Purchase>> = purchaseDao.getBetweenDates(startDate, finishDate)
+            override suspend fun query():  LiveData<List<Purchase>> =  Transformations.map(purchaseDao.getBetweenDates(startDate, finishDate)){ it.asDomainModel()}
             override fun validate(response: List<Purchase>): Int = if(response.isNotEmpty()){
                 runBlocking(Dispatchers.IO){
                     response.forEach {
@@ -108,7 +110,7 @@ class PurchaseRepository @Inject constructor(
     fun add(item: Purchase): LiveData<Resource<Pair<Long, Int>>>{
         return object : Processor<Pair<Long, Int>, Pair<Long, Int>>(true){
             override suspend fun query(): Pair<Long, Int> {
-                val purchaseId = purchaseDao.insert(item)
+                val purchaseId = purchaseDao.insert(item.asDatabaseModel())
 
                 if(purchaseId <= 0){ return Pair(0, 1) }
 
@@ -142,7 +144,7 @@ class PurchaseRepository @Inject constructor(
     ): LiveData<Resource<Pair<Long, Int>>>{
         return object : Processor<Pair<Long, Int>, Pair<Long, Int>>(true){
             override suspend fun query(): Pair<Long, Int> {
-                val purchaseId = purchaseDao.update(purchase)
+                val purchaseId = purchaseDao.update(purchase.asDatabaseModel())
                 if(purchaseId <= 0){ return Pair(0, 1) }
 
                 val paymentInserted =  paymentPurchaseDao.insert(paymentPurchase)

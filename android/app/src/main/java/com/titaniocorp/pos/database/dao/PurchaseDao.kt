@@ -3,6 +3,7 @@ package com.titaniocorp.pos.database.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.titaniocorp.pos.app.model.Purchase
+import com.titaniocorp.pos.app.model.PurchaseEntity
 import com.titaniocorp.pos.app.model.dto.DetailPurchaseAdapterDto
 import com.titaniocorp.pos.app.model.dto.PurchaseDTO
 
@@ -16,19 +17,19 @@ import com.titaniocorp.pos.app.model.dto.PurchaseDTO
 interface PurchaseDao {
     /* SELECT */
     @Query("SELECT * FROM purchase WHERE purchase_id = :id LIMIT 1")
-    suspend fun getById(id: Long): Purchase
+    suspend fun getById(id: Long): PurchaseEntity
 
     @Query("SELECT * FROM purchase WHERE purchase_id = :id LIMIT 1")
-    fun getByIdAsLiveData(id: Long): LiveData<Purchase>
+    fun getByIdAsLiveData(id: Long): LiveData<PurchaseEntity>
 
     @Query("SELECT * FROM purchase WHERE active = 1 ORDER BY created_date DESC")
-    fun getAll(): LiveData<List<Purchase>>
+    fun getAll(): LiveData<List<PurchaseEntity>>
 
     @Query("SELECT purchase_id, customer_id, is_credit, total, created_date FROM purchase WHERE active = 1 ORDER BY created_date DESC")
     fun getLightAll(): LiveData<List<PurchaseDTO>>
 
     @Query("SELECT * FROM purchase WHERE active = 1 AND created_date BETWEEN :startDate AND :finishDate ORDER BY created_date DESC")
-    fun getBetweenDates(startDate: Long, finishDate: Long): LiveData<List<Purchase>>
+    fun getBetweenDates(startDate: Long, finishDate: Long): LiveData<List<PurchaseEntity>>
 
     @Query("SELECT purchase_id, customer_id, is_credit, total, created_date FROM purchase WHERE active = 1 AND created_date BETWEEN :startDate AND :finishDate ORDER BY created_date DESC")
     fun getLightBetweenDates(startDate: Long, finishDate: Long): LiveData<List<PurchaseDTO>>
@@ -52,16 +53,16 @@ interface PurchaseDao {
     fun getPriceDtoById(id: Long): LiveData<List<DetailPurchaseAdapterDto>>
 
     @Query("SELECT * FROM purchase WHERE active = 1")
-    suspend fun getSimpleAll(): List<Purchase>
+    suspend fun getSimpleAll(): List<PurchaseEntity>
 
     /* INSERT */
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(item: Purchase): Long
+    suspend fun insert(item: PurchaseEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(vararg items: Purchase): List<Long>
+    suspend fun insertAll(vararg items: PurchaseEntity): List<Long>
 
     /* UPDATE */
     @Update
-    suspend fun update(vararg item: Purchase): Int
+    suspend fun update(vararg item: PurchaseEntity): Int
 }

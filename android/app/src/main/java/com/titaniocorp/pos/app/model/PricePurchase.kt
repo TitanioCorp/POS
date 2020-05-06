@@ -11,7 +11,7 @@ import java.util.*
         Index(value = ["purchase_id"])
     ],
     foreignKeys = [
-        ForeignKey(entity = Purchase::class,
+        ForeignKey(entity = PurchaseEntity::class,
             parentColumns = ["purchase_id"],
             childColumns = ["purchase_id"],
             onDelete = ForeignKey.CASCADE
