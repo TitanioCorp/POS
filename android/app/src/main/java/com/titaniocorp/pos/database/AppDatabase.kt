@@ -25,7 +25,7 @@ import com.titaniocorp.pos.database.dao.*
         CustomerEntity::class,
         StockEntity::class,
         PriceStockEntity::class,
-        Payment::class,
+        PaymentEntity::class,
         PaymentCategory::class
     ],
     version = 1,
