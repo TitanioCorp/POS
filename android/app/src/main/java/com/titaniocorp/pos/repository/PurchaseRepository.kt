@@ -26,7 +26,7 @@ class PurchaseRepository @Inject constructor(
         return object : Processor<Purchase, Purchase>(){
             override suspend fun query(): Purchase {
                 return purchaseDao.getById(id).asDomainModel().also {
-                    it.payments.addAll(paymentPurchaseDao.getSimpleAll(it.id))
+                    it.payments.addAll(paymentPurchaseDao.getSimpleAll(it.id).asDomainModel())
                     it.prices.addAll(pricePurchaseDao.getSimpleAll(it.id))
                 }
             }
@@ -45,7 +45,7 @@ class PurchaseRepository @Inject constructor(
             }
             override fun validate(response: Purchase): Int = if(response.id > 0){
                 runBlocking(Dispatchers.IO){
-                    response.payments.addAll(paymentPurchaseDao.getSimpleAll(id))
+                    response.payments.addAll(paymentPurchaseDao.getSimpleAll(id).asDomainModel())
                     response.prices.addAll(pricePurchaseDao.getSimpleAll(id))
                 }
                 AppCode.SUCCESS_QUERY_DATABASE
@@ -72,7 +72,7 @@ class PurchaseRepository @Inject constructor(
             override fun validate(response: List<Purchase>): Int = if(response.isNotEmpty()){
                 runBlocking(Dispatchers.IO){
                     response.forEach {
-                        it.payments.addAll(paymentPurchaseDao.getSimpleAll(it.id))
+                        it.payments.addAll(paymentPurchaseDao.getSimpleAll(it.id).asDomainModel())
                         it.prices.addAll(pricePurchaseDao.getSimpleAll(it.id))
                     }
                 }
@@ -115,7 +115,7 @@ class PurchaseRepository @Inject constructor(
                 if(purchaseId <= 0){ return Pair(0, 1) }
 
                 item.payments.forEach { it.purchaseId = purchaseId }
-                val paymentsInserted =  paymentPurchaseDao.insertAll(*item.payments.toTypedArray())
+                val paymentsInserted =  paymentPurchaseDao.insertAll(*item.payments.asDatabaseModel().toTypedArray())
 
                 if(paymentsInserted.isEmpty() && !item.isCredit){ return Pair(0, 1) }
 
@@ -147,7 +147,7 @@ class PurchaseRepository @Inject constructor(
                 val purchaseId = purchaseDao.update(purchase.asDatabaseModel())
                 if(purchaseId <= 0){ return Pair(0, 1) }
 
-                val paymentInserted =  paymentPurchaseDao.insert(paymentPurchase)
+                val paymentInserted =  paymentPurchaseDao.insert(paymentPurchase.asDatabaseModel())
                 if(paymentInserted <= 0){ return Pair(0, 1) }
 
                 val priceUpdated = if(price.quantity == 0){
@@ -170,8 +170,8 @@ class PurchaseRepository @Inject constructor(
     fun addPayment(payment: PaymentPurchase): LiveData<Resource<List<PaymentPurchase>>>{
         return object : Processor<List<PaymentPurchase>, List<PaymentPurchase>>(true){
             override suspend fun query(): List<PaymentPurchase> {
-                return if(paymentPurchaseDao.insert(payment) > 0){
-                    paymentPurchaseDao.getSimpleAll(payment.purchaseId)
+                return if(paymentPurchaseDao.insert(payment.asDatabaseModel()) > 0){
+                    paymentPurchaseDao.getSimpleAll(payment.purchaseId).asDomainModel()
                 }else{
                     listOf()
                 }
