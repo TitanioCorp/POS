@@ -48,7 +48,7 @@ class ProductRepository @Inject constructor(
 
                 val profits = profitDao.getSimpleAll()
 
-                return Pair(product, profits)
+                return Pair(product, profits.asDomainModel())
             }
             override fun validate(response: Pair<Product, List<Profit>>): Int {
                 return if(response.first.id > 0){
