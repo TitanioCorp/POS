@@ -26,7 +26,7 @@ class ProductRepository @Inject constructor(
         return object : Processor<Product, Product>(true){
             override suspend fun query(): Product {
                 return  productDao.getById(productId).asDomainModel().also{
-                   it.prices.addAll(priceDao.getAllByProduct(productId))
+                   it.prices.addAll(priceDao.getAllByProduct(productId).asDomainModel())
                 }
             }
             override fun validate(response: Product): Int {
@@ -43,7 +43,7 @@ class ProductRepository @Inject constructor(
         return object : Processor<Pair<Product, List<Profit>>, Pair<Product, List<Profit>>>(){
             override suspend fun query(): Pair<Product, List<Profit>> {
                 val product = productDao.getById(productId).asDomainModel().also{
-                    it.prices.addAll(priceDao.getAllByProduct(productId))
+                    it.prices.addAll(priceDao.getAllByProduct(productId).asDomainModel())
                 }
 
                 val profits = profitDao.getSimpleAll()
@@ -82,7 +82,7 @@ class ProductRepository @Inject constructor(
                     it.productId = productId
                 }
 
-                val pricesId = priceDao.insertAll(*product.prices.toTypedArray())
+                val pricesId = priceDao.insertAll(*product.prices.asDatabaseModel().toTypedArray())
 
                 return Pair(productId, pricesId)
             }
@@ -104,7 +104,7 @@ class ProductRepository @Inject constructor(
                     it.productId = product.id
                 }
 
-                val pricesId = priceDao.insertAll(*product.prices.toTypedArray())
+                val pricesId = priceDao.insertAll(*product.prices.asDatabaseModel().toTypedArray())
 
                 return Pair(productId, pricesId.size)
             }

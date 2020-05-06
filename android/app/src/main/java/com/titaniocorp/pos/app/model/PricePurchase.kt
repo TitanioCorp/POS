@@ -16,7 +16,7 @@ import java.util.*
             childColumns = ["purchase_id"],
             onDelete = ForeignKey.CASCADE
         ),
-        ForeignKey(entity = Price::class,
+        ForeignKey(entity = PriceEntity::class,
             parentColumns = ["price_id"],
             childColumns = ["price_id"],
             onDelete = ForeignKey.CASCADE

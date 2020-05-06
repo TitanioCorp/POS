@@ -137,8 +137,8 @@ class AddProductPOSFragment: BaseFragment(), View.OnClickListener{
                         })
 
                         lifecycleScope.launch {
-                            viewModel.searchedList.value?.data?.get(arguments?.getInt(ARG_POSITION) ?: 0)?.let {searchSelected ->
-                                val profit = product.prices.find { it.id == searchSelected.priceId }
+                            viewModel.searchedList.value?.data?.get(arguments?.getInt(ARG_POSITION) ?: 0)?.let {_ ->
+                                //val profit = product.prices.find { it.id == searchSelected.priceId }
                             }
 
 

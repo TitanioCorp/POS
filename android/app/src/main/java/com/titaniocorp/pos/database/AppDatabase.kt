@@ -16,7 +16,7 @@ import com.titaniocorp.pos.database.dao.*
     entities = [
         CategoryEntity::class,
         ProductEntity::class,
-        Price::class,
+        PriceEntity::class,
         Profit::class,
         PurchaseEntity::class,
         PaymentPurchase::class,

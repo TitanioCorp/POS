@@ -32,13 +32,13 @@ object DialogHelper {
                 setMessage(message)
 
                 positiveCallback?.let {callback ->
-                    setPositiveButton(positiveString ?: it.getString(R.string.action_accept)){dialog, which ->
+                    setPositiveButton(positiveString ?: it.getString(R.string.action_accept)){_, _ ->
                         callback()
                     }
                 }
 
                 negativeCallback?.let {callback ->
-                    setNegativeButton(negativeString ?: it.getString(R.string.action_cancel)){dialog, which ->
+                    setNegativeButton(negativeString ?: it.getString(R.string.action_cancel)){_, _ ->
                         callback()
                     }
                 }
@@ -168,7 +168,7 @@ object DialogHelper {
                 textTotal.text = root.context.getString(R.string.text_money, total.formatMoney())
             }
 
-            switchProfitPercent.setOnCheckedChangeListener{buttonView, isChecked ->
+            switchProfitPercent.setOnCheckedChangeListener{_, isChecked ->
                 val cost = inputCost.text.toString().moneyFilter()
                 val tax: Double = if(isChecked){
                     cost.calculateTax()
