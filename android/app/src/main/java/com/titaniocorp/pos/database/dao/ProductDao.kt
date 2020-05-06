@@ -3,6 +3,7 @@ package com.titaniocorp.pos.database.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.titaniocorp.pos.app.model.Product
+import com.titaniocorp.pos.app.model.ProductEntity
 import com.titaniocorp.pos.app.model.dto.SearchProductDTO
 
 /**
@@ -15,10 +16,10 @@ import com.titaniocorp.pos.app.model.dto.SearchProductDTO
 interface ProductDao {
     /* SELECT */
     @Query("SELECT * FROM product WHERE product_id = :id LIMIT 1")
-    suspend fun getById(id: Long): Product
+    suspend fun getById(id: Long): ProductEntity
 
     @Query("SELECT * FROM product WHERE active = 1")
-    fun getAll(): LiveData<List<Product>>
+    fun getAll(): LiveData<List<ProductEntity>>
 
     //@Query("SELECT product_id, name FROM product WHERE active = 1 AND name LIKE :query")
     @Query("SELECT " +
@@ -35,11 +36,11 @@ interface ProductDao {
 
     /* INSERT */
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(item: Product): Long
+    suspend fun insert(item: ProductEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(vararg items: Product): List<Long>
+    suspend fun insertAll(vararg items: ProductEntity): List<Long>
 
     @Update
-    suspend fun update(vararg item: Product): Int
+    suspend fun update(vararg item: ProductEntity): Int
 }

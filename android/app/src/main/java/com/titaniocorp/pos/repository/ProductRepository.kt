@@ -1,9 +1,7 @@
 package com.titaniocorp.pos.repository
 
 import androidx.lifecycle.*
-import com.titaniocorp.pos.app.model.Product
-import com.titaniocorp.pos.app.model.Profit
-import com.titaniocorp.pos.app.model.Resource
+import com.titaniocorp.pos.app.model.*
 import com.titaniocorp.pos.app.model.dto.SearchProductDTO
 import com.titaniocorp.pos.database.dao.PriceDao
 import com.titaniocorp.pos.database.dao.ProductDao
@@ -27,7 +25,7 @@ class ProductRepository @Inject constructor(
     fun getProductById(productId: Long): LiveData<Resource<Product>>{
         return object : Processor<Product, Product>(true){
             override suspend fun query(): Product {
-                return  productDao.getById(productId).also{
+                return  productDao.getById(productId).asDomainModel().also{
                    it.prices.addAll(priceDao.getAllByProduct(productId))
                 }
             }
@@ -44,7 +42,7 @@ class ProductRepository @Inject constructor(
     fun getPOSProductById(productId: Long): LiveData<Resource<Pair<Product, List<Profit>>>>{
         return object : Processor<Pair<Product, List<Profit>>, Pair<Product, List<Profit>>>(){
             override suspend fun query(): Pair<Product, List<Profit>> {
-                val product = productDao.getById(productId).also{
+                val product = productDao.getById(productId).asDomainModel().also{
                     it.prices.addAll(priceDao.getAllByProduct(productId))
                 }
 
@@ -64,7 +62,7 @@ class ProductRepository @Inject constructor(
 
     fun getAll(): LiveData<Resource<List<Product>>>{
         return object : Processor<List<Product>, LiveData<List<Product>>>(){
-            override suspend fun query(): LiveData<List<Product>> = productDao.getAll()
+            override suspend fun query(): LiveData<List<Product>> = Transformations.map(productDao.getAll()){ it.asDomainModel() }
             override fun validate(response: List<Product>): Int {
                 return if(response.isNotEmpty()){
                     AppCode.SUCCESS_QUERY_DATABASE
@@ -78,7 +76,7 @@ class ProductRepository @Inject constructor(
     fun addProduct(product: Product): LiveData<Resource<Pair<Long, List<Long>>>>{
         return object : Processor<Pair<Long, List<Long>>, Pair<Long, List<Long>>>(true){
             override suspend fun query(): Pair<Long, List<Long>> {
-                val productId = productDao.insert(product)
+                val productId = productDao.insert(product.asDatabaseModel())
 
                 product.prices.forEach {
                     it.productId = productId
@@ -100,7 +98,7 @@ class ProductRepository @Inject constructor(
     fun updateProduct(product: Product): LiveData<Resource<Pair<Int, Int>>>{
         return object : Processor<Pair<Int,Int>, Pair<Int, Int>>(true){
             override suspend fun query(): Pair<Int, Int> {
-                val productId = productDao.update(product)
+                val productId = productDao.update(product.asDatabaseModel())
 
                 product.prices.forEach {
                     it.productId = product.id
