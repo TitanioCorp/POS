@@ -12,7 +12,7 @@ import java.util.*
     ],
     foreignKeys = [
         ForeignKey(
-            entity = Stock::class,
+            entity = StockEntity::class,
             parentColumns = ["stock_id"],
             childColumns = ["stock_id"],
             onDelete = ForeignKey.CASCADE

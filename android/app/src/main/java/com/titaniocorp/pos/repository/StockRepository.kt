@@ -3,6 +3,8 @@ package com.titaniocorp.pos.repository
 import androidx.lifecycle.*
 import com.titaniocorp.pos.app.model.Resource
 import com.titaniocorp.pos.app.model.Stock
+import com.titaniocorp.pos.app.model.asDatabaseModel
+import com.titaniocorp.pos.app.model.asDomainModel
 import com.titaniocorp.pos.database.dao.*
 import com.titaniocorp.pos.repository.processor.*
 import com.titaniocorp.pos.util.AppCode
@@ -23,7 +25,7 @@ class StockRepository @Inject constructor(
     fun getById(id: Long): LiveData<Resource<Stock>>{
         return object : Processor<Stock, Stock>(){
             override suspend fun query(): Stock {
-                val stock = stockDao.getById(id)
+                val stock = stockDao.getById(id).asDomainModel()
 
                 stock.prices.addAll(priceStockDao.getSimpleAll(stock.id).map {
                     it.toPriceStock()
@@ -43,7 +45,7 @@ class StockRepository @Inject constructor(
 
     fun getAll(): LiveData<Resource<List<Stock>>>{
         return object : Processor<List<Stock>, LiveData<List<Stock>>>(){
-            override suspend fun query(): LiveData<List<Stock>> = stockDao.getAll()
+            override suspend fun query(): LiveData<List<Stock>> = Transformations.map(stockDao.getAll()){ it.asDomainModel() }
             override fun validate(response: List<Stock>): Int {
                 runBlocking(Dispatchers.IO){
                     response.forEach {
@@ -64,7 +66,7 @@ class StockRepository @Inject constructor(
     fun add(item: Stock): LiveData<Resource<Pair<Long, List<Long>>>>{
         return object : Processor<Pair<Long, List<Long>>, Pair<Long, List<Long>>>(true){
             override suspend fun query(): Pair<Long, List<Long>> {
-                val id = stockDao.insert(item)
+                val id = stockDao.insert(item.asDatabaseModel())
 
                 item.prices.forEach {
                     it.stockId = id
@@ -91,7 +93,7 @@ class StockRepository @Inject constructor(
 
     fun getBetweenDates(startDate: Long, finishDate: Long): LiveData<Resource<List<Stock>>>{
         return object : Processor<List<Stock>, LiveData<List<Stock>>>(){
-            override suspend fun query():  LiveData<List<Stock>> = stockDao.getBetweenDates(startDate, finishDate)
+            override suspend fun query():  LiveData<List<Stock>> = Transformations.map(stockDao.getBetweenDates(startDate, finishDate)){ it.asDomainModel() }
             override fun validate(response: List<Stock>): Int = if(response.isNotEmpty()){
                 AppCode.SUCCESS_QUERY_DATABASE
 
