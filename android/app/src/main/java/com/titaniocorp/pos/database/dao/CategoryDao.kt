@@ -3,6 +3,7 @@ package com.titaniocorp.pos.database.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.titaniocorp.pos.app.model.Category
+import com.titaniocorp.pos.app.model.CategoryEntity
 
 /**
  * Maneja las consultas a la base de datos de pelicula
@@ -14,18 +15,18 @@ import com.titaniocorp.pos.app.model.Category
 interface CategoryDao {
     /* SELECT */
     @Query("SELECT * FROM category WHERE category_id = :id LIMIT 1")
-    suspend fun getById(id: Long): Category
+    suspend fun getById(id: Long): CategoryEntity
 
     @Query("SELECT * FROM category WHERE active = 1")
-    fun getAll(): LiveData<List<Category>>
+    fun getAll(): LiveData<List<CategoryEntity>>
 
     /* INSERT */
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(item: Category): Long
+    suspend fun insert(item: CategoryEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(vararg items: Category): List<Long>
+    suspend fun insertAll(vararg items: CategoryEntity): List<Long>
 
     @Update
-    suspend fun update(vararg item: Category): Int
+    suspend fun update(vararg item: CategoryEntity): Int
 }

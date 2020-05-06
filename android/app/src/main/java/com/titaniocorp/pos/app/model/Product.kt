@@ -10,7 +10,7 @@ import java.util.*
         Index(value = ["category_id"])
     ],
     foreignKeys = [
-        ForeignKey(entity = Category::class,
+            ForeignKey(entity = CategoryEntity::class,
             parentColumns = ["category_id"],
             childColumns = ["category_id"],
             onDelete = CASCADE)

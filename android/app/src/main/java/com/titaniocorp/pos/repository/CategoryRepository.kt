@@ -3,6 +3,8 @@ package com.titaniocorp.pos.repository
 import androidx.lifecycle.*
 import com.titaniocorp.pos.app.model.Category
 import com.titaniocorp.pos.app.model.Resource
+import com.titaniocorp.pos.app.model.asDatabaseModel
+import com.titaniocorp.pos.app.model.asDomainModel
 import com.titaniocorp.pos.database.dao.CategoryDao
 import com.titaniocorp.pos.repository.processor.Processor
 import com.titaniocorp.pos.repository.processor.SingleProcessor
@@ -21,7 +23,7 @@ class CategoryRepository @Inject constructor(private val dao: CategoryDao):  Bas
     fun getById(id: Long): LiveData<Resource<Category>>{
         return object : Processor<Category, Category>(true){
             override suspend fun query(): Category {
-                return  dao.getById(id)
+                return  dao.getById(id).asDomainModel()
             }
             override fun validate(response: Category): Int {
                 return if(response.id ?:0 > 0){
@@ -35,7 +37,7 @@ class CategoryRepository @Inject constructor(private val dao: CategoryDao):  Bas
 
     fun getAll(): LiveData<Resource<List<Category>>>{
         return object : Processor<List<Category>, LiveData<List<Category>>>(){
-            override suspend fun query(): LiveData<List<Category>> = dao.getAll()
+            override suspend fun query(): LiveData<List<Category>> = Transformations.map(dao.getAll()){ it.asDomainModel() }
             override fun validate(response: List<Category>): Int {
                 return if(response.isNotEmpty()){
                     AppCode.SUCCESS_QUERY_DATABASE
@@ -48,7 +50,7 @@ class CategoryRepository @Inject constructor(private val dao: CategoryDao):  Bas
 
     fun add(category: Category): LiveData<Resource<Long>>{
         return object : Processor<Long, Long>(true){
-            override suspend fun query(): Long = dao.insert(category)
+            override suspend fun query(): Long = dao.insert(category.asDatabaseModel())
             override fun validate(response: Long): Int {
                 return if(response > 0){
                     AppCode.SUCCESS_QUERY_DATABASE
@@ -61,7 +63,7 @@ class CategoryRepository @Inject constructor(private val dao: CategoryDao):  Bas
 
     fun update(item: Category): LiveData<Resource<Int>>{
         return object : Processor<Int, Int>(true){
-            override suspend fun query() = dao.update(item)
+            override suspend fun query() = dao.update(item.asDatabaseModel())
             override fun validate(response: Int): Int {
                 return if(response > 0){
                     AppCode.SUCCESS_QUERY_DATABASE
@@ -75,7 +77,7 @@ class CategoryRepository @Inject constructor(private val dao: CategoryDao):  Bas
     /* Single Processor */
     suspend fun getByIdSingle(id: Long): Resource<Category>{
         return object : SingleProcessor<Category>(){
-            override suspend fun query() = dao.getById(id)
+            override suspend fun query() = dao.getById(id).asDomainModel()
             override fun isValidQuery(response: Category): Boolean = (response.id ?:0) > 0
         }.process()
     }
