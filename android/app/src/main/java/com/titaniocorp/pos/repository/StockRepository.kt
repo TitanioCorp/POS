@@ -72,7 +72,7 @@ class StockRepository @Inject constructor(
                     it.stockId = id
                 }
 
-                val listInserted = priceStockDao.insertAll(*item.prices.toTypedArray())
+                val listInserted = priceStockDao.insertAll(*item.prices.asDomainModel().toTypedArray())
                 var countUpdatedPrice = 0
 
                 item.prices.forEach {

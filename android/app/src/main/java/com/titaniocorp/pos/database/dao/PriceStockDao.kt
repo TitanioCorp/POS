@@ -3,6 +3,7 @@ package com.titaniocorp.pos.database.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.titaniocorp.pos.app.model.PriceStock
+import com.titaniocorp.pos.app.model.PriceStockEntity
 import com.titaniocorp.pos.app.model.dto.PriceStockDto
 
 /**
@@ -15,13 +16,13 @@ import com.titaniocorp.pos.app.model.dto.PriceStockDto
 interface PriceStockDao {
     /* SELECT */
     @Query("SELECT * FROM price_stock WHERE price_stock_id = :id LIMIT 1")
-    suspend fun getById(id: Long): PriceStock
+    suspend fun getById(id: Long): PriceStockEntity
 
     @Query("SELECT * FROM price_stock WHERE stock_id = :id")
-    fun getAllById(id: Long): LiveData<List<PriceStock>>
+    fun getAllById(id: Long): LiveData<List<PriceStockEntity>>
 
     @Query("SELECT * FROM price_stock")
-    fun getAll(): LiveData<List<PriceStock>>
+    fun getAll(): LiveData<List<PriceStockEntity>>
 
     //@Query("SELECT * FROM price_stock WHERE stock_id = :id")
     @Query("SELECT " +
@@ -42,11 +43,11 @@ interface PriceStockDao {
 
     /* INSERT */
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(item: PriceStock): Long
+    suspend fun insert(item: PriceStockEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(vararg items: PriceStock): List<Long>
+    suspend fun insertAll(vararg items: PriceStockEntity): List<Long>
 
     @Update
-    suspend fun update(vararg item: PriceStock): Int
+    suspend fun update(vararg item: PriceStockEntity): Int
 }
