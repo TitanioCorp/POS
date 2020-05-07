@@ -1,7 +1,6 @@
 package com.titaniocorp.pos.app.model
 
 import androidx.room.*
-import androidx.room.ForeignKey.CASCADE
 import java.util.*
 
 @Entity(tableName = "product",
@@ -12,8 +11,7 @@ import java.util.*
     foreignKeys = [
             ForeignKey(entity = CategoryEntity::class,
             parentColumns = ["category_id"],
-            childColumns = ["category_id"],
-            onDelete = CASCADE)
+            childColumns = ["category_id"])
     ]
 )
 data class ProductEntity(

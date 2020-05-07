@@ -1,7 +1,6 @@
 package com.titaniocorp.pos.app.model
 
 import androidx.room.*
-import androidx.room.ForeignKey.CASCADE
 import com.titaniocorp.pos.app.model.domain.Customer
 
 @Entity(

@@ -14,14 +14,12 @@ import java.util.*
         ForeignKey(
             entity = StockEntity::class,
             parentColumns = ["stock_id"],
-            childColumns = ["stock_id"],
-            onDelete = ForeignKey.CASCADE
+            childColumns = ["stock_id"]
         ),
         ForeignKey(
             entity = PriceEntity::class,
             parentColumns = ["price_id"],
-            childColumns = ["price_id"],
-            onDelete = ForeignKey.CASCADE
+            childColumns = ["price_id"]
         )
     ]
 )

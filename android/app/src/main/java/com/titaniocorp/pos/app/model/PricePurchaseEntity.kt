@@ -13,13 +13,11 @@ import java.util.*
     foreignKeys = [
         ForeignKey(entity = PurchaseEntity::class,
             parentColumns = ["purchase_id"],
-            childColumns = ["purchase_id"],
-            onDelete = ForeignKey.CASCADE
+            childColumns = ["purchase_id"]
         ),
         ForeignKey(entity = PriceEntity::class,
             parentColumns = ["price_id"],
-            childColumns = ["price_id"],
-            onDelete = ForeignKey.CASCADE
+            childColumns = ["price_id"]
         )
     ])
 data class PricePurchaseEntity(
