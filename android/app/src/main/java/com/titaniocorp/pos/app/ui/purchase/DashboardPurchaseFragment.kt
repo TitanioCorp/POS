@@ -15,6 +15,7 @@ import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentPurchaseDashboardBinding
 import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DatePickerFragment
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -99,6 +100,36 @@ class DashboardPurchaseFragment: BaseFragment(),
                     binding.recycler.visibility = View.GONE
                     binding.viewContent.visibility = View.VISIBLE
 
+                }
+            )
+        })
+
+        viewModel.testFlow().observe(viewLifecycleOwner, Observer {
+            it.process(
+                onLoading = {boolean -> setLoading(boolean)},
+                onSuccess = {
+                    binding.recycler.visibility = View.VISIBLE
+                    binding.viewContent.visibility = View.GONE
+                    Timber.tag("FlowMessage").i(it.toString())
+                },
+                onError = {
+                    binding.recycler.visibility = View.GONE
+                    binding.viewContent.visibility = View.VISIBLE
+                }
+            )
+        })
+
+        viewModel.getByIdFlow().observe(viewLifecycleOwner, Observer {
+            it.process(
+                onLoading = {boolean -> setLoading(boolean)},
+                onSuccess = {
+                    binding.recycler.visibility = View.VISIBLE
+                    binding.viewContent.visibility = View.GONE
+                    Timber.tag("AppDebug").i(it.toString())
+                },
+                onError = {
+                    binding.recycler.visibility = View.GONE
+                    binding.viewContent.visibility = View.VISIBLE
                 }
             )
         })

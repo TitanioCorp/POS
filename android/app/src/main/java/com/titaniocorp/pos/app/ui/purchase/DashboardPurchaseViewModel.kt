@@ -1,14 +1,18 @@
 package com.titaniocorp.pos.app.ui.purchase
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.asLiveData
+import com.titaniocorp.pos.app.model.Purchase
+import com.titaniocorp.pos.app.model.Resource
 import com.titaniocorp.pos.app.viewmodel.BaseViewModel
 import com.titaniocorp.pos.repository.PurchaseRepository
 import java.util.*
 import javax.inject.Inject
 
 class DashboardPurchaseViewModel @Inject constructor(
-    purchaseRepository: PurchaseRepository
+    val purchaseRepository: PurchaseRepository
 ): BaseViewModel() {
     private val mAction = MutableLiveData<Pair<Long, Long>?>()
 
@@ -24,7 +28,7 @@ class DashboardPurchaseViewModel @Inject constructor(
         loadToday()
     }
 
-    final fun loadToday(){
+    fun loadToday(){
         val startDate = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE, 0)
@@ -48,4 +52,24 @@ class DashboardPurchaseViewModel @Inject constructor(
             null
         }
     }
+
+    fun testFlow(): LiveData<Resource<List<Purchase>>> {
+        val startDate = Calendar.getInstance().apply {
+            set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH))
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }
+
+        val finishDate = Calendar.getInstance().apply {
+            set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH) + 1)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }
+
+        return purchaseRepository.getAll(startDate.timeInMillis, finishDate.timeInMillis).asLiveData()
+    }
+
+    fun getByIdFlow() = purchaseRepository.getByIdFlow(2).asLiveData()
 }
