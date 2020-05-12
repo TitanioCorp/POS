@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -51,15 +53,30 @@ class DashboardPurchaseFragment: BaseFragment(),
             val adapter = DashboardPurchaseAdapter()
             recycler.adapter = adapter
 
+            context?.let{
+                val typesAdapter = ArrayAdapter(
+                    it,
+                    android.R.layout.simple_list_item_1,
+                    resources.getStringArray(R.array.purchase_filters)
+                )
+
+                spinnerType.adapter = typesAdapter
+
+                val customerAdapter = ArrayAdapter(
+                    it,
+                    android.R.layout.simple_list_item_1,
+                    listOf("Ninguno")
+                )
+
+                spinnerCustomer.adapter = customerAdapter
+            }
+
             subscribeUi(adapter)
         }
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.button_show_all -> { loadAll() }
-            R.id.button_show_today -> { viewModel.loadToday() }
-            R.id.button_show_select_range -> { selectRange() }
         }
     }
 
@@ -104,35 +121,35 @@ class DashboardPurchaseFragment: BaseFragment(),
             )
         })
 
-        viewModel.testFlow().observe(viewLifecycleOwner, Observer {
-            it.process(
-                onLoading = {boolean -> setLoading(boolean)},
-                onSuccess = {
-                    binding.recycler.visibility = View.VISIBLE
-                    binding.viewContent.visibility = View.GONE
-                    Timber.tag("FlowMessage").i(it.toString())
-                },
-                onError = {
-                    binding.recycler.visibility = View.GONE
-                    binding.viewContent.visibility = View.VISIBLE
-                }
-            )
-        })
+        binding.spinnerType.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
 
-        viewModel.getByIdFlow().observe(viewLifecycleOwner, Observer {
-            it.process(
-                onLoading = {boolean -> setLoading(boolean)},
-                onSuccess = {
-                    binding.recycler.visibility = View.VISIBLE
-                    binding.viewContent.visibility = View.GONE
-                    Timber.tag("AppDebug").i(it.toString())
-                },
-                onError = {
-                    binding.recycler.visibility = View.GONE
-                    binding.viewContent.visibility = View.VISIBLE
-                }
-            )
-        })
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+
+        binding.spinnerCustomer.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
     }
 
     private fun loadAll(){

@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.asLiveData
 import com.titaniocorp.pos.app.model.Purchase
 import com.titaniocorp.pos.app.model.Resource
+import com.titaniocorp.pos.app.model.SearchPurchase
 import com.titaniocorp.pos.app.viewmodel.BaseViewModel
 import com.titaniocorp.pos.repository.PurchaseRepository
 import java.util.*
@@ -53,23 +54,8 @@ class DashboardPurchaseViewModel @Inject constructor(
         }
     }
 
-    fun testFlow(): LiveData<Resource<List<Purchase>>> {
-        val startDate = Calendar.getInstance().apply {
-            set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH))
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-        }
 
-        val finishDate = Calendar.getInstance().apply {
-            set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH) + 1)
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-        }
+    // Flow
+    private val mSearch = MutableLiveData<SearchPurchase>()
 
-        return purchaseRepository.getAll(startDate.timeInMillis, finishDate.timeInMillis).asLiveData()
-    }
-
-    fun getByIdFlow() = purchaseRepository.getByIdFlow(2).asLiveData()
 }

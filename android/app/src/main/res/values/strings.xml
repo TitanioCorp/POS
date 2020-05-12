@@ -25,6 +25,13 @@
         <item>Ventas</item>
     </string-array>
 
+    <!-- Arrays -->
+    <string-array name="purchase_filters">
+        <item>Hoy</item>
+        <item>Todos</item>
+        <item>Por cobrar</item>
+    </string-array>
+
     <!-- Title -->
     <string name="title_settings_fragment">Configuraciones</string>
     <string name="title_information">Información</string>

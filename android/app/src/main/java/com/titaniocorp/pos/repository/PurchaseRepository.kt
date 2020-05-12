@@ -26,6 +26,13 @@ class PurchaseRepository @Inject constructor(
     private val pricePurchaseDao: PricePurchaseDao,
     private val paymentPurchaseDao: PaymentPurchaseDao
 ):  BaseRepository(){
+
+
+
+
+
+
+
     fun getById(id: Long): LiveData<Resource<Purchase>>{
         return object : Processor<Purchase, Purchase>(){
             override suspend fun query(): Purchase {
@@ -188,39 +195,5 @@ class PurchaseRepository @Inject constructor(
         }.asResult()
     }
 
-    fun getAll(startDate: Long, finishDate: Long): Flow<Resource<List<Purchase>>>{
-        return object : FlowProcessor<List<Purchase>, List<Purchase>>(){
-            override fun query() = purchaseDao.getBetweenDatesFlow(startDate, finishDate).map{ it.asDomainModel() }
 
-            override fun validate(response: List<Purchase>): Int =
-                if(response.isNotEmpty())
-                    AppCode.SUCCESS_QUERY_DATABASE
-                else
-                    AppCode.ERROR_QUERY_DATABASE
-
-            override suspend fun onResult(response: List<Purchase>) {
-                response.forEach {
-                    it.payments.addAll(paymentPurchaseDao.getSimpleAll(it.id).asDomainModel())
-                    it.prices.addAll(pricePurchaseDao.getSimpleAll(it.id).asDomainModel())
-                }
-            }
-        }.process()
-    }
-
-    fun getByIdFlow(id: Long): Flow<Resource<Purchase>>{
-        return object : FlowProcessor<Purchase, Purchase>(){
-            override fun query() = purchaseDao.getByIdFlow(id).map{ it.asDomainModel() }
-
-            override fun validate(response: Purchase): Int =
-                if(response.id > 0)
-                    AppCode.SUCCESS_QUERY_DATABASE
-                else
-                    AppCode.ERROR_QUERY_DATABASE
-
-            override suspend fun onResult(response: Purchase) {
-                response.payments.addAll(paymentPurchaseDao.getSimpleAll(id).asDomainModel())
-                response.prices.addAll(pricePurchaseDao.getSimpleAll(id).asDomainModel())
-            }
-        }.process()
-    }
 }

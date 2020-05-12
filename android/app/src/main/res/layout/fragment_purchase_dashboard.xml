@@ -95,42 +95,54 @@
 
                     </androidx.appcompat.widget.SearchView>
 
-                    <Button
-                        android:id="@+id/button_show_all"
+                    <LinearLayout
+                        android:id="@+id/linear_search"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/bg_subsection"
                         android:onClick="@{clickListener}"
-                        android:text="Todas"
-                        app:layout_constraintEnd_toStartOf="@+id/button_show_today"
-                        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                        app:layout_constraintTop_toBottomOf="@+id/search_view" />
-
-                    <Button
-                        android:id="@+id/button_show_today"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:onClick="@{clickListener}"
-                        android:text="Hoy"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                        app:layout_constraintStart_toEndOf="@+id/button_show_all"
-                        app:layout_constraintTop_toTopOf="@+id/button_show_all" />
-
-                    <Button
-                        android:id="@+id/button_show_select_range"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
-                        android:onClick="@{clickListener}"
-                        android:text="Personalizado"
+                        android:orientation="vertical"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                        app:layout_constraintTop_toBottomOf="@+id/button_show_all" />
+                        app:layout_constraintTop_toBottomOf="@+id/search_view">
+
+                        <TextView
+                            android:id="@+id/text_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tipo" />
+
+                        <Spinner
+                            android:id="@+id/spinner_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawSelectorOnTop="true"
+                            android:overlapAnchor="false"
+                            android:spinnerMode="dropdown" />
+
+                        <TextView
+                            android:id="@+id/text_client"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Cliente" />
+
+                        <Spinner
+                            android:id="@+id/spinner_customer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:drawSelectorOnTop="true"
+                            android:overlapAnchor="false"
+                            android:spinnerMode="dropdown" />
+                    </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

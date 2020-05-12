@@ -67,10 +67,13 @@ interface PurchaseDao {
     @Update
     suspend fun update(vararg item: PurchaseEntity): Int
 
-    //--
+    //Flow
     @Query("SELECT * FROM purchase WHERE active = 1 AND created_date BETWEEN :startDate AND :finishDate ORDER BY created_date DESC")
     fun getBetweenDatesFlow(startDate: Long, finishDate: Long): Flow<List<PurchaseEntity>>
 
     @Query("SELECT * FROM purchase WHERE purchase_id = :id LIMIT 1")
     fun getByIdFlow(id: Long): Flow<PurchaseEntity>
+
+    @Query("SELECT * FROM purchase WHERE active = 1 AND created_date BETWEEN :startDate AND :finishDate ORDER BY created_date DESC")
+    fun search(startDate: Long, finishDate: Long): Flow<List<PurchaseEntity>>
 }
