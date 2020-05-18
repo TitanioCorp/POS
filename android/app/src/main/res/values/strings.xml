@@ -33,7 +33,7 @@
 
     <string-array name="purchase_filter_type">
         <item>Todos</item>
-        <item>Crédito</item>
+        <item>Por cobrar</item>
     </string-array>
 
     <string-array name="purchase_filter_customer">
