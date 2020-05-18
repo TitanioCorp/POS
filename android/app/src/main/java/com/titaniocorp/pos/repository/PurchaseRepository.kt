@@ -2,6 +2,7 @@ package com.titaniocorp.pos.repository
 
 import androidx.lifecycle.*
 import com.titaniocorp.pos.app.model.*
+import com.titaniocorp.pos.app.model.domain.PurchaseDashboardItem
 import com.titaniocorp.pos.app.model.dto.DetailPurchaseAdapterDto
 import com.titaniocorp.pos.app.model.dto.PurchaseDTO
 import com.titaniocorp.pos.database.dao.*
@@ -10,7 +11,6 @@ import com.titaniocorp.pos.util.AppCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -26,12 +26,6 @@ class PurchaseRepository @Inject constructor(
     private val pricePurchaseDao: PricePurchaseDao,
     private val paymentPurchaseDao: PaymentPurchaseDao
 ):  BaseRepository(){
-
-
-
-
-
-
 
     fun getById(id: Long): LiveData<Resource<Purchase>>{
         return object : Processor<Purchase, Purchase>(){
@@ -195,5 +189,15 @@ class PurchaseRepository @Inject constructor(
         }.asResult()
     }
 
+    fun search(search: SearchPurchase): Flow<Resource<List<PurchaseDashboardItem>>> {
+        return object: FlowProcessor<List<PurchaseDashboardItem>, List<PurchaseDashboardItem>>(){
+            override fun query(): Flow<List<PurchaseDashboardItem>> = purchaseDao.search(search.type, search.customerId, search.startDate, search.finishDate)
 
+            override fun validate(response: List<PurchaseDashboardItem>): Int = if(response.isNotEmpty()){
+                AppCode.SUCCESS_QUERY_DATABASE
+            }else{
+                AppCode.ERROR_QUERY_DATABASE
+            }
+        }.process()
+    }
 }

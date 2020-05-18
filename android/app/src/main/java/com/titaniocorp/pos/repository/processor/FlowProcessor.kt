@@ -1,12 +1,11 @@
 package com.titaniocorp.pos.repository.processor
 
 import com.titaniocorp.pos.app.model.Resource
-import com.titaniocorp.pos.util.EmptyQueryResultException
-import com.titaniocorp.pos.util.getCode
-import com.titaniocorp.pos.util.validateCode
+import com.titaniocorp.pos.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import timber.log.Timber
 
 /**
  * Peticion a la base de datos manejada todo por Flow
@@ -28,7 +27,9 @@ abstract class FlowProcessor<Result, Query> {
                 val code = validate(result)
                 code.validateCode()
                 onResult(result)
-                Resource.success<Result>(it, code)
+                Resource.success<Result>(it, code).also {resource ->
+                    Timber.tag(Constants.TAG_APP_DEBUG).d("%s: %s", Constants.TAG_DATABASE, resource.toJson())
+                }
 
             } ?: run { throw EmptyQueryResultException("Query to result failed..") }
 

@@ -8,11 +8,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.titaniocorp.pos.R
-import com.titaniocorp.pos.app.model.Product
+import com.titaniocorp.pos.app.model.domain.PurchaseDashboardItem
 import com.titaniocorp.pos.app.model.dto.PurchaseDTO
-import com.titaniocorp.pos.app.viewmodel.model.ProductViewModel
 import com.titaniocorp.pos.app.viewmodel.model.PurchaseDtoViewModel
-import com.titaniocorp.pos.databinding.ItemListProductDashboardProductBinding
 import com.titaniocorp.pos.databinding.ItemListPurchaseDashboardBinding
 
 /**
@@ -21,7 +19,7 @@ import com.titaniocorp.pos.databinding.ItemListPurchaseDashboardBinding
  * @author Juan Ortiz
  * @date 10/09/2019
  */
-class DashboardPurchaseAdapter: ListAdapter<PurchaseDTO, DashboardPurchaseAdapter.ViewHolder>(DiffCallback()){
+class DashboardPurchaseAdapter: ListAdapter<PurchaseDashboardItem, DashboardPurchaseAdapter.ViewHolder>(DiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -38,15 +36,15 @@ class DashboardPurchaseAdapter: ListAdapter<PurchaseDTO, DashboardPurchaseAdapte
         }
     }
 
-    private fun createOnClickListener(item: PurchaseDTO): View.OnClickListener {
+    private fun createOnClickListener(item: PurchaseDashboardItem): View.OnClickListener {
         return View.OnClickListener {
-            val direction = DashboardPurchaseFragmentDirections.toDetailPurchaseFragment(item.id)
+            val direction = DashboardPurchaseFragmentDirections.toDetailPurchaseFragment(item.purchaseId)
             it.findNavController().navigate(direction)
         }
     }
 
     class ViewHolder (private val binding: ItemListPurchaseDashboardBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(item: PurchaseDTO, listener: View.OnClickListener){
+        fun bind(item: PurchaseDashboardItem, listener: View.OnClickListener){
             with(binding) {
                 viewModel = PurchaseDtoViewModel(item)
                 clickListener = listener
@@ -55,11 +53,11 @@ class DashboardPurchaseAdapter: ListAdapter<PurchaseDTO, DashboardPurchaseAdapte
         }
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<PurchaseDTO>() {
-        override fun areItemsTheSame(oldItem: PurchaseDTO, newItem: PurchaseDTO): Boolean =
-            oldItem.id == newItem.id
+    private class DiffCallback : DiffUtil.ItemCallback<PurchaseDashboardItem>() {
+        override fun areItemsTheSame(oldItem: PurchaseDashboardItem, newItem: PurchaseDashboardItem): Boolean =
+            oldItem.purchaseId == newItem.purchaseId
 
-        override fun areContentsTheSame(oldItem: PurchaseDTO, newItem: PurchaseDTO): Boolean =
+        override fun areContentsTheSame(oldItem: PurchaseDashboardItem, newItem: PurchaseDashboardItem): Boolean =
             oldItem == newItem
     }
 }

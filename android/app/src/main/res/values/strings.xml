@@ -25,11 +25,18 @@
         <item>Ventas</item>
     </string-array>
 
-    <!-- Arrays -->
-    <string-array name="purchase_filters">
+    <string-array name="purchase_filter_date">
         <item>Hoy</item>
         <item>Todos</item>
-        <item>Por cobrar</item>
+    </string-array>
+
+    <string-array name="purchase_filter_type">
+        <item>Todos</item>
+        <item>Crédito</item>
+    </string-array>
+
+    <string-array name="purchase_filter_customer">
+        <item>Todos</item>
     </string-array>
 
     <!-- Title -->

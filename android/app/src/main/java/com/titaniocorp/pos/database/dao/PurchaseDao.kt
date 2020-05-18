@@ -2,8 +2,8 @@ package com.titaniocorp.pos.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.titaniocorp.pos.app.model.Purchase
 import com.titaniocorp.pos.app.model.PurchaseEntity
+import com.titaniocorp.pos.app.model.domain.PurchaseDashboardItem
 import com.titaniocorp.pos.app.model.dto.DetailPurchaseAdapterDto
 import com.titaniocorp.pos.app.model.dto.PurchaseDTO
 import kotlinx.coroutines.flow.Flow
@@ -74,6 +74,6 @@ interface PurchaseDao {
     @Query("SELECT * FROM purchase WHERE purchase_id = :id LIMIT 1")
     fun getByIdFlow(id: Long): Flow<PurchaseEntity>
 
-    @Query("SELECT * FROM purchase WHERE active = 1 AND created_date BETWEEN :startDate AND :finishDate ORDER BY created_date DESC")
-    fun search(startDate: Long, finishDate: Long): Flow<List<PurchaseEntity>>
+    @Query("SELECT response.* FROM (SELECT purchase.purchase_id, purchase.total, (purchase.total - sum_payments) AS receivable, CASE WHEN customer.customer_id IS NULL then 0 ELSE customer.customer_id END AS customer_id, CASE WHEN customer.name IS NULL then '' ELSE customer.name END AS name, purchase.created_date FROM purchase LEFT JOIN (SELECT purchase_id, SUM(value) as sum_payments FROM payment_purchase GROUP BY purchase_id) payment_purchase ON payment_purchase.purchase_id = purchase.purchase_id LEFT JOIN (SELECT customer_id, name FROM customer GROUP BY customer_id) customer ON customer.customer_id = purchase.customer_id) response WHERE CASE WHEN :customerId = 0 THEN response.customer_id >= 0 ELSE response.customer_id = :customerId END AND CASE WHEN :type = 0 THEN response.receivable >= 0 ELSE response.receivable > 0 END AND CASE WHEN :startDate = 0 AND :finishDate = 0 THEN response.created_date > 0 ELSE response.created_date >= :startDate AND response.created_date <= :finishDate END")
+    fun search(type: Int, customerId: Long, startDate: Long, finishDate: Long): Flow<List<PurchaseDashboardItem>>
 }
