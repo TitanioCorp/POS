@@ -12,6 +12,10 @@
         <variable
             name="mSearchSrcTextView"
             type="androidx.appcompat.widget.SearchView.SearchAutoComplete"/>
+
+        <variable
+            name="mViewModel"
+            type="com.titaniocorp.pos.app.ui.purchase.DashboardPurchaseViewModel"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -185,26 +189,10 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/item_list_purchase_dashboard" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/view_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_content"
-            android:visibility="gone"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:text="No hay transacciones por mostrar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/view_empty_list"
+            layout="@layout/view_empty_list"
+            android:visibility="visible"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

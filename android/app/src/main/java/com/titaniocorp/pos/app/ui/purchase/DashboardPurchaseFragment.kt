@@ -86,6 +86,8 @@ class DashboardPurchaseFragment: BaseFragment(),
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        val dateRange = DateUtil.getRange(year, month, dayOfMonth)
+        viewModel.filterByDate(dateRange.first, dateRange.second)
     }
 
     private fun subscribeUi(adapter: DashboardPurchaseAdapter){
@@ -123,13 +125,13 @@ class DashboardPurchaseFragment: BaseFragment(),
                 onLoading = {boolean -> setLoading(boolean)},
                 onSuccess = {
                     binding.recycler.visibility = View.VISIBLE
-                    binding.viewContent.visibility = View.GONE
+                    binding.viewEmptyList.visibility = View.GONE
                     adapter.submitList(it.data)
                     viewModel.searchFinished()
                 },
                 onError = {
                     binding.recycler.visibility = View.GONE
-                    binding.viewContent.visibility = View.VISIBLE
+                    binding.viewEmptyList.visibility = View.VISIBLE
                     viewModel.searchFinished()
                 }
             )
@@ -139,11 +141,14 @@ class DashboardPurchaseFragment: BaseFragment(),
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long){
                 when(position){
                     0 -> {
-                        val today = DateUtil.todayRange()
-                        viewModel.filterByDate(today.first, today.second)
+                        val dateRange = DateUtil.todayRange()
+                        viewModel.filterByDate(dateRange.first, dateRange.second)
                     }
                     1 -> {
                         viewModel.filterByDate(0, 0)
+                    }
+                    2 -> {
+                        selectDate()
                     }
                 }
             }
@@ -169,7 +174,7 @@ class DashboardPurchaseFragment: BaseFragment(),
     }
 
 
-    private fun selectRange(){
+    private fun selectDate(){
         DatePickerFragment(this).show(parentFragmentManager, "DatePickerFragment")
     }
 }

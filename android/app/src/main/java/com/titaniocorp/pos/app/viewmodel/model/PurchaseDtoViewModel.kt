@@ -15,5 +15,6 @@ class PurchaseDtoViewModel(data: PurchaseDashboardItem?): ViewModel(){
     val customerId = ObservableField(item.customerId)
     val total = ObservableField(item.total)
     val receivable = ObservableField(item.receivable)
+    val nameCustomer = ObservableField(item.name)
     val date = ObservableField(item.createdDate.toFormatString())
 }

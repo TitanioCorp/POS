@@ -12,18 +12,19 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{clickListener}"
-            android:orientation="horizontal"
-            android:id="@+id/view_content">
+        android:id="@+id/view_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_item_list"
+        android:onClick="@{clickListener}"
+        android:orientation="horizontal">
 
         <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="24dp" />
+            android:id="@+id/guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="24dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_right"
@@ -31,16 +32,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_end="8dp" />
-
-        <TextView
-            android:id="@+id/text_label_purchase_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="# Factura"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-            app:layout_constraintStart_toStartOf="@+id/guideline_left"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/image_arrow"
@@ -56,49 +47,110 @@
             app:srcCompat="@drawable/ic_arrow_right" />
 
         <TextView
-            android:id="@+id/text_purchase_id"
-            android:layout_width="wrap_content"
+            android:id="@+id/text_label_purchase_id"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="# Factura"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+            app:layout_constraintEnd_toStartOf="@+id/text_label_total"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_purchase_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:text="@{Long.toString(viewModel.purchaseId)}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_total"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/text_label_purchase_id" />
 
         <TextView
+            android:id="@+id/text_label_customer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Cliente"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+            app:layout_constraintEnd_toStartOf="@+id/text_label_receivable"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/text_date" />
+
+        <TextView
+            android:id="@+id/text_customer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@{viewModel.nameCustomer}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_receivable"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/text_label_customer" />
+
+        <TextView
             android:id="@+id/text_label_total"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Total"
+            android:textAlignment="textEnd"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-            app:layout_constraintStart_toStartOf="@+id/text_total"
+            app:layout_constraintEnd_toStartOf="@+id/image_arrow"
+            app:layout_constraintStart_toEndOf="@+id/text_label_purchase_id"
             app:layout_constraintTop_toTopOf="@+id/text_label_purchase_id" />
 
         <TextView
             android:id="@+id/text_total"
-            android:layout_width="wrap_content"
+            asMoney="@{viewModel.total}"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{@string/text_money(viewModel.total)}"
-            app:layout_constraintEnd_toStartOf="@+id/text_date"
-            app:layout_constraintStart_toEndOf="@+id/text_label_purchase_id"
+            android:textAlignment="textEnd"
+            app:layout_constraintEnd_toStartOf="@+id/image_arrow"
+            app:layout_constraintStart_toEndOf="@+id/text_purchase_id"
             app:layout_constraintTop_toBottomOf="@+id/text_label_total" />
 
         <TextView
             android:id="@+id/text_label_date"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Fecha"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-            app:layout_constraintEnd_toStartOf="@+id/image_arrow"
-            app:layout_constraintTop_toTopOf="@+id/text_label_purchase_id" />
+            app:layout_constraintEnd_toEndOf="@+id/text_customer"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/text_purchase_id" />
 
         <TextView
             android:id="@+id/text_date"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{viewModel.date}"
-            app:layout_constraintEnd_toStartOf="@+id/image_arrow"
+            app:layout_constraintEnd_toEndOf="@+id/text_label_date"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/text_label_date" />
+
+        <TextView
+            android:id="@+id/text_label_receivable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Por cobrar"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+            app:layout_constraintEnd_toStartOf="@+id/image_arrow"
+            app:layout_constraintStart_toEndOf="@+id/text_label_customer"
+            app:layout_constraintTop_toBottomOf="@+id/text_total" />
+
+        <TextView
+            android:id="@+id/text_receivable"
+            asMoney="@{viewModel.receivable}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toStartOf="@+id/image_arrow"
+            app:layout_constraintStart_toEndOf="@+id/text_customer"
+            app:layout_constraintTop_toBottomOf="@+id/text_label_receivable" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
