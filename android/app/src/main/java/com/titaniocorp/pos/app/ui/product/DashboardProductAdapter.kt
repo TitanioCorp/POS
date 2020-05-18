@@ -37,7 +37,7 @@ class DashboardProductAdapter: ListAdapter<Product, DashboardProductAdapter.View
 
     private fun createOnClickListener(item: Product): View.OnClickListener {
         return View.OnClickListener {
-            val direction = DashboardProductFragmentDirections.actionToDetailProductFragment(item.id ?: 0)
+            val direction = DashboardProductFragmentDirections.actionToDetailProductFragment(item.id)
             it.findNavController().navigate(direction)
         }
     }
