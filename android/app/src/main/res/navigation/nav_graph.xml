@@ -8,7 +8,11 @@
     <fragment
             android:id="@+id/settingsFragment"
             android:name="com.titaniocorp.pos.app.ui.settings.SettingsFragment"
-            android:label="@string/title_settings_fragment"/>
+            android:label="@string/title_settings_fragment">
+        <action
+            android:id="@+id/to_dashboardDatabaseFragment"
+            app:destination="@id/dashboardDatabaseFragment" />
+    </fragment>
     <fragment
             android:id="@+id/dashboardPOSFragment"
             android:name="com.titaniocorp.pos.app.ui.pos.DashboardPOSFragment"
@@ -198,4 +202,8 @@
             android:id="@+id/to_dashboardBillingFragment"
             app:destination="@id/dashboardBillingFragment" />
     </fragment>
+    <fragment
+        android:label="@string/title_settings_fragment"
+        android:id="@+id/dashboardDatabaseFragment"
+        android:name="com.titaniocorp.pos.app.ui.settings.database.DashboardDatabaseFragment"/>
 </navigation>

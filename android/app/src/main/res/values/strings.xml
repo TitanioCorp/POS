@@ -3,6 +3,7 @@
 
     <!-- Preferences Key -->
     <string name="preference_key_language" translatable="false">language</string>
+    <string name="preference_key_database" translatable="false">database</string>
 
     <!-- Arrays -->
     <string-array name="languages_key">
@@ -46,7 +47,11 @@
     <string name="title_preferences_language">Idioma</string>
     <string name="title_delete_product">¿Desea eliminar el producto?</string>
     <string name="title_pos">Punto de venta</string>
+    <string name="title_database">Base de datos</string>
+
+    <!-- Subtitle -->
     <string name="title_subtitle_pos">Genera una nueva venta</string>
+    <string name="title_subtitle_database">Exporta/importa la base de datos.</string>
 
     <!-- Text -->
     <string name="text_results">Resultados</string>
@@ -65,6 +70,10 @@
     <string name="text_empty_list">No hay ningún item agregado</string>
     <string name="text_added_products">Artículos agregados</string>
     <string name="text_barcode">Código de barras</string>
+    <string name="text_export">Exportar</string>
+    <string name="text_export_detail">Presiona para exportar la base de datos</string>
+    <string name="text_import">Importar</string>
+    <string name="text_import_detail">Presiona para importar la base de datos</string>
 
     <!-- Success -->
     <string name="success_title">Exitoso</string>
