@@ -16,6 +16,7 @@ import com.titaniocorp.pos.util.formatMoney
 import com.titaniocorp.pos.util.moneyFilter
 import com.titaniocorp.pos.util.validations.ValidateType
 import com.titaniocorp.pos.util.validations.validate
+import kotlin.math.round
 
 object DialogPurchaseHelper {
     fun addPayment(
@@ -51,13 +52,14 @@ object DialogPurchaseHelper {
 
                     R.id.button_positive -> {
                         inputValue.validate(ValidateType.MONEY){
+                            val receivable = binding.value?.moneyFilter() ?: missingPayment
                             val value = inputValue.text.toString().moneyFilter()
 
-                            if(value > missingPayment){
+                            if(value > receivable){
                                 inputValue.error = "La cantidad ingresada es mayor al faltante por cobrar."
                             }else{
                                 dialog.dismiss()
-                                positiveCallBack(inputValue.text.toString().moneyFilter())
+                                positiveCallBack(if(value > missingPayment){ missingPayment }else{ value })
                             }
                         }
                     }
