@@ -15,6 +15,7 @@ fun Throwable.getCode(): Int{
     when(this){
         is UnknownHostException -> { code = AppCode.NO_INTERNET }
         is QueryDatabaseException -> { code = ERROR_QUERY_DATABASE }
+        is ImportDatabaseException -> { code = ERROR_QUERY_DATABASE }
     }
 
     return code
@@ -22,3 +23,4 @@ fun Throwable.getCode(): Int{
 
 class EmptyQueryResultException(message: String): Exception(message)
 class QueryDatabaseException(message: String): Exception(message)
+class ImportDatabaseException(message: String): Exception(message)
