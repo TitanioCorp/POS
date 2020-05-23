@@ -1,5 +1,6 @@
 package com.titaniocorp.pos.util.ui
 
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -10,7 +11,9 @@ import java.util.*
 
 @BindingAdapter("asMoney")
 fun bindAsMoney(textView: TextView, value: Double) {
-    textView.text = textView.context.getString(R.string.text_money, value.formatMoney())
+    with(textView){
+        text = context.getString(R.string.text_money, value.formatMoney())
+    }
 }
 
 @BindingAdapter("asQuantity")

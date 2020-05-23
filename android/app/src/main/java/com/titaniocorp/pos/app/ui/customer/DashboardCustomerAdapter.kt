@@ -7,12 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.titaniocorp.pos.R
-import com.titaniocorp.pos.app.model.Customer
-import com.titaniocorp.pos.app.model.Profit
+import com.titaniocorp.pos.app.model.domain.Customer
 import com.titaniocorp.pos.app.viewmodel.model.CustomerViewModel
-import com.titaniocorp.pos.app.viewmodel.model.ProfitViewModel
 import com.titaniocorp.pos.databinding.ItemListCustomerDashboardBinding
-import com.titaniocorp.pos.databinding.ItemListProfitDashboardBinding
 
 /**
  * Adaptador que maneja la lista de clientes(customers)

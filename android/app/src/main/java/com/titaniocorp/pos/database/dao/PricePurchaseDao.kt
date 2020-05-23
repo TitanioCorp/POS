@@ -2,7 +2,7 @@ package com.titaniocorp.pos.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.titaniocorp.pos.app.model.PricePurchase
+import com.titaniocorp.pos.app.model.PricePurchaseEntity
 
 /**
  * Maneja las consultas a la base de datos de pelicula
@@ -14,26 +14,26 @@ import com.titaniocorp.pos.app.model.PricePurchase
 interface PricePurchaseDao {
     /* SELECT */
     @Query("SELECT * FROM price_purchase WHERE price_purchase_id = :id LIMIT 1")
-    suspend fun getById(id: Long): PricePurchase
+    suspend fun getById(id: Long): PricePurchaseEntity
 
     @Query("SELECT * FROM price_purchase WHERE purchase_id = :id")
-    fun getAll(id: Long): LiveData<List<PricePurchase>>
+    fun getAll(id: Long): LiveData<List<PricePurchaseEntity>>
 
     @Query("SELECT * FROM price_purchase WHERE purchase_id = :id")
-    suspend fun getSimpleAll(id: Long): List<PricePurchase>
+    suspend fun getSimpleAll(id: Long): List<PricePurchaseEntity>
 
     /* INSERT */
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(item: PricePurchase): Long
+    suspend fun insert(item: PricePurchaseEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(vararg items: PricePurchase): List<Long>
+    suspend fun insertAll(vararg items: PricePurchaseEntity): List<Long>
 
     /* UPDATE */
     @Update
-    suspend fun update(vararg item: PricePurchase): Int
+    suspend fun update(vararg item: PricePurchaseEntity): Int
 
     /* DELETE */
     @Delete
-    suspend fun delete(vararg item: PricePurchase): Int
+    suspend fun delete(vararg item: PricePurchaseEntity): Int
 }

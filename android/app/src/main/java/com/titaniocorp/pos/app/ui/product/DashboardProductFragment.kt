@@ -56,9 +56,7 @@ class DashboardProductFragment: BaseFragment(),
                 setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
             }
             mSearchSrcTextView = searchView.findViewById(R.id.search_src_text)
-            mSearchSrcTextView?.setOnItemClickListener { parent, view, position, id ->
-
-            }
+            mSearchSrcTextView?.setOnItemClickListener { _, _, _, _ -> }
 
             val toolbar = (activity as AppCompatActivity).appbar
             nestedScrollView.setOnScrollChangeListener(

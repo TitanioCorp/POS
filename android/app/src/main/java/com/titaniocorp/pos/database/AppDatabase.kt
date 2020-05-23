@@ -14,19 +14,19 @@ import com.titaniocorp.pos.database.dao.*
  */
 @Database(
     entities = [
-        Category::class,
-        Product::class,
-        Price::class,
-        Profit::class,
-        Purchase::class,
-        PaymentPurchase::class,
-        PricePurchase::class,
-        Billing::class,
-        Customer::class,
-        Stock::class,
-        PriceStock::class,
-        Payment::class,
-        PaymentCategory::class
+        CategoryEntity::class,
+        ProductEntity::class,
+        PriceEntity::class,
+        ProfitEntity::class,
+        PurchaseEntity::class,
+        PaymentPurchaseEntity::class,
+        PricePurchaseEntity::class,
+        BillingEntity::class,
+        CustomerEntity::class,
+        StockEntity::class,
+        PriceStockEntity::class,
+        PaymentEntity::class,
+        PaymentCategoryEntity::class
     ],
     version = 1,
     exportSchema = false)

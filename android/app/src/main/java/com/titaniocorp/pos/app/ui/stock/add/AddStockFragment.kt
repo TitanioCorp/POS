@@ -146,7 +146,7 @@ class AddStockFragment: BaseFragment(),
         return false
     }
 
-    private fun onSearch() = AdapterView.OnItemClickListener { parent, view, position, id ->
+    private fun onSearch() = AdapterView.OnItemClickListener { _, _, position, _ ->
         viewModel.selectProduct(position)
     }
 

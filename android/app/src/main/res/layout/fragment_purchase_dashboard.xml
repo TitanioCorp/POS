@@ -12,6 +12,10 @@
         <variable
             name="mSearchSrcTextView"
             type="androidx.appcompat.widget.SearchView.SearchAutoComplete"/>
+
+        <variable
+            name="mViewModel"
+            type="com.titaniocorp.pos.app.ui.purchase.DashboardPurchaseViewModel"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -58,7 +62,7 @@
                         android:id="@+id/text_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="32dp"
+                        android:layout_marginTop="16dp"
                         android:text="Transacciones"
                         android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
@@ -80,7 +84,7 @@
                         android:id="@+id/search_view"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="16dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_section"
                         android:iconifiedByDefault="true"
@@ -95,42 +99,81 @@
 
                     </androidx.appcompat.widget.SearchView>
 
-                    <Button
-                        android:id="@+id/button_show_all"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraint_search"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/bg_subsection"
                         android:onClick="@{clickListener}"
-                        android:text="Todas"
-                        app:layout_constraintEnd_toStartOf="@+id/button_show_today"
-                        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                        app:layout_constraintTop_toBottomOf="@+id/search_view" />
-
-                    <Button
-                        android:id="@+id/button_show_today"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:onClick="@{clickListener}"
-                        android:text="Hoy"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                        app:layout_constraintStart_toEndOf="@+id/button_show_all"
-                        app:layout_constraintTop_toTopOf="@+id/button_show_all" />
-
-                    <Button
-                        android:id="@+id/button_show_select_range"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
-                        android:onClick="@{clickListener}"
-                        android:text="Personalizado"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                        app:layout_constraintTop_toBottomOf="@+id/button_show_all" />
+                        app:layout_constraintTop_toBottomOf="@+id/search_view">
+
+                        <TextView
+                            android:id="@+id/text_date"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Fecha"
+                            app:layout_constraintEnd_toStartOf="@+id/text_type"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/text_customer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Customer"
+                            app:layout_constraintEnd_toEndOf="@+id/spinner_type"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/spinner_date" />
+
+                        <TextView
+                            android:id="@+id/text_type"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="Tipo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/text_date"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Spinner
+                            android:id="@+id/spinner_date"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toStartOf="@+id/spinner_type"
+                            app:layout_constraintStart_toStartOf="@+id/text_date"
+                            app:layout_constraintTop_toBottomOf="@+id/text_date" />
+
+                        <Spinner
+                            android:id="@+id/spinner_type"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="@+id/text_type"
+                            app:layout_constraintStart_toEndOf="@+id/spinner_date"
+                            app:layout_constraintTop_toBottomOf="@+id/text_date" />
+
+                        <Spinner
+                            android:id="@+id/spinner_customer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/text_customer"
+                            app:layout_constraintStart_toStartOf="@+id/text_customer"
+                            app:layout_constraintTop_toBottomOf="@+id/text_customer" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -146,26 +189,10 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/item_list_purchase_dashboard" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/view_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_content"
-            android:visibility="gone"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:text="No hay transacciones por mostrar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/view_empty_list"
+            layout="@layout/view_empty_list"
+            android:visibility="visible"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

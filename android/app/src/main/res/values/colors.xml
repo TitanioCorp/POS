@@ -10,4 +10,5 @@
     <!-- Theme -->
     <color name="colorBackgroundPrimary">#f1f1f1</color>
     <color name="colorBackgroundAccent">#FFFFFF</color>
+    <color name="colorBackgroundAccentSecondary">#FAFAFA</color>
 </resources>

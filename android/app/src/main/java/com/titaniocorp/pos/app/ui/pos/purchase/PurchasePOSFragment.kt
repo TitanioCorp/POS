@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
 import com.titaniocorp.pos.R
-import com.titaniocorp.pos.app.model.Customer
+import com.titaniocorp.pos.app.model.CustomerEntity
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.app.ui.pos.POSViewModel
 import com.titaniocorp.pos.databinding.FragmentPosPurchaseBinding
@@ -125,7 +125,7 @@ class PurchasePOSFragment: BaseFragment(), View.OnClickListener{
                         context?.let {
 
                             val list = listResponse.toMutableList().apply{
-                                add(0, Customer())
+                                add(0, CustomerEntity())
                             }
 
                             binding.spinnerCustomer.adapter =

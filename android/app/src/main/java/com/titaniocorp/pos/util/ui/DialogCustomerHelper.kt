@@ -2,19 +2,13 @@ package com.titaniocorp.pos.util.ui
 
 import android.app.Activity
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.*
-import com.titaniocorp.pos.app.ui.base.adapter.DialogAddProductAdapter
-import com.titaniocorp.pos.databinding.DialogAddAdjustmentBinding
-import com.titaniocorp.pos.databinding.DialogAddProductBinding
+import com.titaniocorp.pos.app.model.domain.Customer
 import com.titaniocorp.pos.databinding.DialogPriceBinding
-import com.titaniocorp.pos.util.addMoneyTextWatcher
-import com.titaniocorp.pos.util.moneyFilter
 import com.titaniocorp.pos.util.validations.ValidateType
 import com.titaniocorp.pos.util.validations.ValidateUtil
 import com.titaniocorp.pos.util.validations.toValidate

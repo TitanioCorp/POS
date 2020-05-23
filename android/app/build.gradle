@@ -31,7 +31,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName "1.1.0"
+        versionName "1.1.2"
         testInstrumentationRunner "com.titaniocorp.pos.util.AppTestRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -63,6 +63,9 @@ android {
         }
     }
     dataBinding {
+        enabled = true
+    }
+    viewBinding {
         enabled = true
     }
     compileOptions {

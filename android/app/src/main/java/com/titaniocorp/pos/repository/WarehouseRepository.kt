@@ -3,6 +3,8 @@ package com.titaniocorp.pos.repository
 import androidx.lifecycle.*
 import com.titaniocorp.pos.app.model.Payment
 import com.titaniocorp.pos.app.model.Resource
+import com.titaniocorp.pos.app.model.asDatabaseModel
+import com.titaniocorp.pos.app.model.asDomainModel
 import com.titaniocorp.pos.database.dao.*
 import com.titaniocorp.pos.repository.processor.*
 import com.titaniocorp.pos.util.AppCode
@@ -18,7 +20,7 @@ class WarehouseRepository @Inject constructor(
 ):  BaseRepository(){
     fun getById(id: Long): LiveData<Resource<Payment>>{
         return object : Processor<Payment, Payment>(){
-            override suspend fun query(): Payment = dao.getById(id)
+            override suspend fun query(): Payment = dao.getById(id).asDomainModel()
 
             override fun validate(response: Payment): Int {
                 return if(response.id > 0){
@@ -32,7 +34,7 @@ class WarehouseRepository @Inject constructor(
 
     fun getAll(): LiveData<Resource<List<Payment>>>{
         return object : Processor<List<Payment>, LiveData<List<Payment>>>(){
-            override suspend fun query(): LiveData<List<Payment>> = dao.getAll()
+            override suspend fun query(): LiveData<List<Payment>> = Transformations.map(dao.getAll()){ it.asDomainModel() }
             override fun validate(response: List<Payment>): Int {
                 return if(response.isNotEmpty()){
                     AppCode.SUCCESS_QUERY_DATABASE
@@ -46,7 +48,7 @@ class WarehouseRepository @Inject constructor(
     fun add(item: Payment): LiveData<Resource<Pair<Long, Int>>>{
         return object : Processor<Pair<Long, Int>, Pair<Long, Int>>(true){
             override suspend fun query(): Pair<Long, Int> {
-                val id = dao.insert(item)
+                val id = dao.insert(item.asDatabaseModel())
 
                 val code = if(id <= 0){
                     AppCode.ERROR_QUERY_DATABASE
@@ -63,7 +65,7 @@ class WarehouseRepository @Inject constructor(
 
     fun getBetweenDates(startDate: Long, finishDate: Long): LiveData<Resource<List<Payment>>>{
         return object : Processor<List<Payment>, LiveData<List<Payment>>>(){
-            override suspend fun query():  LiveData<List<Payment>> = dao.getBetweenDates(startDate, finishDate)
+            override suspend fun query():  LiveData<List<Payment>> = Transformations.map(dao.getBetweenDates(startDate, finishDate)){ it.asDomainModel() }
             override fun validate(response: List<Payment>): Int = if(response.isNotEmpty()){
                 AppCode.SUCCESS_QUERY_DATABASE
 

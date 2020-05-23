@@ -9,7 +9,7 @@ fun Int.validateCode(){
     }
 }
 
-fun Exception.getCode(): Int{
+fun Throwable.getCode(): Int{
     var code = AppCode.DEFAULT
 
     when(this){
@@ -20,4 +20,5 @@ fun Exception.getCode(): Int{
     return code
 }
 
+class EmptyQueryResultException(message: String): Exception(message)
 class QueryDatabaseException(message: String): Exception(message)

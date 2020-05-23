@@ -19,8 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 /**
- * Fragmento que lista las peliculas
- * @version 1.0
+ * Fragmento que lista los clientes
  * @author Juan Ortiz
  * @date 10/09/2019
  */

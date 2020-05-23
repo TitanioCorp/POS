@@ -20,7 +20,7 @@ class PaymentPurchaseRepository @Inject constructor(private val paymentPurchaseD
 
     fun getBetweenDates(startDate: Long, finishDate: Long): LiveData<Resource<List<PaymentPurchase>>>{
         return object : Processor<List<PaymentPurchase>, LiveData<List<PaymentPurchase>>>(){
-            override suspend fun query():  LiveData<List<PaymentPurchase>> = paymentPurchaseDao.getBetweenDates(startDate, finishDate)
+            override suspend fun query():  LiveData<List<PaymentPurchase>> = Transformations.map(paymentPurchaseDao.getBetweenDates(startDate, finishDate)){ it.asDomainModel()}
             override fun validate(response: List<PaymentPurchase>): Int = if(response.isNotEmpty()){
                 AppCode.SUCCESS_QUERY_DATABASE
 

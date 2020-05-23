@@ -2,12 +2,12 @@ package com.titaniocorp.pos.util.ui
 
 import android.app.Activity
 import android.view.View
-import android.widget.CompoundButton
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.*
+import com.titaniocorp.pos.app.model.domain.Customer
 import com.titaniocorp.pos.databinding.DialogNewCategoryBinding
 import com.titaniocorp.pos.databinding.DialogNewPriceBinding
 import com.titaniocorp.pos.util.*
@@ -32,13 +32,13 @@ object DialogHelper {
                 setMessage(message)
 
                 positiveCallback?.let {callback ->
-                    setPositiveButton(positiveString ?: it.getString(R.string.action_accept)){dialog, which ->
+                    setPositiveButton(positiveString ?: it.getString(R.string.action_accept)){_, _ ->
                         callback()
                     }
                 }
 
                 negativeCallback?.let {callback ->
-                    setNegativeButton(negativeString ?: it.getString(R.string.action_cancel)){dialog, which ->
+                    setNegativeButton(negativeString ?: it.getString(R.string.action_cancel)){_, _ ->
                         callback()
                     }
                 }
@@ -168,7 +168,7 @@ object DialogHelper {
                 textTotal.text = root.context.getString(R.string.text_money, total.formatMoney())
             }
 
-            switchProfitPercent.setOnCheckedChangeListener{buttonView, isChecked ->
+            switchProfitPercent.setOnCheckedChangeListener{_, isChecked ->
                 val cost = inputCost.text.toString().moneyFilter()
                 val tax: Double = if(isChecked){
                     cost.calculateTax()
