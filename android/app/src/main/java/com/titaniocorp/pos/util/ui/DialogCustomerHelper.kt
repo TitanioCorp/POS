@@ -1,17 +1,12 @@
 package com.titaniocorp.pos.util.ui
 
 import android.app.Activity
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.titaniocorp.pos.R
-import com.titaniocorp.pos.app.model.*
 import com.titaniocorp.pos.app.model.domain.Customer
 import com.titaniocorp.pos.databinding.DialogPriceBinding
-import com.titaniocorp.pos.util.validations.ValidateType
-import com.titaniocorp.pos.util.validations.ValidateUtil
-import com.titaniocorp.pos.util.validations.toValidate
 
 object DialogCustomerHelper {
     fun showCustomer(
@@ -22,7 +17,7 @@ object DialogCustomerHelper {
     ): AlertDialog? = activity?.let {
         val binding: DialogPriceBinding = DataBindingUtil.inflate(
             it.layoutInflater,
-            R.layout.dialog_price,
+            R.layout.dialog_customer,
             it.findViewById(android.R.id.content),
             false
         )

@@ -76,10 +76,10 @@
                 android:id="@+id/input_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone"
+                android:hint="Teléfono"
                 android:inputType="phone"
                 android:maxLength="15"
-                android:singleLine="true"/>
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
