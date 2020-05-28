@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/dashboardPOSFragment">
+    app:startDestination="@id/dashboardPosFragment">
 
     <fragment
             android:id="@+id/settingsFragment"
@@ -14,8 +14,8 @@
             app:destination="@id/dashboardDatabaseFragment" />
     </fragment>
     <fragment
-            android:id="@+id/dashboardPOSFragment"
-            android:name="com.titaniocorp.pos.app.ui.pos.DashboardPOSFragment"
+            android:id="@+id/dashboardPosFragment"
+            android:name="com.titaniocorp.pos.app.ui.pos.DashboardPosFragment"
             android:label="@string/app_name"
         tools:layout="@layout/fragment_pos_dashboard">
         <action
@@ -87,8 +87,8 @@
         android:label="Nueva transacción"
         tools:layout="@layout/fragment_pos_purchase">
         <action
-            android:id="@+id/to_dashboardPOSFragment"
-            app:popUpTo="@id/dashboardPOSFragment"
+            android:id="@+id/to_dashboardPosFragment"
+            app:popUpTo="@id/dashboardPosFragment"
             app:popUpToInclusive="false" />
     </fragment>
     <fragment
@@ -106,8 +106,8 @@
             app:argType="integer"
             android:defaultValue="0" />
         <action
-            android:id="@+id/to_dashboardPOSFragment"
-            app:popUpTo="@id/dashboardPOSFragment"
+            android:id="@+id/to_dashboardPosFragment"
+            app:popUpTo="@id/dashboardPosFragment"
             app:popUpToInclusive="false" />
     </fragment>
     <fragment

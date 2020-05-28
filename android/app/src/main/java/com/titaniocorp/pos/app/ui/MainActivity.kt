@@ -41,7 +41,7 @@ class MainActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartF
 
         navController = findNavController(this, R.id.nav_host_fragment)
         val topLevelDestinations = setOf(
-            R.id.dashboardPOSFragment
+            R.id.dashboardPosFragment
         )
 
         appBarConfiguration = AppBarConfiguration

@@ -1,7 +1,7 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/dashboardPOSFragment"
+        android:id="@+id/dashboardPosFragment"
         android:icon="@drawable/ic_shopping_cart"
         android:title="Punto de venta"/>
     <group android:checkableBehavior="single"

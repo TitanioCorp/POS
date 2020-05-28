@@ -3,7 +3,7 @@ package com.titaniocorp.pos.di.module
 import com.titaniocorp.pos.app.ui.billing.DashboardBillingFragment
 import com.titaniocorp.pos.app.ui.category.DashboardCategoryFragment
 import com.titaniocorp.pos.app.ui.customer.DashboardCustomerFragment
-import com.titaniocorp.pos.app.ui.pos.DashboardPOSFragment
+import com.titaniocorp.pos.app.ui.pos.DashboardPosFragment
 import com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPOSFragment
 import com.titaniocorp.pos.app.ui.pos.purchase.PurchasePOSFragment
 import com.titaniocorp.pos.app.ui.product.DashboardProductFragment
@@ -29,7 +29,7 @@ abstract class FragmentBuildersModule {
     abstract fun settingsFragment(): SettingsFragment
 
     @ContributesAndroidInjector
-    abstract fun dashboardPOSFragment(): DashboardPOSFragment
+    abstract fun dashboardPOSFragment(): DashboardPosFragment
 
     @ContributesAndroidInjector
     abstract fun purchasePOSFragment(): PurchasePOSFragment

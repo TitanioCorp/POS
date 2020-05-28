@@ -11,8 +11,15 @@ data class PricePurchase(
     var tax: Double = 0.0,
     var quantity: Int = 1,
     var isRefund: Boolean = false,
-    var createdDate: Date = Date()
-)
+    var createdDate: Date = Date(),
+
+    //Adapter
+    val productName: String = "",
+    val priceName: String = "",
+    val profitName: String = ""
+){
+    val total = (cost + profit) * quantity
+}
 
 fun PricePurchase.asDatabaseModel(): PricePurchaseEntity {
     return PricePurchaseEntity(id, priceId, purchaseId, cost, profit, tax, quantity, isRefund, createdDate)

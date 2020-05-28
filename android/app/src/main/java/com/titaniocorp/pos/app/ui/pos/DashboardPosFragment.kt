@@ -7,10 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.widget.NestedScrollView
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +17,6 @@ import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentPosDashboardBinding
 import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogHelper
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 /**
@@ -30,7 +26,7 @@ import javax.inject.Inject
  * @date 10/09/2019
  */
 
-class DashboardPOSFragment: BaseFragment(),
+class DashboardPosFragment: BaseFragment(),
     View.OnClickListener,
     SearchView.OnQueryTextListener,
     DashboardPOSAdapter.OnItemClickListener{
@@ -54,10 +50,10 @@ class DashboardPOSFragment: BaseFragment(),
         with(binding){
             lifecycleOwner = viewLifecycleOwner
             mViewModel = viewModel
-            clickListener = this@DashboardPOSFragment
+            clickListener = this@DashboardPosFragment
 
             searchView.apply {
-                setOnQueryTextListener(this@DashboardPOSFragment)
+                setOnQueryTextListener(this@DashboardPosFragment)
                 onActionViewExpanded()
                 val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
                 setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
@@ -66,11 +62,11 @@ class DashboardPOSFragment: BaseFragment(),
 
             mSearchSrcTextView = searchView.findViewById(R.id.search_src_text)
             mSearchSrcTextView?.setOnItemClickListener { _, _, position, _ ->
-                val direction = DashboardPOSFragmentDirections.toAddProductPOSFragment(position)
+                val direction = DashboardPosFragmentDirections.toAddProductPOSFragment(position)
                 findNavController().navigate(direction)
             }
 
-            val adapter = DashboardPOSAdapter(this@DashboardPOSFragment)
+            val adapter = DashboardPOSAdapter(this@DashboardPosFragment)
             adapter.submitList(viewModel.adapterPriceList)
             recycler.adapter = adapter
 
@@ -81,7 +77,7 @@ class DashboardPOSFragment: BaseFragment(),
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.button_new_transaction -> {
-                val direction = DashboardPOSFragmentDirections.toTransactionPOSFragment()
+                val direction = DashboardPosFragmentDirections.toTransactionPOSFragment()
                 findNavController().navigate(direction)
             }
 

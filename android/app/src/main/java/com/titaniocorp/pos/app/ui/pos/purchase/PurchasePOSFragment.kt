@@ -169,7 +169,7 @@ class PurchasePOSFragment: BaseFragment(), View.OnClickListener{
                                 "Transacción exitosa",
                                 "Aceptar",
                                 positiveCallback = {
-                                    val direction = PurchasePOSFragmentDirections.toDashboardPOSFragment()
+                                    val direction = PurchasePOSFragmentDirections.toDashboardPosFragment()
                                     findNavController().navigate(direction)
 
                                     viewModel.resetPurchase()
