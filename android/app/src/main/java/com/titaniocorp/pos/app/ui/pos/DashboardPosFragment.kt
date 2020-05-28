@@ -29,7 +29,7 @@ import javax.inject.Inject
 class DashboardPosFragment: BaseFragment(),
     View.OnClickListener,
     SearchView.OnQueryTextListener,
-    DashboardPOSAdapter.OnItemClickListener{
+    DashboardPosAdapter.OnItemClickListener{
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -66,8 +66,8 @@ class DashboardPosFragment: BaseFragment(),
                 findNavController().navigate(direction)
             }
 
-            val adapter = DashboardPOSAdapter(this@DashboardPosFragment)
-            adapter.submitList(viewModel.adapterPriceList)
+            val adapter = DashboardPosAdapter(this@DashboardPosFragment)
+            adapter.submitList(viewModel.purchase.prices)
             recycler.adapter = adapter
 
             subcribeUi(adapter)
@@ -105,11 +105,11 @@ class DashboardPosFragment: BaseFragment(),
             "Remover el producto de la lista",
             "Remover",
             "Cancelar",
-            { viewModel.removeAdapterItem(position) },
+            { viewModel.removeProduct(position) },
             {})?.show()
     }
 
-    private fun subcribeUi(adapter: DashboardPOSAdapter){
+    private fun subcribeUi(adapter: DashboardPosAdapter){
         viewModel.searchedList.observe(viewLifecycleOwner, Observer {
             it.process(
                 {

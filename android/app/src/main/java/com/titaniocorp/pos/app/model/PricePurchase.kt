@@ -14,11 +14,12 @@ data class PricePurchase(
     var createdDate: Date = Date(),
 
     //Adapter
-    val productName: String = "",
-    val priceName: String = "",
-    val profitName: String = ""
+    var productName: String = "",
+    var priceName: String = "",
+    var profitName: String = ""
 ){
-    val total = (cost + profit) * quantity
+    fun getCostTotal() = cost + profit + tax
+    fun getTotal() = (cost + profit + tax) * quantity
 }
 
 fun PricePurchase.asDatabaseModel(): PricePurchaseEntity {
