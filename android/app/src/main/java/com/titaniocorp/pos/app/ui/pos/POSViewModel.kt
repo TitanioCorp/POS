@@ -21,17 +21,16 @@ class POSViewModel @Inject constructor(
     customerRepository: CustomerRepository,
     profitRepository: ProfitRepository
 ): ObservableViewModel(){
-    @Bindable var bPriceUnit = "$0"
-    @Bindable var bPriceTax = "$0"
-    @Bindable var bPriceTotal = "$0"
-
+    //Purchase
     @Bindable var purchase = Purchase()
-    @Bindable var pricePurchase = PricePurchase()
-    @Bindable var product = Product()
 
+    //Product
+    @Bindable var product = Product()
     private var profitSelected: Profit = Profit()
     private var maxStock = 1
+    @Bindable var pricePurchase = PricePurchase()
 
+    //Dashboard
     val adapterUpdated = LiveEvent<Pair<Int, Int>>()
     private val mSearchQuery = LiveEvent<String>()
     private val searchedId = MutableLiveData<Long>()
@@ -236,17 +235,7 @@ class POSViewModel @Inject constructor(
             }
         }
 
-
-        bPriceUnit = (pricePurchase.cost + pricePurchase.profit).formatMoney()
-        bPriceTax = pricePurchase.tax.formatMoney()
-
-        val total = (pricePurchase.cost + pricePurchase.profit + pricePurchase.tax) * pricePurchase.quantity
-        bPriceTotal = total.formatMoney()
-
         notifyPropertyChanged(BR.pricePurchase)
-        notifyPropertyChanged(BR.bPriceUnit)
-        notifyPropertyChanged(BR.bPriceTax)
-        notifyPropertyChanged(BR.bPriceTotal)
     }
 
     fun addQuantity(){

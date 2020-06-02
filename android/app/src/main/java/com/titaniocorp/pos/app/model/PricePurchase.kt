@@ -18,6 +18,7 @@ data class PricePurchase(
     var priceName: String = "",
     var profitName: String = ""
 ){
+    fun getCostProfit() = cost + profit
     fun getCostTotal() = cost + profit + tax
     fun getTotal() = (cost + profit + tax) * quantity
 }
