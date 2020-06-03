@@ -98,4 +98,8 @@ class AppModule {
     @Singleton
     @Provides
     fun providePaymentDao(db: AppDatabase): PaymentDao = db.paymentDao()
+
+    @Singleton
+    @Provides
+    fun provideReportDao(db: AppDatabase) = db.reportDao()
 }

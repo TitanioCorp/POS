@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="viewModel"
+            type="com.titaniocorp.pos.app.ui.report.stock.StockReportViewModel"/>
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Scrollable view here -->
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackgroundPrimary">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbarAlwaysDrawHorizontalTrack="false"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.5">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_left2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="24dp"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_right2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_end="24dp" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_subsection_top"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline_right2"
+                        app:layout_constraintStart_toStartOf="@+id/guideline_left2"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_end="24dp" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="24dp"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/text_label_total_stock"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:text="@string/text_total_stock"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/text_value_total_stock"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@{Integer.toString(viewModel.stock)}"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                            android:textColor="@color/colorPrimary"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                            app:layout_constraintTop_toBottomOf="@+id/text_label_total_stock" />
+
+                        <TextView
+                            android:id="@+id/text_label_total"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/text_total"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                            app:layout_constraintTop_toBottomOf="@+id/text_value_total_stock" />
+
+                        <TextView
+                            android:id="@+id/text_value_total"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_item_list"
+                            android:paddingBottom="8dp"
+                            asMoney="@{viewModel.total}"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                            android:textColor="@color/colorPrimary"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                            app:layout_constraintTop_toBottomOf="@+id/text_label_total" />
+
+                        <TextView
+                            android:id="@+id/text_label_cost"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/text_cost"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                            app:layout_constraintTop_toBottomOf="@+id/text_value_total" />
+
+                        <TextView
+                            android:id="@+id/text_value_cost"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            asMoney="@{viewModel.cost}"
+                            android:textColor="@color/colorPrimary"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                            app:layout_constraintTop_toBottomOf="@+id/text_label_cost" />
+
+                        <TextView
+                            android:id="@+id/text_label_tax"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/text_tax"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                            app:layout_constraintTop_toBottomOf="@+id/text_value_cost" />
+
+                        <TextView
+                            android:id="@+id/text_value_tax"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="24dp"
+                            asMoney="@{viewModel.tax}"
+                            android:textColor="@color/colorPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                            app:layout_constraintTop_toBottomOf="@+id/text_label_tax" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/item_list_purchase_dashboard" />
+
+        <include
+            android:id="@+id/view_empty_list"
+            layout="@layout/view_empty_list"
+            android:visibility="visible"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

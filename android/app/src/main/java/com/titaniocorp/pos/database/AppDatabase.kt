@@ -44,4 +44,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun stockDao(): StockDao
     abstract fun priceStockDao(): PriceStockDao
     abstract fun paymentDao(): PaymentDao
+    abstract fun reportDao(): ReportDao
 }
