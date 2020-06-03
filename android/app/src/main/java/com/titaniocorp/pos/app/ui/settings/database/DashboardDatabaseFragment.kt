@@ -98,7 +98,7 @@ class DashboardDatabaseFragment: BaseFragment(), View.OnClickListener{
     }
 
     private fun import(){
-        viewModel.export().observe(viewLifecycleOwner, Observer {
+        viewModel.import().observe(viewLifecycleOwner, Observer {
             it.process(
                 {
                     showSuccess("La base de datos se ha importado correctamente.")
