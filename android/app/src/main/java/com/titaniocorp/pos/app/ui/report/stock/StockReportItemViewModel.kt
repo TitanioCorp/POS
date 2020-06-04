@@ -1,5 +1,6 @@
 package com.titaniocorp.pos.app.ui.report.stock
 
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.titaniocorp.pos.app.model.Price
@@ -21,4 +22,16 @@ class StockReportItemViewModel(data: StockReportItem?): ViewModel(){
 
     val tax = ObservableField(item.tax)
     val total = ObservableField(item.total)
+
+    val isSelected = ObservableBoolean(item.isSelected)
+
+    fun setSelected(){
+        if(item.isSelected){
+            item.isSelected = false
+            isSelected.set(false)
+        }else{
+            item.isSelected = true
+            isSelected.set(true)
+        }
+    }
 }

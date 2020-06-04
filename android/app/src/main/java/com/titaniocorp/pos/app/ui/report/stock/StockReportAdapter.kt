@@ -41,6 +41,13 @@ class StockReportAdapter: ListAdapter<StockReportItem, StockReportAdapter.ViewHo
         fun bind(item: StockReportItem){
             with(binding) {
                 viewModel = StockReportItemViewModel(item)
+                clickListener = View.OnClickListener {
+                    when(it.id){
+                        R.id.view_content -> {
+                            viewModel?.setSelected()
+                        }
+                    }
+                }
                 executePendingBindings()
             }
         }

@@ -28,4 +28,7 @@ data class StockReportItem(
 
     @Ignore
     val total = (cost + tax) * stock
+
+    @Ignore
+    var isSelected = false
 }

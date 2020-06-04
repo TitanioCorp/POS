@@ -4,6 +4,9 @@
         xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+        <variable
                 name="viewModel"
                 type="com.titaniocorp.pos.app.ui.report.stock.StockReportItemViewModel" />
     </data>
@@ -12,8 +15,8 @@
         android:id="@+id/view_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_item_list"
-        android:orientation="horizontal">
+        android:background="@{viewModel.isSelected ?  @drawable/bg_item_list_selected : @drawable/bg_item_list}"
+        android:onClick="@{clickListener}">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_left"
