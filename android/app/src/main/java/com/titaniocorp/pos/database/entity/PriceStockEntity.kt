@@ -1,7 +1,7 @@
-package com.titaniocorp.pos.app.model
+package com.titaniocorp.pos.database.entity
 
 import androidx.room.*
-import java.util.*
+import com.titaniocorp.pos.app.model.PriceStock
 
 @Entity(
     tableName = "price_stock",
@@ -42,9 +42,23 @@ data class PriceStockEntity(
 )
 
 fun List<PriceStockEntity>.asDomainModel(): List<PriceStock>{
-    return map { PriceStock(it.id, it.stockId, it.priceId, it.quantity, it.isRefund) }
+    return map {
+        PriceStock(
+            it.id,
+            it.stockId,
+            it.priceId,
+            it.quantity,
+            it.isRefund
+        )
+    }
 }
 
-fun PriceStockEntity.asDomainModel(): PriceStock{
-    return PriceStock(id, stockId, priceId, quantity, isRefund)
+fun PriceStockEntity.asDomainModel(): PriceStock {
+    return PriceStock(
+        id,
+        stockId,
+        priceId,
+        quantity,
+        isRefund
+    )
 }

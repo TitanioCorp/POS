@@ -2,7 +2,7 @@ package com.titaniocorp.pos.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.titaniocorp.pos.app.model.PurchaseEntity
+import com.titaniocorp.pos.database.entity.PurchaseEntity
 import com.titaniocorp.pos.app.model.domain.PurchaseDashboardItem
 import com.titaniocorp.pos.app.model.dto.DetailPurchaseAdapterDto
 import com.titaniocorp.pos.app.model.dto.PurchaseDTO

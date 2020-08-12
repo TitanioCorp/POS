@@ -1,5 +1,6 @@
 package com.titaniocorp.pos.app.model
 
+import com.titaniocorp.pos.database.entity.PurchaseEntity
 import java.util.*
 
 data class Purchase(
@@ -32,5 +33,6 @@ fun Purchase.asDatabaseModel(): PurchaseEntity {
         total,
         isCredit,
         active,
-        createdDate)
+        createdDate
+    )
 }

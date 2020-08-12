@@ -6,6 +6,7 @@ import com.titaniocorp.pos.app.model.domain.PurchaseDashboardItem
 import com.titaniocorp.pos.app.model.dto.DetailPurchaseAdapterDto
 import com.titaniocorp.pos.app.model.dto.PurchaseDTO
 import com.titaniocorp.pos.database.dao.*
+import com.titaniocorp.pos.database.entity.asDomainModel
 import com.titaniocorp.pos.repository.processor.*
 import com.titaniocorp.pos.util.AppCode
 import kotlinx.coroutines.Dispatchers

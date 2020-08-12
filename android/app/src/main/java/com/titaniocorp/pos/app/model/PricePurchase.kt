@@ -1,5 +1,6 @@
 package com.titaniocorp.pos.app.model
 
+import com.titaniocorp.pos.database.entity.PricePurchaseEntity
 import java.util.*
 
 data class PricePurchase(
@@ -24,9 +25,31 @@ data class PricePurchase(
 }
 
 fun PricePurchase.asDatabaseModel(): PricePurchaseEntity {
-    return PricePurchaseEntity(id, priceId, purchaseId, cost, profit, tax, quantity, isRefund, createdDate)
+    return PricePurchaseEntity(
+        id,
+        priceId,
+        purchaseId,
+        cost,
+        profit,
+        tax,
+        quantity,
+        isRefund,
+        createdDate
+    )
 }
 
 fun List<PricePurchase>.asDomainModel(): List<PricePurchaseEntity>{
-    return map { PricePurchaseEntity(it.id, it.priceId, it.purchaseId, it.cost, it.profit, it.tax, it.quantity, it.isRefund, it.createdDate) }
+    return map {
+        PricePurchaseEntity(
+            it.id,
+            it.priceId,
+            it.purchaseId,
+            it.cost,
+            it.profit,
+            it.tax,
+            it.quantity,
+            it.isRefund,
+            it.createdDate
+        )
+    }
 }

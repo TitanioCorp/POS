@@ -5,15 +5,17 @@ import androidx.lifecycle.*
 import com.hadilq.liveevent.LiveEvent
 import com.titaniocorp.pos.BR
 import com.titaniocorp.pos.app.model.*
-import com.titaniocorp.pos.app.model.dto.DashboardPOSAdapterDto
 import com.titaniocorp.pos.app.model.dto.SearchProductDTO
 import com.titaniocorp.pos.app.viewmodel.ObservableViewModel
+import com.titaniocorp.pos.database.entity.CustomerEntity
 import com.titaniocorp.pos.repository.*
 import com.titaniocorp.pos.util.*
 import com.titaniocorp.pos.util.AppCode.Companion.ERROR_PURCHASE_EMPTY_PRICES
 import com.titaniocorp.pos.util.AppCode.Companion.ERROR_PURCHASE_NO_CUSTOMER
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class POSViewModel @Inject constructor(
     private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository,
@@ -207,12 +209,7 @@ class POSViewModel @Inject constructor(
         with(pricePurchase){
             this.priceId = priceId
 
-            this.tax = if(isInitialProfit){
-                cost.calculateTax()
-            }else{
-                cost * Configurations.taxPercent
-            }
-
+            this.tax = cost.calculateTax(isInitialProfit)
             this.cost = cost
 
 

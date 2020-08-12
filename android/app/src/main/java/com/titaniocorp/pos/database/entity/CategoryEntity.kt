@@ -1,9 +1,10 @@
-package com.titaniocorp.pos.app.model
+package com.titaniocorp.pos.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.titaniocorp.pos.app.model.Category
 
 @Entity(
     tableName = "category",
@@ -24,9 +25,15 @@ data class CategoryEntity(
 )
 
 fun List<CategoryEntity>.asDomainModel(): List<Category>{
-    return map { Category(it.id, it.name, it.active) }
+    return map {
+        Category(
+            it.id,
+            it.name,
+            it.active
+        )
+    }
 }
 
-fun CategoryEntity.asDomainModel(): Category{
+fun CategoryEntity.asDomainModel(): Category {
     return Category(id, name, active)
 }

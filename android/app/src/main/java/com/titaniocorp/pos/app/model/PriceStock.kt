@@ -1,5 +1,7 @@
 package com.titaniocorp.pos.app.model
 
+import com.titaniocorp.pos.database.entity.PriceStockEntity
+
 data class PriceStock(
     var id: Long = 0,
     var stockId: Long = 0,
@@ -14,9 +16,23 @@ data class PriceStock(
 )
 
 fun PriceStock.asDatabaseModel(): PriceStockEntity {
-    return PriceStockEntity(id, stockId, priceId, quantity, isRefund)
+    return PriceStockEntity(
+        id,
+        stockId,
+        priceId,
+        quantity,
+        isRefund
+    )
 }
 
 fun List<PriceStock>.asDomainModel(): List<PriceStockEntity>{
-    return map { PriceStockEntity(it.id, it.stockId, it.priceId, it.quantity, it.isRefund) }
+    return map {
+        PriceStockEntity(
+            it.id,
+            it.stockId,
+            it.priceId,
+            it.quantity,
+            it.isRefund
+        )
+    }
 }

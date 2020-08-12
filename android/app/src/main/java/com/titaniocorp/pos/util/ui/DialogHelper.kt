@@ -145,11 +145,7 @@ object DialogHelper {
 
                 switchProfitPercent.isChecked = price.isInitialProfit
 
-                val tax: Double = if(price.isInitialProfit){
-                    price.cost.calculateTax()
-                }else{
-                    price.cost * Configurations.taxPercent
-                }
+                val tax: Double = price.cost.calculateTax(price.isInitialProfit)
 
                 val total = price.cost + tax
                 textTax.text = root.context.getString(R.string.text_money, tax.formatMoney())

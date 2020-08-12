@@ -1,6 +1,7 @@
-package com.titaniocorp.pos.app.model
+package com.titaniocorp.pos.database.entity
 
 import androidx.room.*
+import com.titaniocorp.pos.app.model.Profit
 
 @Entity(
     tableName = "profit",
@@ -21,9 +22,15 @@ data class ProfitEntity(
 )
 
 fun List<ProfitEntity>.asDomainModel(): List<Profit>{
-    return map { Profit(it.id, it.name, it.percent) }
+    return map {
+        Profit(
+            it.id,
+            it.name,
+            it.percent
+        )
+    }
 }
 
-fun ProfitEntity.asDomainModel(): Profit{
+fun ProfitEntity.asDomainModel(): Profit {
     return Profit(id, name, percent)
 }

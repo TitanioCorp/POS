@@ -1,6 +1,7 @@
-package com.titaniocorp.pos.app.model
+package com.titaniocorp.pos.database.entity
 
 import androidx.room.*
+import com.titaniocorp.pos.app.model.Payment
 import java.util.*
 
 @Entity(
@@ -29,9 +30,23 @@ data class PaymentEntity(
 )
 
 fun List<PaymentEntity>.asDomainModel(): List<Payment>{
-    return map { Payment(it.id, it.paymentCategoryId, it.value, it.observation, it.date) }
+    return map {
+        Payment(
+            it.id,
+            it.paymentCategoryId,
+            it.value,
+            it.observation,
+            it.date
+        )
+    }
 }
 
-fun PaymentEntity.asDomainModel(): Payment{
-    return Payment(id, paymentCategoryId, value, observation, date)
+fun PaymentEntity.asDomainModel(): Payment {
+    return Payment(
+        id,
+        paymentCategoryId,
+        value,
+        observation,
+        date
+    )
 }

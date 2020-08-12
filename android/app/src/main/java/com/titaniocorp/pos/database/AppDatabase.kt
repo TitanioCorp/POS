@@ -3,8 +3,8 @@ package com.titaniocorp.pos.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.titaniocorp.pos.app.model.*
 import com.titaniocorp.pos.database.dao.*
+import com.titaniocorp.pos.database.entity.*
 
 /**
  * Base de datos de la APP. Implementar acá los DAO
