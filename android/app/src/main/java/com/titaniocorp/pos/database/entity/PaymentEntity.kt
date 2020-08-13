@@ -8,7 +8,8 @@ import java.util.*
     tableName = "payment",
     indices = [
         Index(value = ["payment_id"], unique = true),
-        Index(value = ["payment_category_id"])
+        Index(value = ["payment_category_id"]),
+        Index(value = ["date"], unique = true)
     ]
 )
 data class PaymentEntity(

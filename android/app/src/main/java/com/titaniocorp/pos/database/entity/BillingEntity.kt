@@ -6,7 +6,8 @@ import java.util.*
 @Entity(
     tableName = "billing",
     indices = [
-        Index(value = ["billing_id"], unique = true)
+        Index(value = ["billing_id"], unique = true),
+        Index(value = ["created_date"], unique = true)
     ]
 )
 data class BillingEntity(

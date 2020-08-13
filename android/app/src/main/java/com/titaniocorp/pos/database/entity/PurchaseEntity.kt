@@ -8,7 +8,8 @@ import java.util.*
     tableName = "purchase",
     indices = [
         Index(value = ["purchase_id"], unique = true),
-        Index(value = ["customer_id"])
+        Index(value = ["customer_id"]),
+        Index(value = ["created_date"], unique = true)
     ]
 )
 data class PurchaseEntity(

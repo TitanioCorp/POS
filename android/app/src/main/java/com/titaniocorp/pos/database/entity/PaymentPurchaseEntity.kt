@@ -9,7 +9,8 @@ import java.util.*
     indices = [
         Index(value = ["payment_purchase_id"], unique = true),
         Index(value = ["purchase_id"]),
-        Index(value = ["payment_category_id"])
+        Index(value = ["payment_category_id"]),
+        Index(value = ["created_date"], unique = true)
     ],
     foreignKeys = [
         ForeignKey(entity = PurchaseEntity::class,

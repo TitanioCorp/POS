@@ -11,7 +11,8 @@ import java.util.*
     tableName = "price",
     indices = [
         Index(value = ["price_id"], unique = true),
-        Index(value = ["product_id"])
+        Index(value = ["product_id"]),
+        Index(value = ["created_date"], unique = true)
     ]
 )
 data class PriceEntity(

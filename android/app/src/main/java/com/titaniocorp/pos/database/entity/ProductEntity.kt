@@ -7,7 +7,8 @@ import java.util.*
 @Entity(tableName = "product",
     indices = [
         Index(value = ["product_id"], unique = true),
-        Index(value = ["category_id"])
+        Index(value = ["category_id"]),
+        Index(value = ["created_date"], unique = true)
     ],
     foreignKeys = [
             ForeignKey(entity = CategoryEntity::class,
