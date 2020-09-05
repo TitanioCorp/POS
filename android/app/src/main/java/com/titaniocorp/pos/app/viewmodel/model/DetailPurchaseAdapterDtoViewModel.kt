@@ -2,12 +2,7 @@ package com.titaniocorp.pos.app.viewmodel.model
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
-import com.titaniocorp.pos.app.model.PricePurchase
-import com.titaniocorp.pos.app.model.Profit
-import com.titaniocorp.pos.app.model.dto.DashboardPOSAdapterDto
 import com.titaniocorp.pos.app.model.dto.DetailPurchaseAdapterDto
-import com.titaniocorp.pos.util.formatMoney
-import com.titaniocorp.pos.util.toFormatString
 
 class DetailPurchaseAdapterDtoViewModel(data: DetailPurchaseAdapterDto?): ViewModel(){
     private val item = checkNotNull(data)

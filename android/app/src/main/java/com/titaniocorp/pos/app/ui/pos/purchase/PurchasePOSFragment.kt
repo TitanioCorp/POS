@@ -18,7 +18,7 @@ import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.app.ui.pos.POSViewModel
 import com.titaniocorp.pos.databinding.FragmentPosPurchaseBinding
 import com.titaniocorp.pos.util.addMoneyTextWatcher
-import com.titaniocorp.pos.util.moneyFilter
+import com.titaniocorp.pos.util.getValueMoney
 import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogHelper
 import kotlinx.android.synthetic.main.activity_main.*
@@ -80,7 +80,7 @@ class PurchasePOSFragment: BaseFragment(), View.OnClickListener{
             if(validate()){
                 binding.inputAbono.text.toString().let {
                     if(it.isNotEmpty()){
-                        viewModel.addCreditPayment(it.moneyFilter())
+                        viewModel.addCreditPayment(it.getValueMoney())
                     }
                 }
                 saveTransaction()
