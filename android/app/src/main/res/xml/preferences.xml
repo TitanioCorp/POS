@@ -35,5 +35,12 @@
             android:summary="Porcentaje de impuestos"
             android:dialogLayout="@layout/preferences_edit_text"/>
 
+        <EditTextPreference
+            android:key="EMAIL_ADMINISTRATOR_PREFERENCE"
+            android:title="Email de administrador"
+            app:icon="@drawable/ic_email"
+            android:summary="Correo electrónico que llegarán los reportes"
+            android:dialogLayout="@layout/preferences_edit_text_email"/>
+
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>
