@@ -1,4 +1,4 @@
-package com.titaniocorp.pos.app.ui.report.stock
+package com.titaniocorp.pos.app.ui.report.products.stock
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,6 @@ import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentPurchaseDashboardBinding
 import com.titaniocorp.pos.databinding.FragmentStockReportBinding
 import com.titaniocorp.pos.util.process
-import com.titaniocorp.pos.util.ui.DatePickerFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 

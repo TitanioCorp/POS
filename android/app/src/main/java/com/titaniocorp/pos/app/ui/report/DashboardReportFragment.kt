@@ -102,7 +102,8 @@ class DashboardReportFragment: BaseFragment(),
                     val direction = DashboardReportFragmentDirections.toStockReportFragment()
                     findNavController().navigate(direction)
                 }
-                1 -> {
+                1 -> { }
+                2 -> {
                     lifecycleScope.launch{
                         val dates = viewModel.getDates()
                         val direction = DashboardReportFragmentDirections.toDashboardBillingFragment(

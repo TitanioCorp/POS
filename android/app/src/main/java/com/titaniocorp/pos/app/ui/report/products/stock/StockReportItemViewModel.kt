@@ -1,4 +1,4 @@
-package com.titaniocorp.pos.app.ui.report.stock
+package com.titaniocorp.pos.app.ui.report.products.stock
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField

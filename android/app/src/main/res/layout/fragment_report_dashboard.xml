@@ -63,7 +63,9 @@
                 android:id="@+id/text_label_type_report"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
                 android:text="Tipo de movimiento"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
@@ -74,6 +76,8 @@
                 android:id="@+id/spinner_type_report"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_section"
                 android:drawSelectorOnTop="true"
                 android:overlapAnchor="false"
                 android:spinnerMode="dropdown"
@@ -139,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="button_end_date,text_label_start_Date,button_start_date,text_label_end_date"
-                android:visibility="@{(mViewModel.selectedReport == 0) ? View.GONE : View.VISIBLE}"/>
+                android:visibility="@{(mViewModel.selectedReport != 2) ? View.GONE : View.VISIBLE}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

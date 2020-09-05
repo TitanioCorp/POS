@@ -212,7 +212,7 @@
 
     <fragment
         android:id="@+id/stockReportFragment"
-        android:name="com.titaniocorp.pos.app.ui.report.stock.StockReportFragment"
+        android:name="com.titaniocorp.pos.app.ui.report.products.stock.StockReportFragment"
         android:label="Reporte de inventario"
         tools:layout="@layout/fragment_stock_report"/>
 </navigation>

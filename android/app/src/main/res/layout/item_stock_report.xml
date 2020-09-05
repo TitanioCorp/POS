@@ -8,7 +8,7 @@
             type="android.view.View.OnClickListener"/>
         <variable
                 name="viewModel"
-                type="com.titaniocorp.pos.app.ui.report.stock.StockReportItemViewModel" />
+                type="com.titaniocorp.pos.app.ui.report.products.stock.StockReportItemViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

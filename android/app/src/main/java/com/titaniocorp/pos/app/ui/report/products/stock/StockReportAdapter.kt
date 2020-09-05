@@ -1,17 +1,13 @@
-package com.titaniocorp.pos.app.ui.report.stock
+package com.titaniocorp.pos.app.ui.report.products.stock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.titaniocorp.pos.R
-import com.titaniocorp.pos.app.model.domain.PurchaseDashboardItem
 import com.titaniocorp.pos.app.model.domain.StockReportItem
-import com.titaniocorp.pos.app.model.dto.PurchaseDTO
-import com.titaniocorp.pos.app.viewmodel.model.PurchaseDtoViewModel
 import com.titaniocorp.pos.databinding.ItemListPurchaseDashboardBinding
 import com.titaniocorp.pos.databinding.ItemStockReportBinding
 

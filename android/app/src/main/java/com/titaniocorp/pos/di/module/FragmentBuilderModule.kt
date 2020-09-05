@@ -12,7 +12,7 @@ import com.titaniocorp.pos.app.ui.profit.DashboardProfitFragment
 import com.titaniocorp.pos.app.ui.purchase.DashboardPurchaseFragment
 import com.titaniocorp.pos.app.ui.purchase.detail.DetailPurchaseFragment
 import com.titaniocorp.pos.app.ui.report.DashboardReportFragment
-import com.titaniocorp.pos.app.ui.report.stock.StockReportFragment
+import com.titaniocorp.pos.app.ui.report.products.stock.StockReportFragment
 import com.titaniocorp.pos.app.ui.settings.SettingsFragment
 import com.titaniocorp.pos.app.ui.settings.database.DashboardDatabaseFragment
 import com.titaniocorp.pos.app.ui.stock.DashboardStockFragment

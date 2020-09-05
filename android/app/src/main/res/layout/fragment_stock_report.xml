@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.titaniocorp.pos.app.ui.report.stock.StockReportViewModel"/>
+            type="com.titaniocorp.pos.app.ui.report.products.stock.StockReportViewModel"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
