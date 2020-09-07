@@ -8,6 +8,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.databinding.DialogAddAdjustmentBinding
 import com.titaniocorp.pos.util.addMoneyTextWatcher
+import com.titaniocorp.pos.util.asMoney
 import com.titaniocorp.pos.util.getValueMoney
 
 object DialogPOSHelper {
@@ -33,7 +34,7 @@ object DialogPOSHelper {
 
         with(binding){
             inputValue.addMoneyTextWatcher()
-            inputValue.setText(item.toString().replace("-", ""))
+            inputValue.setText(item.asMoney())
 
             clickListener = View.OnClickListener { view ->
                 when(view.id){

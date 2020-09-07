@@ -87,8 +87,12 @@ class POSViewModel @Inject constructor(
                 profit += it.profit * it.quantity
                 tax += it.tax * it.quantity
             }
+
+            adjustment = if(prices.isNullOrEmpty()) 0.0  else adjustment
+
             subtotal = cost + profit
             total = cost + profit + tax + adjustment
+            
             notifyPropertyChanged(BR.purchase)
         }
     }
