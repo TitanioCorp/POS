@@ -11,7 +11,7 @@ import java.util.*
 import javax.inject.Inject
 
 class DashboardReportViewModel @Inject constructor(): ObservableViewModel() {
-    val navigate = LiveEvent<Pair<Int, Pair<Date,Date>>>()
+    val navigate = LiveEvent<Pair<Int, Pair<Date,Date>?>>()
     @Bindable var selectedReport = 0
 
     @Bindable val startDate: Calendar = Calendar.getInstance().apply {

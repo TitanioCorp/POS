@@ -1,6 +1,6 @@
 package com.titaniocorp.pos.app.model.domain
 
-import com.titaniocorp.pos.app.model.CustomerEntity
+import com.titaniocorp.pos.database.entity.CustomerEntity
 
 data class Customer(
     var id: Long = 0,
@@ -18,6 +18,6 @@ fun Customer.asDatabaseModel(): CustomerEntity {
         dni = dni,
         phone = phone,
         email = email,
-        active =active
+        active = active
     )
 }

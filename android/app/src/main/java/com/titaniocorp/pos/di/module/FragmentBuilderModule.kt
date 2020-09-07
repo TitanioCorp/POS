@@ -3,7 +3,7 @@ package com.titaniocorp.pos.di.module
 import com.titaniocorp.pos.app.ui.billing.DashboardBillingFragment
 import com.titaniocorp.pos.app.ui.category.DashboardCategoryFragment
 import com.titaniocorp.pos.app.ui.customer.DashboardCustomerFragment
-import com.titaniocorp.pos.app.ui.pos.DashboardPOSFragment
+import com.titaniocorp.pos.app.ui.pos.DashboardPosFragment
 import com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPOSFragment
 import com.titaniocorp.pos.app.ui.pos.purchase.PurchasePOSFragment
 import com.titaniocorp.pos.app.ui.product.DashboardProductFragment
@@ -12,7 +12,9 @@ import com.titaniocorp.pos.app.ui.profit.DashboardProfitFragment
 import com.titaniocorp.pos.app.ui.purchase.DashboardPurchaseFragment
 import com.titaniocorp.pos.app.ui.purchase.detail.DetailPurchaseFragment
 import com.titaniocorp.pos.app.ui.report.DashboardReportFragment
+import com.titaniocorp.pos.app.ui.report.products.stock.StockReportFragment
 import com.titaniocorp.pos.app.ui.settings.SettingsFragment
+import com.titaniocorp.pos.app.ui.settings.database.DashboardDatabaseFragment
 import com.titaniocorp.pos.app.ui.stock.DashboardStockFragment
 import com.titaniocorp.pos.app.ui.stock.add.AddStockFragment
 import com.titaniocorp.pos.app.ui.stock.detail.DetailStockFragment
@@ -28,7 +30,7 @@ abstract class FragmentBuildersModule {
     abstract fun settingsFragment(): SettingsFragment
 
     @ContributesAndroidInjector
-    abstract fun dashboardPOSFragment(): DashboardPOSFragment
+    abstract fun dashboardPOSFragment(): DashboardPosFragment
 
     @ContributesAndroidInjector
     abstract fun purchasePOSFragment(): PurchasePOSFragment
@@ -78,5 +80,9 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun dashboardReportFragment(): DashboardReportFragment
 
+    @ContributesAndroidInjector
+    abstract fun dashboardDatabaseFragment(): DashboardDatabaseFragment
 
+    @ContributesAndroidInjector
+    abstract fun stockReportFragment(): StockReportFragment
 }

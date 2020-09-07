@@ -1,5 +1,6 @@
 package com.titaniocorp.pos.app.model
 
+import com.titaniocorp.pos.database.entity.StockEntity
 import java.util.*
 
 data class Stock(
@@ -13,5 +14,12 @@ data class Stock(
 )
 
 fun Stock.asDatabaseModel(): StockEntity {
-    return StockEntity(id, purchaseRef, cost, tax, total, date)
+    return StockEntity(
+        id,
+        purchaseRef,
+        cost,
+        tax,
+        total,
+        date
+    )
 }

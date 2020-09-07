@@ -9,7 +9,7 @@ import com.titaniocorp.pos.util.AppCode.Companion.VALIDATE_MONEY_ZERO
 import com.titaniocorp.pos.util.AppCode.Companion.VALIDATE_NUMBER_LENGTH
 import com.titaniocorp.pos.util.AppCode.Companion.VALIDATE_NUMBER_ZERO
 import com.titaniocorp.pos.util.AppCode.Companion.VALIDATE_SUCCESS
-import com.titaniocorp.pos.util.moneyFilter
+import com.titaniocorp.pos.util.getValueMoney
 import timber.log.Timber
 import java.lang.Exception
 
@@ -82,7 +82,7 @@ fun String.validate(type: ValidateType = ValidateType.SINGLE): Int{
             //MONEY
             type == ValidateType.MONEY -> {
                 when{
-                    moneyFilter() <= 0 -> VALIDATE_MONEY_ZERO
+                    getValueMoney() <= 0 -> VALIDATE_MONEY_ZERO
                     else -> VALIDATE_SUCCESS
                 }
             }

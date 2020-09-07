@@ -1,5 +1,6 @@
 package com.titaniocorp.pos.app.model
 
+import com.titaniocorp.pos.database.entity.PriceEntity
 import java.util.*
 
 data class Price(
@@ -15,19 +16,31 @@ data class Price(
 )
 
 fun Price.asDatabaseModel(): PriceEntity {
-    return PriceEntity(id, productId, name, sku, cost, stock, isInitialProfit, active, createdDate)
+    return PriceEntity(
+        id,
+        productId,
+        name,
+        sku,
+        cost,
+        stock,
+        isInitialProfit,
+        active,
+        createdDate
+    )
 }
 
 fun List<Price>.asDatabaseModel(): List<PriceEntity> {
-    return map { PriceEntity(
-        it.id,
-        it.productId,
-        it.name,
-        it.sku,
-        it.cost,
-        it.stock,
-        it.isInitialProfit,
-        it.active,
-        it.createdDate)
+    return map {
+        PriceEntity(
+            it.id,
+            it.productId,
+            it.name,
+            it.sku,
+            it.cost,
+            it.stock,
+            it.isInitialProfit,
+            it.active,
+            it.createdDate
+        )
     }
 }

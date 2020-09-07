@@ -195,7 +195,7 @@
                 android:id="@+id/text_unidad"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{@string/text_money(viewModel.bPriceUnit)}"
+                asMoney="@{viewModel.pricePurchase.getCostProfit()}"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@+id/text_label_unidad" />
@@ -214,7 +214,7 @@
                 android:id="@+id/text_tax"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{@string/text_money(viewModel.bPriceTax)}"
+                asMoney="@{viewModel.pricePurchase.tax}"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@+id/text_label_tax" />
@@ -233,7 +233,7 @@
                 android:id="@+id/text_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{@string/text_money(viewModel.bPriceTotal)}"
+                asMoney="@{viewModel.pricePurchase.getTotal()}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"

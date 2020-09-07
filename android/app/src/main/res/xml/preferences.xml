@@ -11,17 +11,36 @@
             app:entryValues="@array/languages_value"
             app:defaultValue="en"/>
 
-    <EditTextPreference
-        android:key="PROFIT_PERCENT_PREFERENCE"
-        android:title="Ganancia Inicial"
-        app:icon="@drawable/ic_profit"
-        android:summary="Porcentaje inicial de ganancia"
-        android:dialogLayout="@layout/preferences_edit_text"/>
+    <Preference
+        app:key="@string/preference_key_database"
+        android:title="Base de datos"
+        android:summary="Exportar/Importar base de datos"
+        app:fragment="com.titaniocorp.pos.app.ui.report.DashboardReportFragment" />
 
-    <EditTextPreference
-        android:key="TAX_PERCENT_PREFERENCE"
-        android:title="Porcentaje de Impuetos"
-        app:icon="@drawable/ic_profit"
-        android:summary="Porcentaje de impuestos"
-        android:dialogLayout="@layout/preferences_edit_text"/>
+    <PreferenceCategory
+        app:key="help_category"
+        app:title="Porcentajes">
+
+        <EditTextPreference
+            android:key="PROFIT_PERCENT_PREFERENCE"
+            android:title="Ganancia Inicial"
+            app:icon="@drawable/ic_profit"
+            android:summary="Porcentaje inicial de ganancia"
+            android:dialogLayout="@layout/preferences_edit_text"/>
+
+        <EditTextPreference
+            android:key="TAX_PERCENT_PREFERENCE"
+            android:title="Porcentaje de Impuetos"
+            app:icon="@drawable/ic_profit"
+            android:summary="Porcentaje de impuestos"
+            android:dialogLayout="@layout/preferences_edit_text"/>
+
+        <EditTextPreference
+            android:key="EMAIL_ADMINISTRATOR_PREFERENCE"
+            android:title="Email de administrador"
+            app:icon="@drawable/ic_email"
+            android:summary="Correo electrónico que llegarán los reportes"
+            android:dialogLayout="@layout/preferences_edit_text_email"/>
+
+    </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

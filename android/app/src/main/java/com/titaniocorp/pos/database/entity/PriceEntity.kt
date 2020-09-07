@@ -1,16 +1,18 @@
-package com.titaniocorp.pos.app.model
+package com.titaniocorp.pos.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.titaniocorp.pos.app.model.Price
 import java.util.*
 
 @Entity(
     tableName = "price",
     indices = [
         Index(value = ["price_id"], unique = true),
-        Index(value = ["product_id"])
+        Index(value = ["product_id"]),
+        Index(value = ["created_date"], unique = true)
     ]
 )
 data class PriceEntity(
@@ -44,9 +46,31 @@ data class PriceEntity(
 )
 
 fun List<PriceEntity>.asDomainModel(): List<Price>{
-    return map { Price(it.id, it.productId, it.name, it.sku, it.cost, it.stock, it.isInitialProfit, it.active, it.createdDate) }
+    return map {
+        Price(
+            it.id,
+            it.productId,
+            it.name,
+            it.sku,
+            it.cost,
+            it.stock,
+            it.isInitialProfit,
+            it.active,
+            it.createdDate
+        )
+    }
 }
 
-fun PriceEntity.asDomainModel(): Price{
-    return Price(id, productId, name, sku, cost, stock, isInitialProfit, active, createdDate)
+fun PriceEntity.asDomainModel(): Price {
+    return Price(
+        id,
+        productId,
+        name,
+        sku,
+        cost,
+        stock,
+        isInitialProfit,
+        active,
+        createdDate
+    )
 }

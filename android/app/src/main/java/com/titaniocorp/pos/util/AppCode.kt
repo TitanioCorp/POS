@@ -35,6 +35,7 @@ class AppCode {
 
         const val SUCCESS_QUERY_DATABASE= 1504
         const val ERROR_QUERY_DATABASE= 1505
+        const val IMPORT_DATABASE= 1506
 
         /* Services */
         const val RESPONSE_EMTPY = 1600

@@ -1,13 +1,15 @@
-package com.titaniocorp.pos.app.model
+package com.titaniocorp.pos.database.entity
 
 import androidx.room.*
+import com.titaniocorp.pos.app.model.Purchase
 import java.util.*
 
 @Entity(
     tableName = "purchase",
     indices = [
         Index(value = ["purchase_id"], unique = true),
-        Index(value = ["customer_id"])
+        Index(value = ["customer_id"]),
+        Index(value = ["created_date"], unique = true)
     ]
 )
 data class PurchaseEntity(
@@ -50,23 +52,25 @@ data class PurchaseEntity(
 )
 
 fun List<PurchaseEntity>.asDomainModel(): List<Purchase>{
-    return map { Purchase(
-        it.id,
-        it.customerId,
-        it.cost,
-        it.profit,
-        it.adjustment,
-        it.refund,
-        it.tax,
-        it.subtotal,
-        it.total,
-        it.isCredit,
-        it.active,
-        it.createdDate)
+    return map {
+        Purchase(
+            it.id,
+            it.customerId,
+            it.cost,
+            it.profit,
+            it.adjustment,
+            it.refund,
+            it.tax,
+            it.subtotal,
+            it.total,
+            it.isCredit,
+            it.active,
+            it.createdDate
+        )
     }
 }
 
-fun PurchaseEntity.asDomainModel(): Purchase{
+fun PurchaseEntity.asDomainModel(): Purchase {
     return Purchase(
         id,
         customerId,

@@ -1,6 +1,7 @@
 package com.titaniocorp.pos.di.module
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.titaniocorp.pos.BuildConfig
 import com.titaniocorp.pos.api.API
@@ -16,6 +17,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 @Module(includes = [ViewModelModule::class])
 class AppModule {
+    @Singleton
+    @Provides
+    fun provideApplicationContext(application: Application): Context = application.applicationContext
+
     @Singleton
     @Provides
     fun provideApiService(): API {
@@ -42,6 +47,7 @@ class AppModule {
     @Provides
     fun provideDb(app: Application): AppDatabase {
         return Room.databaseBuilder(app, AppDatabase::class.java, "appdatabase.db")
+            .addMigrations(*AppDatabase.getMigrations().toTypedArray())
             .fallbackToDestructiveMigration()
             .build()
     }
@@ -93,4 +99,8 @@ class AppModule {
     @Singleton
     @Provides
     fun providePaymentDao(db: AppDatabase): PaymentDao = db.paymentDao()
+
+    @Singleton
+    @Provides
+    fun provideReportDao(db: AppDatabase) = db.reportDao()
 }

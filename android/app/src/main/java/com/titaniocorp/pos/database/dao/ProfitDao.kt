@@ -2,7 +2,7 @@ package com.titaniocorp.pos.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.titaniocorp.pos.app.model.ProfitEntity
+import com.titaniocorp.pos.database.entity.ProfitEntity
 
 /**
  * Maneja las consultas a la base de datos de pelicula

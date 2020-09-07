@@ -13,12 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
 import com.titaniocorp.pos.R
-import com.titaniocorp.pos.app.model.CustomerEntity
+import com.titaniocorp.pos.database.entity.CustomerEntity
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.app.ui.pos.POSViewModel
 import com.titaniocorp.pos.databinding.FragmentPosPurchaseBinding
 import com.titaniocorp.pos.util.addMoneyTextWatcher
-import com.titaniocorp.pos.util.moneyFilter
+import com.titaniocorp.pos.util.getValueMoney
 import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogHelper
 import kotlinx.android.synthetic.main.activity_main.*
@@ -80,7 +80,7 @@ class PurchasePOSFragment: BaseFragment(), View.OnClickListener{
             if(validate()){
                 binding.inputAbono.text.toString().let {
                     if(it.isNotEmpty()){
-                        viewModel.addCreditPayment(it.moneyFilter())
+                        viewModel.addCreditPayment(it.getValueMoney())
                     }
                 }
                 saveTransaction()
@@ -125,7 +125,9 @@ class PurchasePOSFragment: BaseFragment(), View.OnClickListener{
                         context?.let {
 
                             val list = listResponse.toMutableList().apply{
-                                add(0, CustomerEntity())
+                                add(0,
+                                    CustomerEntity()
+                                )
                             }
 
                             binding.spinnerCustomer.adapter =
@@ -169,7 +171,7 @@ class PurchasePOSFragment: BaseFragment(), View.OnClickListener{
                                 "Transacción exitosa",
                                 "Aceptar",
                                 positiveCallback = {
-                                    val direction = PurchasePOSFragmentDirections.toDashboardPOSFragment()
+                                    val direction = PurchasePOSFragmentDirections.toDashboardPosFragment()
                                     findNavController().navigate(direction)
 
                                     viewModel.resetPurchase()

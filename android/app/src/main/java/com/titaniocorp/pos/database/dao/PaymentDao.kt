@@ -2,7 +2,7 @@ package com.titaniocorp.pos.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.titaniocorp.pos.app.model.PaymentEntity
+import com.titaniocorp.pos.database.entity.PaymentEntity
 
 /**
  * Maneja las consultas a la base de pagos (payments)

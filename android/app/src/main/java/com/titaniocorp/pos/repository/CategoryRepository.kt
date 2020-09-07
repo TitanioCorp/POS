@@ -4,8 +4,8 @@ import androidx.lifecycle.*
 import com.titaniocorp.pos.app.model.Category
 import com.titaniocorp.pos.app.model.Resource
 import com.titaniocorp.pos.app.model.asDatabaseModel
-import com.titaniocorp.pos.app.model.asDomainModel
 import com.titaniocorp.pos.database.dao.CategoryDao
+import com.titaniocorp.pos.database.entity.asDomainModel
 import com.titaniocorp.pos.repository.processor.Processor
 import com.titaniocorp.pos.repository.processor.SingleProcessor
 import com.titaniocorp.pos.util.AppCode

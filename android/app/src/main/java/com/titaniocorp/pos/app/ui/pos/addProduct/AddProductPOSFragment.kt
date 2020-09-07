@@ -98,7 +98,7 @@ class AddProductPOSFragment: BaseFragment(), View.OnClickListener{
         R.id.action_add_price_purchase -> {
             when(val code = viewModel.addProduct()){
                 AppCode.VALIDATE_SUCCESS -> {
-                    val direction = AddProductPOSFragmentDirections.toDashboardPOSFragment()
+                    val direction = AddProductPOSFragmentDirections.toDashboardPosFragment()
                     findNavController().navigate(direction)
                 }
 

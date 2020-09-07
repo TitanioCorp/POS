@@ -8,8 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.titaniocorp.pos.R
+import com.titaniocorp.pos.app.model.PricePurchase
 import com.titaniocorp.pos.app.model.dto.DashboardPOSAdapterDto
-import com.titaniocorp.pos.app.viewmodel.model.DashboardPOSAdapterDtoViewModel
+import com.titaniocorp.pos.app.viewmodel.model.DashboardPosAdapterViewModel
 import com.titaniocorp.pos.databinding.ItemListPosDashboardProductBinding
 
 /**
@@ -18,7 +19,7 @@ import com.titaniocorp.pos.databinding.ItemListPosDashboardProductBinding
  * @author Juan Ortiz
  * @date 10/09/2019
  */
-class DashboardPOSAdapter(private val listener: OnItemClickListener): ListAdapter<DashboardPOSAdapterDto, DashboardPOSAdapter.ViewHolder>(DiffCallback()){
+class DashboardPosAdapter(private val listener: OnItemClickListener): ListAdapter<PricePurchase, DashboardPosAdapter.ViewHolder>(DiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -49,22 +50,22 @@ class DashboardPOSAdapter(private val listener: OnItemClickListener): ListAdapte
     }
 
     class ViewHolder (private val binding: ItemListPosDashboardProductBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(item: DashboardPOSAdapterDto, viewListener: View.OnClickListener){
+        fun bind(item: PricePurchase, viewListener: View.OnClickListener){
             with(binding) {
-                viewModel = DashboardPOSAdapterDtoViewModel(item)
+                viewModel = DashboardPosAdapterViewModel(item)
                 clickListener = viewListener
                 executePendingBindings()
             }
         }
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<DashboardPOSAdapterDto>() {
+    private class DiffCallback : DiffUtil.ItemCallback<PricePurchase>() {
 
-        override fun areItemsTheSame(oldItem: DashboardPOSAdapterDto, newItem: DashboardPOSAdapterDto): Boolean {
-            return oldItem.namePrice == newItem.namePrice
+        override fun areItemsTheSame(oldItem: PricePurchase, newItem: PricePurchase): Boolean {
+            return oldItem.priceId == newItem.priceId
         }
 
-        override fun areContentsTheSame(oldItem: DashboardPOSAdapterDto, newItem: DashboardPOSAdapterDto): Boolean {
+        override fun areContentsTheSame(oldItem: PricePurchase, newItem: PricePurchase): Boolean {
             return oldItem == newItem
         }
     }

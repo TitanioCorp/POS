@@ -98,7 +98,10 @@ class DashboardReportFragment: BaseFragment(),
     private fun subscribeUi(){
         viewModel.navigate.observe(viewLifecycleOwner, Observer {
             when(it.first){
-                0 -> {}
+                0 -> {
+                    val direction = DashboardReportFragmentDirections.toStockReportFragment()
+                    findNavController().navigate(direction)
+                }
                 1 -> {
                     lifecycleScope.launch{
                         val dates = viewModel.getDates()

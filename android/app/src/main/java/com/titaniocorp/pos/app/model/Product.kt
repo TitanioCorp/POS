@@ -1,5 +1,6 @@
 package com.titaniocorp.pos.app.model
 
+import com.titaniocorp.pos.database.entity.ProductEntity
 import java.util.*
 
 data class Product(
@@ -13,5 +14,12 @@ data class Product(
 )
 
 fun Product.asDatabaseModel(): ProductEntity {
-    return ProductEntity(id, name, categoryId, description, active, createdDate)
+    return ProductEntity(
+        id,
+        name,
+        categoryId,
+        description,
+        active,
+        createdDate
+    )
 }

@@ -5,15 +5,17 @@ import androidx.lifecycle.*
 import com.hadilq.liveevent.LiveEvent
 import com.titaniocorp.pos.BR
 import com.titaniocorp.pos.app.model.*
-import com.titaniocorp.pos.app.model.dto.DashboardPOSAdapterDto
 import com.titaniocorp.pos.app.model.dto.SearchProductDTO
 import com.titaniocorp.pos.app.viewmodel.ObservableViewModel
+import com.titaniocorp.pos.database.entity.CustomerEntity
 import com.titaniocorp.pos.repository.*
 import com.titaniocorp.pos.util.*
 import com.titaniocorp.pos.util.AppCode.Companion.ERROR_PURCHASE_EMPTY_PRICES
 import com.titaniocorp.pos.util.AppCode.Companion.ERROR_PURCHASE_NO_CUSTOMER
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class POSViewModel @Inject constructor(
     private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository,
@@ -21,18 +23,16 @@ class POSViewModel @Inject constructor(
     customerRepository: CustomerRepository,
     profitRepository: ProfitRepository
 ): ObservableViewModel(){
-    @Bindable var bPriceUnit = "$0"
-    @Bindable var bPriceTax = "$0"
-    @Bindable var bPriceTotal = "$0"
-
+    //Purchase
     @Bindable var purchase = Purchase()
-    @Bindable var pricePurchase = PricePurchase()
-    @Bindable var product = Product()
-    val adapterPriceList = mutableListOf<DashboardPOSAdapterDto>()
 
+    //Product
+    @Bindable var product = Product()
     private var profitSelected: Profit = Profit()
     private var maxStock = 1
+    @Bindable var pricePurchase = PricePurchase()
 
+    //Dashboard
     val adapterUpdated = LiveEvent<Pair<Int, Int>>()
     private val mSearchQuery = LiveEvent<String>()
     private val searchedId = MutableLiveData<Long>()
@@ -54,34 +54,6 @@ class POSViewModel @Inject constructor(
         return categoryRepository.getByIdSingle(id).also {
             setLoading(false)
         }
-    }
-    //endregion
-
-    //region View
-    fun addAdapterItem(): Boolean{
-        with(pricePurchase){
-            adapterPriceList.add(
-                DashboardPOSAdapterDto(
-                    product.name,
-                    product.prices.find { it.id == priceId }?.name ?: "",
-                    profitSelected.name,
-                    cost,
-                    tax,
-                    profit,
-                    quantity,
-                    (cost + profit) * quantity
-                )
-            )
-
-            adapterUpdated.value = Pair(1, adapterPriceList.size - 1)
-        }
-        return true
-    }
-
-    fun removeAdapterItem(position: Int){
-        adapterPriceList.removeAt(position)
-        removeProduct(position)
-        adapterUpdated.value = Pair(3, position)
     }
     //endregion
 
@@ -115,8 +87,12 @@ class POSViewModel @Inject constructor(
                 profit += it.profit * it.quantity
                 tax += it.tax * it.quantity
             }
+
+            adjustment = if(prices.isNullOrEmpty()) 0.0  else adjustment
+
             subtotal = cost + profit
             total = cost + profit + tax + adjustment
+
             notifyPropertyChanged(BR.purchase)
         }
     }
@@ -135,8 +111,14 @@ class POSViewModel @Inject constructor(
             return if(pricePurchase.quantity + currentQuantity > totalQuantity){
                 AppCode.ERROR_QUANTITY_PRICE_PURCHASE
             }else{
+                with(pricePurchase){
+                    productName = product.name
+                    priceName = product.prices.find { it.id == priceId }?.name ?: ""
+                    profitName = profitSelected.name
+                }
+
                 purchase.prices.add(pricePurchase)
-                addAdapterItem()
+                adapterUpdated.value = Pair(1, purchase.prices.size - 1)
                 computePurchase()
                 AppCode.VALIDATE_SUCCESS
             }
@@ -145,9 +127,10 @@ class POSViewModel @Inject constructor(
         }
     }
 
-    private fun removeProduct(position: Int){
+    fun removeProduct(position: Int){
         purchase.prices.removeAt(position)
         computePurchase()
+        adapterUpdated.value = Pair(3, position)
     }
 
     fun setProductSelected(product: Product){
@@ -205,7 +188,6 @@ class POSViewModel @Inject constructor(
         purchase = Purchase()
         pricePurchase = PricePurchase()
         product = Product()
-        adapterPriceList.clear()
 
         profitSelected = Profit()
         maxStock = 1
@@ -231,12 +213,7 @@ class POSViewModel @Inject constructor(
         with(pricePurchase){
             this.priceId = priceId
 
-            this.tax = if(isInitialProfit){
-                cost.calculateTax()
-            }else{
-                cost * Configurations.taxPercent
-            }
-
+            this.tax = cost.calculateTax(isInitialProfit)
             this.cost = cost
 
 
@@ -259,17 +236,7 @@ class POSViewModel @Inject constructor(
             }
         }
 
-
-        bPriceUnit = (pricePurchase.cost + pricePurchase.profit).formatMoney()
-        bPriceTax = pricePurchase.tax.formatMoney()
-
-        val total = (pricePurchase.cost + pricePurchase.profit + pricePurchase.tax) * pricePurchase.quantity
-        bPriceTotal = total.formatMoney()
-
         notifyPropertyChanged(BR.pricePurchase)
-        notifyPropertyChanged(BR.bPriceUnit)
-        notifyPropertyChanged(BR.bPriceTax)
-        notifyPropertyChanged(BR.bPriceTotal)
     }
 
     fun addQuantity(){

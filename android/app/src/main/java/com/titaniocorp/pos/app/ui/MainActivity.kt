@@ -8,9 +8,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.*
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import com.titaniocorp.pos.BuildConfig
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.ui.base.activity.BaseActivity
+import com.titaniocorp.pos.app.ui.settings.SettingsFragmentDirections
 import com.titaniocorp.pos.databinding.ActivityMainBinding
 import com.titaniocorp.pos.util.Configurations
 import com.titaniocorp.pos.util.Constants
@@ -22,7 +25,7 @@ import timber.log.Timber
  * @author Juan Ortiz
  * @date 10/09/2019
  */
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
@@ -38,7 +41,7 @@ class MainActivity : BaseActivity() {
 
         navController = findNavController(this, R.id.nav_host_fragment)
         val topLevelDestinations = setOf(
-            R.id.dashboardPOSFragment
+            R.id.dashboardPosFragment
         )
 
         appBarConfiguration = AppBarConfiguration
@@ -65,5 +68,19 @@ class MainActivity : BaseActivity() {
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
     //endregion
+
+    override fun onPreferenceStartFragment(
+        caller: PreferenceFragmentCompat?,
+        pref: Preference?
+    ): Boolean {
+        when(pref?.key){
+            getString(R.string.preference_key_database) -> {
+                val direction = SettingsFragmentDirections.toDashboardDatabaseFragment()
+                navController.navigate(direction)
+            }
+        }
+
+        return true
+    }
 }
 

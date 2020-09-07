@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+        <variable
+                name="viewModel"
+                type="com.titaniocorp.pos.app.ui.report.products.stock.StockReportItemViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@{viewModel.isSelected ?  @drawable/bg_item_list_selected : @drawable/bg_item_list}"
+        android:onClick="@{clickListener}">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="24dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="24dp" />
+
+        <TextView
+            android:id="@+id/text_label_product"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Producto"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+            app:layout_constraintEnd_toStartOf="@+id/text_value_cost"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_value_product"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.productName}"
+            app:layout_constraintEnd_toEndOf="@+id/text_label_product"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/text_label_product" />
+
+        <TextView
+            android:id="@+id/text_label_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Punto de precio"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+            app:layout_constraintEnd_toEndOf="@+id/text_value_product"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/text_value_product" />
+
+        <TextView
+            android:id="@+id/text_value_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.priceName}"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/text_label_price"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left"
+            app:layout_constraintTop_toBottomOf="@+id/text_label_price" />
+
+        <TextView
+            android:id="@+id/text_value_cost"
+            asMoney="@{viewModel.cost}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textAlignment="textEnd"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toEndOf="@+id/text_label_product"
+            app:layout_constraintTop_toTopOf="@+id/text_label_product" />
+
+        <TextView
+            android:id="@+id/text_value_tax"
+            asTax="@{viewModel.tax}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/text_value_cost"
+            app:layout_constraintTop_toBottomOf="@+id/text_value_cost" />
+
+        <TextView
+            android:id="@+id/text_value_quantity"
+            asQuantity="@{viewModel.stock}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/text_value_tax"
+            app:layout_constraintTop_toBottomOf="@+id/text_value_tax" />
+
+        <TextView
+            android:id="@+id/text_value_total"
+            asMoney="@{viewModel.total}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="textEnd"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+            app:layout_constraintStart_toStartOf="@+id/text_value_tax"
+            app:layout_constraintTop_toBottomOf="@+id/text_value_quantity" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
