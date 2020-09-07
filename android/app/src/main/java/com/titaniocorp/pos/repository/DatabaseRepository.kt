@@ -1,18 +1,19 @@
 package com.titaniocorp.pos.repository
 
 import android.content.Context
+import android.net.Uri
 import android.os.Environment
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.titaniocorp.pos.BuildConfig
 import com.titaniocorp.pos.app.model.Resource
-import com.titaniocorp.pos.util.ImportDatabaseException
-import com.titaniocorp.pos.util.getCode
-import com.titaniocorp.pos.util.toFormatFileString
+import com.titaniocorp.pos.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import timber.log.Timber
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
+import java.lang.Exception
 import java.util.*
 import javax.inject.Inject
 
@@ -23,30 +24,64 @@ import javax.inject.Inject
  */
 @ExperimentalCoroutinesApi
 class DatabaseRepository @Inject constructor(private val applicationContext: Context):  BaseRepository(){
+
+    private fun StorageReference.uploadToFirebase(file: File){
+        val uploadTask = putFile(Uri.fromFile(file))
+
+        uploadTask
+            .addOnFailureListener {
+                Timber.tag(Constants.TAG_APP_DEBUG).e("${file.path} file upload error!")
+            }
+            .addOnSuccessListener {
+                Timber.tag(Constants.TAG_APP_DEBUG).d("${file.path} file upload success!")
+            }
+    }
+
+    private fun StorageReference.importFromFirebase(
+        dataDirectory: File,
+        deviceFilePath: String,
+        suffix: String
+    ){
+        try {
+            val filenamePath = "${deviceFilePath}.${suffix}"
+            val file = File.createTempFile(DATABASE_NAME, suffix)
+
+            getFile(file)
+                .addOnSuccessListener {
+                    File(dataDirectory, filenamePath).delete()
+                    file.copyTo(File(dataDirectory, filenamePath), true)
+
+                    Timber.tag(Constants.TAG_APP_DEBUG).d("$filenamePath file import success!")
+                }
+                .addOnFailureListener {
+                    Timber.tag(Constants.TAG_APP_DEBUG).e("$filenamePath file import error!")
+                }
+        }catch (exception: Exception){
+            Timber.tag(Constants.TAG_APP_DEBUG).e(exception)
+        }
+    }
+
     fun export(): Flow<Resource<Boolean>> {
         val dataDirectory = Environment.getDataDirectory()
-        val databaseDirectoryPath= "/data/${BuildConfig.APPLICATION_ID}/databases/$DATABASE_NAME"
+        val databaseDevicePath= "/data/${BuildConfig.APPLICATION_ID}/databases/$DATABASE_NAME"
 
-        val exportDirectory = applicationContext.getExternalFilesDir("databases/export")
-        val exportFilename = "database-v${BuildConfig.VERSION_NAME}-${Date().toFormatFileString()}-"
+        val date = Date().toFormatFileString()
+        val filename = "${FIREBASE_DATABASE_FOLDER}/${date}/${DATABASE_NAME}"
+
+        val storageRef = FirebaseStorage.getInstance().reference
 
         val flow: Flow<Resource<Boolean>> = flow{
-            File(dataDirectory, "$databaseDirectoryPath.db").apply {
-                File.createTempFile(exportFilename, ".db", exportDirectory).also {
-                    copyTo(it, true)
-                }
+
+            File(dataDirectory, "$databaseDevicePath.db").also {
+                storageRef.child("${filename}.db").uploadToFirebase(it)
             }
 
-            File(dataDirectory, "$databaseDirectoryPath.db-shm").apply {
-                File.createTempFile(exportFilename, ".db-shm", exportDirectory).also {
-                    copyTo(it, true)
-                }
+            File(dataDirectory, "$databaseDevicePath.db-shm").also {
+                storageRef.child("${filename}.db-shm").uploadToFirebase(it)
             }
 
-            File(dataDirectory, "$databaseDirectoryPath.db-wal").apply {
-                File.createTempFile(exportFilename, ".db-wal", exportDirectory).also {
-                    copyTo(it, true)
-                }
+            File(dataDirectory, "$databaseDevicePath.db-wal").also {
+                storageRef.child("${filename}.db-wal").uploadToFirebase(it)
             }
 
             emit(Resource.success(true))
@@ -67,28 +102,25 @@ class DatabaseRepository @Inject constructor(private val applicationContext: Con
 
     fun import(): Flow<Resource<Boolean>> {
         val dataDirectory = Environment.getDataDirectory()
-        val databaseDirectoryPath= "/data/${BuildConfig.APPLICATION_ID}/databases"
+        val filenameDevice = "/data/${BuildConfig.APPLICATION_ID}/databases/$DATABASE_NAME"
+        val filenameFirebase = "${FIREBASE_DATABASE_FOLDER}/import/${DATABASE_NAME}"
 
-        val importDirectory = applicationContext?.getExternalFilesDir("databases/import")
-        val importFilename = "database.db"
+        val storageRef = FirebaseStorage.getInstance().reference
 
         val flow: Flow<Resource<Boolean>> = flow{
-            if(importDirectory?.exists() == true){
-                File(dataDirectory, "$databaseDirectoryPath/$DATABASE_NAME.db-shm").delete()
-                File(dataDirectory, "$databaseDirectoryPath/$DATABASE_NAME.db-wal").delete()
+            storageRef
+                .child("${filenameFirebase}.db")
+                .importFromFirebase(dataDirectory, filenameDevice, "db")
 
-                FileInputStream(File(importDirectory, importFilename)).channel.also {
-                    FileOutputStream(File(dataDirectory, "$databaseDirectoryPath/$DATABASE_NAME.db")).channel.apply {
-                        transferFrom(it, 0, it.size())
-                        it.close()
-                        close()
-                    }
-                }
+            storageRef
+                .child("${filenameFirebase}.db-shm")
+                .importFromFirebase(dataDirectory, filenameDevice, "db-shm")
 
-                emit(Resource.success(true))
-            }else{
-                throw ImportDatabaseException("Import directory does not exits!")
-            }
+            storageRef
+                .child("${filenameFirebase}.db-wal")
+                .importFromFirebase(dataDirectory, filenameDevice, "db-wal")
+
+            emit(Resource.success(true))
         }
 
         with(flow){
@@ -105,6 +137,7 @@ class DatabaseRepository @Inject constructor(private val applicationContext: Con
     }
 
     companion object{
+        private const val FIREBASE_DATABASE_FOLDER = "databases"
         private const val DATABASE_NAME = "appdatabase"
     }
 }
