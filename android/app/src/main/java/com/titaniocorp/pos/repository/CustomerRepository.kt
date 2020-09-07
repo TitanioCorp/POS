@@ -1,7 +1,7 @@
 package com.titaniocorp.pos.repository
 
 import androidx.lifecycle.*
-import com.titaniocorp.pos.app.model.CustomerEntity
+import com.titaniocorp.pos.database.entity.CustomerEntity
 import com.titaniocorp.pos.app.model.Resource
 import com.titaniocorp.pos.database.dao.CustomerDao
 import com.titaniocorp.pos.repository.processor.*

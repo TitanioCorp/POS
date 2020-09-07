@@ -1,5 +1,6 @@
 package com.titaniocorp.pos.app.model
 
+import com.titaniocorp.pos.database.entity.PaymentPurchaseEntity
 import java.util.*
 
 data class PaymentPurchase(
@@ -12,9 +13,25 @@ data class PaymentPurchase(
 )
 
 fun PaymentPurchase.asDatabaseModel(): PaymentPurchaseEntity {
-    return PaymentPurchaseEntity(id, purchaseId, paymentCategoryId, value, isCredit, createdDate)
+    return PaymentPurchaseEntity(
+        id,
+        purchaseId,
+        paymentCategoryId,
+        value,
+        isCredit,
+        createdDate
+    )
 }
 
 fun List<PaymentPurchase>.asDatabaseModel(): List<PaymentPurchaseEntity> {
-    return map{ PaymentPurchaseEntity(it.id, it.purchaseId, it.paymentCategoryId, it.value, it.isCredit, it.createdDate)}
+    return map{
+        PaymentPurchaseEntity(
+            it.id,
+            it.purchaseId,
+            it.paymentCategoryId,
+            it.value,
+            it.isCredit,
+            it.createdDate
+        )
+    }
 }

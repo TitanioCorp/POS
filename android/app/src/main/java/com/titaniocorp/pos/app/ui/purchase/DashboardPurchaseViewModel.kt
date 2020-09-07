@@ -7,6 +7,7 @@ import androidx.lifecycle.asLiveData
 import com.titaniocorp.pos.app.model.*
 import com.titaniocorp.pos.app.model.domain.Customer
 import com.titaniocorp.pos.app.viewmodel.BaseViewModel
+import com.titaniocorp.pos.database.entity.asDomainModel
 import com.titaniocorp.pos.repository.CustomerRepository
 import com.titaniocorp.pos.repository.PurchaseRepository
 import com.titaniocorp.pos.util.DateUtil

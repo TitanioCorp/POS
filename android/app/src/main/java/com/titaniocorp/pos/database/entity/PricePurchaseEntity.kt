@@ -1,6 +1,7 @@
-package com.titaniocorp.pos.app.model
+package com.titaniocorp.pos.database.entity
 
 import androidx.room.*
+import com.titaniocorp.pos.app.model.PricePurchase
 import java.util.*
 
 @Entity(
@@ -8,7 +9,8 @@ import java.util.*
     indices = [
         Index(value = ["price_purchase_id"], unique = true),
         Index(value = ["price_id"]),
-        Index(value = ["purchase_id"])
+        Index(value = ["purchase_id"]),
+        Index(value = ["created_date"], unique = true)
     ],
     foreignKeys = [
         ForeignKey(entity = PurchaseEntity::class,
@@ -51,9 +53,31 @@ data class PricePurchaseEntity(
 )
 
 fun List<PricePurchaseEntity>.asDomainModel(): List<PricePurchase>{
-    return map { PricePurchase(it.id, it.priceId, it.purchaseId, it.cost, it.profit, it.tax, it.quantity, it.isRefund, it.createdDate) }
+    return map {
+        PricePurchase(
+            it.id,
+            it.priceId,
+            it.purchaseId,
+            it.cost,
+            it.profit,
+            it.tax,
+            it.quantity,
+            it.isRefund,
+            it.createdDate
+        )
+    }
 }
 
-fun PricePurchaseEntity.asDomainModel(): PricePurchase{
-    return PricePurchase(id, priceId, purchaseId, cost, profit, tax, quantity, isRefund, createdDate)
+fun PricePurchaseEntity.asDomainModel(): PricePurchase {
+    return PricePurchase(
+        id,
+        priceId,
+        purchaseId,
+        cost,
+        profit,
+        tax,
+        quantity,
+        isRefund,
+        createdDate
+    )
 }

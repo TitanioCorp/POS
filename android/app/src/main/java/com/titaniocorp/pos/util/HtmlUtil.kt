@@ -123,37 +123,37 @@ object HtmlUtil {
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Costo</div>" +
-            "            <div class=\"value\">\$${billing.cost.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.cost.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Ganancia</div>" +
-            "            <div class=\"value\">\$${billing.profit.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.profit.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Reembolso</div>" +
-            "            <div class=\"value\">\$${billing.refund.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.refund.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Abonos</div>" +
-            "            <div class=\"value\">\$${billing.payments.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.payments.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Ajuste</div>" +
-            "            <div class=\"value\">\$${billing.adjustment.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.adjustment.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item\">" +
             "            <div class=\"label\">Impuesto</div>" +
-            "            <div class=\"value\">\$${billing.tax.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.tax.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
@@ -163,20 +163,20 @@ object HtmlUtil {
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Compra de inventario</div>" +
-            "            <div class=\"value\">\$${billing.stock.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.stock.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Otros egresos</div>" +
-            "            <div class=\"value\">\$${billing.expenses.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.expenses.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item\">" +
             "            <div class=\"label\">Otros ingresos</div>" +
-            "            <div class=\"value\">\$${billing.income.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.income.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
@@ -186,25 +186,25 @@ object HtmlUtil {
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Total ventas</div>" +
-            "            <div class=\"value\">\$${billing.totalPurchase.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.totalPurchase.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Total egresos</div>" +
-            "            <div class=\"value\">\$${billing.totalExpenses.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.totalExpenses.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Total ingresos</div>" +
-            "            <div class=\"value\">\$${billing.totalIncome.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.totalIncome.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item\">" +
             "            <div class=\"label text-primary text-bold\">Total</div>" +
-            "            <div class=\"value text-primary text-bold\">\$${billing.total.formatMoney()}</div>" +
+            "            <div class=\"value text-primary text-bold\">\$${billing.total.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "        </ul>" +
@@ -347,37 +347,37 @@ object HtmlUtil {
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Costo</div>" +
-            "            <div class=\"value\">\$${billing.cost.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.cost.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Ganancia</div>" +
-            "            <div class=\"value\">\$${billing.profit.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.profit.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Reembolso</div>" +
-            "            <div class=\"value\">\$${billing.refund.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.refund.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Abonos</div>" +
-            "            <div class=\"value\">\$${billing.payments.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.payments.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Ajuste</div>" +
-            "            <div class=\"value\">\$${billing.adjustment.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.adjustment.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item\">" +
             "            <div class=\"label\">Impuesto</div>" +
-            "            <div class=\"value\">\$${billing.tax.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.tax.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
@@ -387,20 +387,20 @@ object HtmlUtil {
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Compra de inventario</div>" +
-            "            <div class=\"value\">\$${billing.stock.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.stock.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Otros egresos</div>" +
-            "            <div class=\"value\">\$${billing.expenses.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.expenses.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item\">" +
             "            <div class=\"label\">Otros ingresos</div>" +
-            "            <div class=\"value\">\$${billing.income.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.income.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
@@ -410,25 +410,25 @@ object HtmlUtil {
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Total ventas</div>" +
-            "            <div class=\"value\">\$${billing.totalPurchase.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.totalPurchase.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Total egresos</div>" +
-            "            <div class=\"value\">\$${billing.totalExpenses.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.totalExpenses.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item item-row\">" +
             "            <div class=\"label\">Total ingresos</div>" +
-            "            <div class=\"value\">\$${billing.totalIncome.formatMoney()}</div>" +
+            "            <div class=\"value\">\$${billing.totalIncome.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "" +
             "          <li class=\"item\">" +
             "            <div class=\"label text-primary text-bold\">Total</div>" +
-            "            <div class=\"value text-primary text-bold\">\$${billing.total.formatMoney()}</div>" +
+            "            <div class=\"value text-primary text-bold\">\$${billing.total.asMoney()}</div>" +
             "            <div class=\"clear\"></div>" +
             "          </li>" +
             "        </ul>" +

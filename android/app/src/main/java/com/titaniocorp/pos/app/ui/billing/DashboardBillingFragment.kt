@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.titaniocorp.pos.R
+import com.titaniocorp.pos.app.model.Resource
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentBillingDashboardBinding
 import com.titaniocorp.pos.util.*
@@ -100,35 +101,8 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
                         }
 
                         viewModel.sendMail().observe(viewLifecycleOwner, Observer{
-                            it.process(
-                                onLoading = { boolean -> setLoading(boolean) },
-                                onSuccess = {
-                                    try {
-                                        FileUtil.deleteDirectory(activity.applicationContext)
-                                        Configurations.setDirectory(null)
-
-                                        DialogHelper.normal(
-                                            activity,
-                                            "El email se ha enviado exitosamente",
-                                            "Envíado exitoso",
-                                            positiveString = "Aceptar",
-                                            positiveCallback = {})?.show()
-                                    }catch (exception: Exception){
-                                        Timber.tag(Constants.TAG_APP_DEBUG).e(exception)
-                                    }
-                                },
-                                onError = {
-                                    DialogHelper.normal(
-                                        activity,
-                                        "${it.data}",
-                                        "Envíado fallido!",
-                                        negativeString = "Aceptar",
-                                        negativeCallback = {}
-                                        )?.show()
-                                }
-                            )
+                            it.processEmail()
                         })
-
                     }
                 }
             }
@@ -141,20 +115,7 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
                         }
 
                         viewModel.sendMail(TypeEmail.REPORT).observe(viewLifecycleOwner, Observer{
-                            it.process(
-                                onLoading = {
-                                        boolean -> setLoading(boolean)
-                                },
-                                onSuccess = {
-                                    try {
-                                        FileUtil.deleteDirectory(activity.applicationContext)
-                                        Configurations.setDirectory(null)
-                                    }catch (exception: Exception){
-                                        Timber.tag(Constants.TAG_APP_DEBUG).e(exception)
-                                    }
-                                },
-                                onError = {}
-                            )
+                            it.processEmail()
                         })
 
                     }
@@ -195,6 +156,38 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
                 onError = {}
             )
         })
+    }
+
+    private fun Resource<String>.processEmail(){
+        process(
+            onLoading = {
+                    boolean -> setLoading(boolean)
+            },
+            onSuccess = {
+                try {
+                    activity?.let{FileUtil.deleteDirectory(it.applicationContext)}
+                    Configurations.setDirectory(null)
+
+                    DialogHelper.normal(
+                        activity,
+                        "El email se ha enviado exitosamente",
+                        "Envíado exitoso",
+                        positiveString = "Aceptar",
+                        positiveCallback = {})?.show()
+                }catch (exception: Exception){
+                    Timber.tag(Constants.TAG_APP_DEBUG).e(exception)
+                }
+            },
+            onError = {
+                DialogHelper.normal(
+                    activity,
+                    "$data",
+                    "Envíado fallido!",
+                    negativeString = "Aceptar",
+                    negativeCallback = {}
+                )?.show()
+            }
+        )
     }
 
     companion object{

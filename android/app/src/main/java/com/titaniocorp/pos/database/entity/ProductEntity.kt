@@ -1,12 +1,14 @@
-package com.titaniocorp.pos.app.model
+package com.titaniocorp.pos.database.entity
 
 import androidx.room.*
+import com.titaniocorp.pos.app.model.Product
 import java.util.*
 
 @Entity(tableName = "product",
     indices = [
         Index(value = ["product_id"], unique = true),
-        Index(value = ["category_id"])
+        Index(value = ["category_id"]),
+        Index(value = ["created_date"], unique = true)
     ],
     foreignKeys = [
             ForeignKey(entity = CategoryEntity::class,
@@ -36,9 +38,25 @@ data class ProductEntity(
 )
 
 fun List<ProductEntity>.asDomainModel(): List<Product>{
-    return map { Product(it.id, it.name, it.categoryId, it.description, it.active, it.createdDate) }
+    return map {
+        Product(
+            it.id,
+            it.name,
+            it.categoryId,
+            it.description,
+            it.active,
+            it.createdDate
+        )
+    }
 }
 
-fun ProductEntity.asDomainModel(): Product{
-    return Product(id, name, categoryId, description, active, createdDate)
+fun ProductEntity.asDomainModel(): Product {
+    return Product(
+        id,
+        name,
+        categoryId,
+        description,
+        active,
+        createdDate
+    )
 }

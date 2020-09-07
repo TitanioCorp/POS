@@ -12,7 +12,7 @@ import com.titaniocorp.pos.app.ui.profit.DashboardProfitViewModel
 import com.titaniocorp.pos.app.ui.purchase.DashboardPurchaseViewModel
 import com.titaniocorp.pos.app.ui.purchase.detail.DetailPurchaseViewModel
 import com.titaniocorp.pos.app.ui.report.DashboardReportViewModel
-import com.titaniocorp.pos.app.ui.report.stock.StockReportViewModel
+import com.titaniocorp.pos.app.ui.report.products.stock.StockReportViewModel
 import com.titaniocorp.pos.app.ui.settings.database.DashboardDatabaseViewModel
 import com.titaniocorp.pos.app.ui.stock.DashboardStockViewModel
 import com.titaniocorp.pos.app.ui.stock.add.AddStockViewModel

@@ -47,6 +47,7 @@ class AppModule {
     @Provides
     fun provideDb(app: Application): AppDatabase {
         return Room.databaseBuilder(app, AppDatabase::class.java, "appdatabase.db")
+            .addMigrations(*AppDatabase.getMigrations().toTypedArray())
             .fallbackToDestructiveMigration()
             .build()
     }

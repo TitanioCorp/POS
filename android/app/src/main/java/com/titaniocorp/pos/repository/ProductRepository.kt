@@ -6,6 +6,7 @@ import com.titaniocorp.pos.app.model.dto.SearchProductDTO
 import com.titaniocorp.pos.database.dao.PriceDao
 import com.titaniocorp.pos.database.dao.ProductDao
 import com.titaniocorp.pos.database.dao.ProfitDao
+import com.titaniocorp.pos.database.entity.asDomainModel
 import com.titaniocorp.pos.repository.processor.*
 import com.titaniocorp.pos.util.AppCode
 import javax.inject.Inject

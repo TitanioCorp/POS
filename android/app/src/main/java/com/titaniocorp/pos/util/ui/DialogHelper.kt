@@ -140,20 +140,16 @@ object DialogHelper {
             price?.let {
                 inputName.setText(price.name)
                 inputSku.setText(price.sku)
-                inputCost.setText(price.cost.formatMoney())
+                inputCost.setText(price.cost.asMoney())
                 inputStock.setText(price.stock.toString())
 
                 switchProfitPercent.isChecked = price.isInitialProfit
 
-                val tax: Double = if(price.isInitialProfit){
-                    price.cost.calculateTax()
-                }else{
-                    price.cost * Configurations.taxPercent
-                }
+                val tax: Double = price.cost.calculateTax(price.isInitialProfit)
 
                 val total = price.cost + tax
-                textTax.text = root.context.getString(R.string.text_money, tax.formatMoney())
-                textTotal.text = root.context.getString(R.string.text_money, total.formatMoney())
+                textTax.text = root.context.getString(R.string.text_money, tax.asMoney())
+                textTotal.text = root.context.getString(R.string.text_money, total.asMoney())
             }
 
             inputCost.addMoneyTextWatcher{cost ->
@@ -164,12 +160,12 @@ object DialogHelper {
                 }
 
                 val total = cost + tax
-                textTax.text = root.context.getString(R.string.text_money, tax.formatMoney())
-                textTotal.text = root.context.getString(R.string.text_money, total.formatMoney())
+                textTax.text = root.context.getString(R.string.text_money, tax.asMoney())
+                textTotal.text = root.context.getString(R.string.text_money, total.asMoney())
             }
 
             switchProfitPercent.setOnCheckedChangeListener{_, isChecked ->
-                val cost = inputCost.text.toString().moneyFilter()
+                val cost = inputCost.text.toString().getValueMoney()
                 val tax: Double = if(isChecked){
                     cost.calculateTax()
                 }else{
@@ -177,8 +173,8 @@ object DialogHelper {
                 }
 
                 val total = cost + tax
-                textTax.text = root.context.getString(R.string.text_money, tax.formatMoney())
-                textTotal.text = root.context.getString(R.string.text_money, total.formatMoney())
+                textTax.text = root.context.getString(R.string.text_money, tax.asMoney())
+                textTotal.text = root.context.getString(R.string.text_money, total.asMoney())
             }
 
             clickListener = View.OnClickListener { view ->
@@ -201,7 +197,7 @@ object DialogHelper {
                                     price?.productId ?: 0,
                                     inputName.text.toString(),
                                     inputSku.text.toString(),
-                                    inputCost.text.toString().moneyFilter(),
+                                    inputCost.text.toString().getValueMoney(),
                                     inputStock.text.toString().toInt(),
                                     switchProfitPercent.isChecked,
                                     price?.active ?: true)

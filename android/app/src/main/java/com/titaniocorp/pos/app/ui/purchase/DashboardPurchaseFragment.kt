@@ -13,15 +13,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.titaniocorp.pos.R
-import com.titaniocorp.pos.app.model.CustomerEntity
 import com.titaniocorp.pos.app.model.domain.Customer
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentPurchaseDashboardBinding
 import com.titaniocorp.pos.util.DateUtil
 import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DatePickerFragment
-import timber.log.Timber
-import java.util.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
 /**
@@ -30,6 +28,8 @@ import javax.inject.Inject
  * @author Juan Ortiz
  * @date 10/09/2019
  */
+
+@ExperimentalCoroutinesApi
 class DashboardPurchaseFragment: BaseFragment(),
     View.OnClickListener,
     DatePickerDialog.OnDateSetListener{

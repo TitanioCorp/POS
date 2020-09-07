@@ -45,10 +45,10 @@ object MailUtil {
             val date = Date()
 
             MimeMessage(getSession(getProperties())).apply {
-                addRecipient(Message.RecipientType.TO, InternetAddress("juanortizbayona@gmail.com"))
+                addRecipient(Message.RecipientType.TO, InternetAddress(Configurations.emailAdmin))
                 subject = "Cierre de caja - ${Date().toFormatString()}"
                 sentDate = date
-                setFrom(InternetAddress("titaniocorporate@gmail.com", "Titanio Corporate"))
+                setFrom(InternetAddress(BuildConfig.EMAIL_USERNAME, "Titanio Corporate"))
 
                 setContent(MimeMultipart().apply {
 

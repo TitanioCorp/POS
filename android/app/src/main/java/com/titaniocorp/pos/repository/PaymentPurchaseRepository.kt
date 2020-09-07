@@ -2,13 +2,10 @@ package com.titaniocorp.pos.repository
 
 import androidx.lifecycle.*
 import com.titaniocorp.pos.app.model.*
-import com.titaniocorp.pos.app.model.dto.DetailPurchaseAdapterDto
-import com.titaniocorp.pos.app.model.dto.PurchaseDTO
 import com.titaniocorp.pos.database.dao.*
+import com.titaniocorp.pos.database.entity.asDomainModel
 import com.titaniocorp.pos.repository.processor.*
 import com.titaniocorp.pos.util.AppCode
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 /**

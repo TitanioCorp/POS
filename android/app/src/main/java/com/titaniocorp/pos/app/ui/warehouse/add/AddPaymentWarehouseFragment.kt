@@ -13,7 +13,7 @@ import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentWarehousePaymentAddBinding
 import com.titaniocorp.pos.util.addMoneyTextWatcher
-import com.titaniocorp.pos.util.moneyFilter
+import com.titaniocorp.pos.util.getValueMoney
 import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogHelper
 import com.titaniocorp.pos.util.validations.ValidateType
@@ -76,8 +76,8 @@ class AddPaymentWarehouseFragment: BaseFragment(),
                     "Cancelar",
                     {
                         viewModel.payment.value = when(binding.spinnerTypePayment.selectedItem as String){
-                            "Egreso" -> { binding.inputValue.text.toString().moneyFilter() * -1 }
-                            else -> { binding.inputValue.text.toString().moneyFilter() }
+                            "Egreso" -> { binding.inputValue.text.toString().getValueMoney() * -1 }
+                            else -> { binding.inputValue.text.toString().getValueMoney() }
                         }
                         viewModel.payment.observation = binding.inputObservation.text.toString()
 

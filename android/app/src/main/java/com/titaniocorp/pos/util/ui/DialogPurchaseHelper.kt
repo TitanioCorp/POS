@@ -6,17 +6,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.titaniocorp.pos.R
-import com.titaniocorp.pos.app.model.Profit
 import com.titaniocorp.pos.app.model.dto.DetailPurchaseAdapterDto
 import com.titaniocorp.pos.databinding.DialogAddPaymentBinding
 import com.titaniocorp.pos.databinding.DialogAddRefundBinding
-import com.titaniocorp.pos.databinding.DialogNewProfitBinding
 import com.titaniocorp.pos.util.addMoneyTextWatcher
-import com.titaniocorp.pos.util.formatMoney
-import com.titaniocorp.pos.util.moneyFilter
+import com.titaniocorp.pos.util.asMoney
+import com.titaniocorp.pos.util.getValueMoney
 import com.titaniocorp.pos.util.validations.ValidateType
 import com.titaniocorp.pos.util.validations.validate
-import kotlin.math.round
 
 object DialogPurchaseHelper {
     fun addPayment(
@@ -40,7 +37,7 @@ object DialogPurchaseHelper {
 
 
         with(binding){
-            value = missingPayment.formatMoney()
+            value = missingPayment.asMoney()
             inputValue.addMoneyTextWatcher()
 
             clickListener = View.OnClickListener { view ->
@@ -52,8 +49,8 @@ object DialogPurchaseHelper {
 
                     R.id.button_positive -> {
                         inputValue.validate(ValidateType.MONEY){
-                            val receivable = binding.value?.moneyFilter() ?: missingPayment
-                            val value = inputValue.text.toString().moneyFilter()
+                            val receivable = binding.value?.getValueMoney() ?: missingPayment
+                            val value = inputValue.text.toString().getValueMoney()
 
                             if(value > receivable){
                                 inputValue.error = "La cantidad ingresada es mayor al faltante por cobrar."

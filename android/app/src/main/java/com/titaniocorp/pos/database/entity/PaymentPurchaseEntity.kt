@@ -1,6 +1,7 @@
-package com.titaniocorp.pos.app.model
+package com.titaniocorp.pos.database.entity
 
 import androidx.room.*
+import com.titaniocorp.pos.app.model.PaymentPurchase
 import java.util.*
 
 @Entity(
@@ -8,7 +9,8 @@ import java.util.*
     indices = [
         Index(value = ["payment_purchase_id"], unique = true),
         Index(value = ["purchase_id"]),
-        Index(value = ["payment_category_id"])
+        Index(value = ["payment_category_id"]),
+        Index(value = ["created_date"], unique = true)
     ],
     foreignKeys = [
         ForeignKey(entity = PurchaseEntity::class,
@@ -38,9 +40,25 @@ data class PaymentPurchaseEntity(
 )
 
 fun List<PaymentPurchaseEntity>.asDomainModel(): List<PaymentPurchase>{
-    return map { PaymentPurchase(it.id, it.purchaseId, it.paymentCategoryId, it.value, it.isCredit, it.createdDate) }
+    return map {
+        PaymentPurchase(
+            it.id,
+            it.purchaseId,
+            it.paymentCategoryId,
+            it.value,
+            it.isCredit,
+            it.createdDate
+        )
+    }
 }
 
-fun PaymentPurchaseEntity.asDomainModel(): PaymentPurchase{
-    return PaymentPurchase(id, purchaseId, paymentCategoryId, value, isCredit, createdDate)
+fun PaymentPurchaseEntity.asDomainModel(): PaymentPurchase {
+    return PaymentPurchase(
+        id,
+        purchaseId,
+        paymentCategoryId,
+        value,
+        isCredit,
+        createdDate
+    )
 }

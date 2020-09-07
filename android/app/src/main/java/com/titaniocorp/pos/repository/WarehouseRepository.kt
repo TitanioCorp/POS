@@ -4,8 +4,8 @@ import androidx.lifecycle.*
 import com.titaniocorp.pos.app.model.Payment
 import com.titaniocorp.pos.app.model.Resource
 import com.titaniocorp.pos.app.model.asDatabaseModel
-import com.titaniocorp.pos.app.model.asDomainModel
 import com.titaniocorp.pos.database.dao.*
+import com.titaniocorp.pos.database.entity.asDomainModel
 import com.titaniocorp.pos.repository.processor.*
 import com.titaniocorp.pos.util.AppCode
 import javax.inject.Inject

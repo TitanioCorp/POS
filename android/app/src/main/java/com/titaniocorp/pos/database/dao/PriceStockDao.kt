@@ -2,8 +2,7 @@ package com.titaniocorp.pos.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.titaniocorp.pos.app.model.PriceStock
-import com.titaniocorp.pos.app.model.PriceStockEntity
+import com.titaniocorp.pos.database.entity.PriceStockEntity
 import com.titaniocorp.pos.app.model.dto.PriceStockDto
 
 /**
