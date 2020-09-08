@@ -7,7 +7,8 @@ import java.util.*
 @Entity(
     tableName = "payment_category",
     indices = [
-        Index(value = ["payment_category_id"], unique = true)
+        Index(value = ["payment_category_id"], unique = true),
+        Index(value = ["date"], unique = true)
     ]
 )
 data class PaymentCategoryEntity(
