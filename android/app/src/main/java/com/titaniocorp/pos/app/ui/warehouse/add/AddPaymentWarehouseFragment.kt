@@ -54,6 +54,7 @@ class AddPaymentWarehouseFragment: BaseFragment(),
             clickListener = this@AddPaymentWarehouseFragment
             mViewModel = viewModel
 
+            inputValue.setText("0")
             inputValue.addMoneyTextWatcher()
             spinnerTypePayment.adapter = ArrayAdapter(binding.root.context, android.R.layout.simple_list_item_1, resources.getStringArray(R.array.array_type_payments))
         }

@@ -92,7 +92,7 @@ class POSViewModel @Inject constructor(
 
             subtotal = cost + profit
             total = cost + profit + tax + adjustment
-            
+
             notifyPropertyChanged(BR.purchase)
         }
     }

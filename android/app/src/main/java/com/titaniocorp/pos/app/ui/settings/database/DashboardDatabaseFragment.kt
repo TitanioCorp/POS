@@ -30,6 +30,7 @@ import java.util.*
 import javax.inject.Inject
 import androidx.lifecycle.Observer
 import com.titaniocorp.pos.util.process
+import com.titaniocorp.pos.util.ui.DialogHelper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
@@ -71,8 +72,20 @@ class DashboardDatabaseFragment: BaseFragment(), View.OnClickListener{
     override fun onClick(v: View?) {
         if(allPermissionsGranted()){
             when(v?.id){
-                R.id.button_export -> {export()}
-                R.id.button_import -> {import()}
+                R.id.button_export -> {
+                    export()
+                }
+                R.id.button_import -> {
+                    DialogHelper.normal(
+                        activity,
+                        "Se sincronizará la base de datos de internet. Esta acción no se podrá revertir.",
+                        "¿Desea sincronizar la base de datos?",
+                        "Syncronizar",
+                        "Cancelar",
+                        { import() },
+                        {})?.show()
+
+                }
             }
         }else{
             activity?.let{
