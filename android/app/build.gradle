@@ -24,8 +24,10 @@ android {
             keyAlias credentialsProperties['keyAlias']
         }
     }
+
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+
     defaultConfig {
         applicationId "com.titaniocorp.pos"
         minSdkVersion 21
@@ -39,6 +41,7 @@ android {
         buildConfigField 'String', 'EMAIL_PASSWORD', "\"${credentialsProperties['passwordEmail']}\""
         buildConfigField 'String', 'apiKey', NONE
     }
+
     buildTypes {
         debug{
             signingConfig signingConfigs.release
@@ -62,28 +65,31 @@ android {
             buildConfigField 'String', 'urlBase', NONE
         }
     }
-    dataBinding {
-        enabled = true
+
+    buildFeatures{
+        dataBinding = true
     }
-    viewBinding {
-        enabled = true
-    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     sourceSets {
         androidTest.java.srcDirs += "src/test-common/java"
         test.java.srcDirs += "src/test-common/java"
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     lintOptions {
         checkAllWarnings true
         warningsAsErrors true
         abortOnError false
     }
+
     packagingOptions {
         pickFirst 'META-INF/LICENSE.txt'
 
@@ -97,6 +103,7 @@ android {
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/INDEX.LIST'
     }
+
     kapt {
         generateStubs = true
     }
