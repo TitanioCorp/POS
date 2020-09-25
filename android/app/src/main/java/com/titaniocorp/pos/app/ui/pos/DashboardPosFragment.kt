@@ -31,9 +31,6 @@ class DashboardPosFragment: BaseFragment(),
     SearchView.OnQueryTextListener,
     DashboardPosAdapter.OnItemClickListener{
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
     private lateinit var binding: FragmentPosDashboardBinding
     val viewModel: POSViewModel by viewModels { viewModelFactory }
 
@@ -45,7 +42,6 @@ class DashboardPosFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner

@@ -24,8 +24,6 @@ import javax.inject.Inject
  */
 class DashboardWarehouseFragment: BaseFragment(), View.OnClickListener{
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentWarehouseDashboardBinding
     val viewModel: DashboardWarehouseViewModel by viewModels { viewModelFactory }
 
@@ -37,7 +35,6 @@ class DashboardWarehouseFragment: BaseFragment(), View.OnClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner

@@ -34,8 +34,6 @@ import javax.inject.Inject
  */
 class AddProductPOSFragment: BaseFragment(), View.OnClickListener{
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentPosAddProductBinding
     val viewModel: POSViewModel by viewModels { viewModelFactory }
 
@@ -52,7 +50,6 @@ class AddProductPOSFragment: BaseFragment(), View.OnClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         arguments?.let {
             val positionSelected = it.getInt(ARG_POSITION)

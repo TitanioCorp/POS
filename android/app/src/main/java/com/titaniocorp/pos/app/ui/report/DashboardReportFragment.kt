@@ -30,8 +30,6 @@ import javax.inject.Inject
 class DashboardReportFragment: BaseFragment(),
     View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentReportDashboardBinding
     val viewModel: DashboardReportViewModel by viewModels { viewModelFactory }
 
@@ -43,7 +41,6 @@ class DashboardReportFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner

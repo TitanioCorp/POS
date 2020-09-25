@@ -20,17 +20,25 @@ import com.titaniocorp.pos.app.ui.stock.detail.DetailStockViewModel
 import com.titaniocorp.pos.app.ui.warehouse.DashboardWarehouseViewModel
 import com.titaniocorp.pos.app.ui.warehouse.add.AddPaymentWarehouseViewModel
 import com.titaniocorp.pos.app.viewmodel.AppViewModelFactory
+import com.titaniocorp.pos.app.viewmodel.BaseViewModel
 import com.titaniocorp.pos.di.key.ViewModelKey
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
 import dagger.multibindings.IntoMap
+import javax.inject.Singleton
 
 @Suppress("unused")
 @Module
 abstract class ViewModelModule {
     @Binds
     abstract fun bindViewModelFactory(factory: AppViewModelFactory): ViewModelProvider.Factory
+
+    @Binds
+    @IntoMap
+    @Singleton
+    @ViewModelKey(BaseViewModel::class)
+    abstract fun baseViewModel(viewModel: BaseViewModel): ViewModel
 
     @Binds
     @IntoMap

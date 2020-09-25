@@ -39,8 +39,6 @@ class DetailProductFragment: BaseFragment(),
     AdapterView.OnItemSelectedListener,
     DetailProductAdapter.DetailProductItemListener{
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentProductDetailBinding
     val viewModel: DetailProductViewModel by viewModels { viewModelFactory }
 
@@ -57,7 +55,6 @@ class DetailProductFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         arguments?.let {
             val productId = it.getLong("productId", 0)

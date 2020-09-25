@@ -33,9 +33,6 @@ import javax.inject.Inject
  * @date 10/09/2019
  */
 class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentBillingDashboardBinding
     val viewModel: DashboardBillingViewModel by viewModels { viewModelFactory }
 
@@ -47,7 +44,6 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         lifecycleScope.launch(Dispatchers.IO){
             try {

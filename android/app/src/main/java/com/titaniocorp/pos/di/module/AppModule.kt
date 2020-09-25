@@ -3,8 +3,10 @@ package com.titaniocorp.pos.di.module
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.hadilq.liveevent.LiveEvent
 import com.titaniocorp.pos.BuildConfig
 import com.titaniocorp.pos.api.API
+import com.titaniocorp.pos.app.model.ErrorResource
 import com.titaniocorp.pos.database.AppDatabase
 import com.titaniocorp.pos.database.dao.*
 import dagger.Module
@@ -14,12 +16,23 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 import okhttp3.logging.HttpLoggingInterceptor
+import javax.inject.Named
 
 @Module(includes = [ViewModelModule::class])
 class AppModule {
     @Singleton
     @Provides
     fun provideApplicationContext(application: Application): Context = application.applicationContext
+
+    @Singleton
+    @Provides
+    @Named("LoadingLiveData")
+    fun provideLoadingLiveData() = LiveEvent<Boolean>().apply { postValue(false) }
+
+    @Singleton
+    @Provides
+    @Named("ErrorLiveData")
+    fun provideErrorLiveData() = LiveEvent<ErrorResource>()
 
     @Singleton
     @Provides
