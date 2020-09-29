@@ -23,12 +23,17 @@
         android:focusableInTouchMode="true">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <!-- Scrollable view here -->
 
             <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorBackgroundPrimary">
@@ -65,49 +70,32 @@
                             app:layout_constraintGuide_end="24dp" />
 
                         <TextView
-                            android:id="@+id/text_title"
+                            android:id="@+id/textView4"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
-                            android:text="@string/title_pos"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/text_pos_step_1"
                             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                             app:layout_constraintStart_toStartOf="@+id/guideline_left"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/text_subtitle"
+                        <androidx.appcompat.widget.SearchView
+                            android:id="@+id/search_view"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/title_subtitle_pos"
-                            android:textAlignment="center"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                            app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                            app:layout_constraintTop_toBottomOf="@+id/text_title" />
-
-                        <LinearLayout
-                            android:id="@+id/search_linear"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
                             android:background="@drawable/bg_section"
-                            android:orientation="horizontal"
+                            android:iconifiedByDefault="false"
+                            android:queryBackground="@android:color/transparent"
+                            android:theme="@style/AppTheme.SearchView"
+                            app:defaultQueryHint="@string/text_add_product"
                             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                            app:layout_constraintTop_toBottomOf="@+id/text_subtitle">
-
-                            <androidx.appcompat.widget.SearchView
-                                android:id="@+id/search_view"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:iconifiedByDefault="false"
-                                android:queryBackground="@android:color/transparent"
-                                app:queryBackground="@android:color/transparent"
-                                app:queryHint="@string/text_add_product" />
-
-                        </LinearLayout>
+                            app:layout_constraintTop_toBottomOf="@+id/textView4"
+                            app:queryBackground="@android:color/transparent" />
 
                         <LinearLayout
                             android:id="@+id/button_barcode"
@@ -116,6 +104,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
                             android:layout_marginEnd="32dp"
+                            android:background="@drawable/bg_subsection"
+                            android:onClick="@{clickListener}"
                             android:orientation="horizontal"
                             android:paddingStart="16dp"
                             android:paddingTop="16dp"
@@ -123,9 +113,7 @@
                             android:paddingBottom="16dp"
                             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                            app:layout_constraintTop_toBottomOf="@+id/search_linear"
-                            android:background="@drawable/bg_subsection"
-                            android:onClick="@{clickListener}">
+                            app:layout_constraintTop_toBottomOf="@+id/search_view">
 
                             <ImageView
                                 android:id="@+id/imageView"
@@ -165,29 +153,67 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_content"
+                android:visibility="@{mViewModel.purchase.total > 0 ? View.VISIBLE : View.GONE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/item_list_stock_dashboard"
-                android:visibility="@{mViewModel.purchase.total > 0 ? View.VISIBLE : View.GONE}">
-            </androidx.recyclerview.widget.RecyclerView>
+                tools:listitem="@layout/item_list_pos_dashboard_product"></androidx.recyclerview.widget.RecyclerView>
 
             <include
                 android:id="@+id/view_empty_list"
                 layout="@layout/view_empty_list"
-                android:visibility="@{mViewModel.purchase.total > 0 ? View.GONE : View.VISIBLE}"/>
+                android:visibility="@{mViewModel.purchase.total > 0 ? View.GONE : View.VISIBLE}" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <Button
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/button_new_transaction"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:onClick="@{clickListener}"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_dialog_rounded_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            asMoney="@{mViewModel.purchase.total}"/>
+            android:onClick="@{clickListener}">
+
+            <TextView
+                android:id="@+id/text_value"
+                asMoney="@{mViewModel.purchase.total}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="2 Artículos"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_value" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_right" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

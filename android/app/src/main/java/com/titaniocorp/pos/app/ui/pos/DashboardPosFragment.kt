@@ -12,16 +12,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.appbar.AppBarLayout
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentPosDashboardBinding
+import com.titaniocorp.pos.util.autoCleared
 import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogHelper
 import javax.inject.Inject
+import kotlin.math.abs
 
 /**
- * Fragmento que lista las peliculas
- * @version 1.0
+ * Fragmento que lista los arþiculos agregados
  * @author Juan Ortiz
  * @date 10/09/2019
  */
@@ -31,8 +33,8 @@ class DashboardPosFragment: BaseFragment(),
     SearchView.OnQueryTextListener,
     DashboardPosAdapter.OnItemClickListener{
 
-    private lateinit var binding: FragmentPosDashboardBinding
-    val viewModel: POSViewModel by viewModels { viewModelFactory }
+    private var binding: FragmentPosDashboardBinding by autoCleared()
+    private val viewModel: POSViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -65,6 +67,18 @@ class DashboardPosFragment: BaseFragment(),
             val adapter = DashboardPosAdapter(this@DashboardPosFragment)
             adapter.submitList(viewModel.purchase.prices)
             recycler.adapter = adapter
+
+            appBar.addOnOffsetChangedListener(
+                AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                    val shouldHideButtonTransaction = abs(verticalOffset) >= appBarLayout.totalScrollRange
+
+                    buttonNewTransaction.visibility = if(shouldHideButtonTransaction){
+                        View.GONE
+                    }else{
+                        View.VISIBLE
+                    }
+                }
+            )
 
             subcribeUi(adapter)
         }

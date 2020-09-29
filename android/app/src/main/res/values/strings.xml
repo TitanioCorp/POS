@@ -80,6 +80,7 @@
     <string name="text_tax">Impuesto</string>
     <string name="text_total">Total</string>
     <string name="text_total_stock">Total stock</string>
+    <string name="text_pos_step_1">1. Agregue un producto</string>
 
     <!-- Success -->
     <string name="success_title">Exitoso</string>
