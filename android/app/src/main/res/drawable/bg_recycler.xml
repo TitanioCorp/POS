@@ -12,9 +12,7 @@
             <solid android:color="@color/colorOnBackground" />
             <corners
                 android:topLeftRadius="@dimen/corner_large"
-                android:topRightRadius="@dimen/corner_large"
-                android:bottomLeftRadius="@dimen/corner_large"
-                android:bottomRightRadius="@dimen/corner_large"/>
+                android:topRightRadius="@dimen/corner_large" />
         </shape>
     </item>
 </layer-list>

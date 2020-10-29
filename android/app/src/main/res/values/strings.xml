@@ -41,6 +41,9 @@
         <item>Todos</item>
     </string-array>
 
+    <!-- Fragment -->
+    <string name="fragment_pos">Punto de venta</string>
+
     <!-- Title -->
     <string name="title_settings_fragment">Configuraciones</string>
     <string name="title_information">Información</string>

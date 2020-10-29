@@ -16,7 +16,7 @@
     <fragment
             android:id="@+id/dashboardPosFragment"
             android:name="com.titaniocorp.pos.app.ui.pos.DashboardPosFragment"
-            android:label="@string/app_name"
+            android:label="@string/fragment_pos"
         tools:layout="@layout/fragment_pos_dashboard">
         <action
                 android:id="@+id/action_to_settingsFragment"

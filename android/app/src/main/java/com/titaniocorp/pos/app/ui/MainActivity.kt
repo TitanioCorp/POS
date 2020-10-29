@@ -3,6 +3,7 @@ package com.titaniocorp.pos.app.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
@@ -53,6 +54,10 @@ class MainActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartF
         binding.navigationView.setupWithNavController(navController)
 
         binding.navigationView.getHeaderView(0).findViewById<TextView>(R.id.text_app_version).text = BuildConfig.VERSION_NAME
+
+        if (BuildConfig.DEBUG){
+            binding.watermark.visibility = View.VISIBLE
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
