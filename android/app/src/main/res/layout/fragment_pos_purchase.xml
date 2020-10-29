@@ -17,7 +17,6 @@
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackgroundAccent"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,233 +27,81 @@
                 android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundPrimary"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_section_right_card"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/text_label_valor_cobrar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:text="Valor a cobrar"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/text_valor_cobrar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.total))}"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/text_label_valor_cobrar"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_valor_cobrar"
                     app:layout_constraintTop_toBottomOf="@+id/text_label_valor_cobrar" />
 
                 <Button
                     android:id="@+id/button_add_adjustment"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:onClick="@{clickListener}"
                     android:text="Ajustar valor"
+                    android:textAlignment="center"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/text_valor_cobrar"
+                    app:layout_constraintStart_toStartOf="@+id/text_valor_cobrar"
                     app:layout_constraintTop_toBottomOf="@+id/text_valor_cobrar" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/content"
-                android:layout_width="match_parent"
+                android:id="@+id/cosntraint_customer"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_section_adjust_bill"
+                android:orientation="vertical"
+                android:padding="@dimen/medium_padding"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/header"
                 app:layout_constraintTop_toBottomOf="@+id/header">
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_begin="24dp"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_end="24dp" />
-
-                <TextView
-                    android:id="@+id/text_label_detail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Detalle de la venta"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/text_label_cost"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Costo"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_detail" />
-
-                <TextView
-                    android:id="@+id/text_cost"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.cost))}"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_cost" />
-
-                <TextView
-                    android:id="@+id/text_label_profit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Ganancia"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_cost" />
-
-                <TextView
-                    android:id="@+id/text_profit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.profit))}"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_profit" />
-
-                <TextView
-                    android:id="@+id/text_label_subtotal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Subtotal"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_profit" />
-
-                <TextView
-                    android:id="@+id/text_subtotal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_item_list"
-                    android:paddingBottom="16dp"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.subtotal))}"
-                    android:textColor="@color/colorPrimary"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_subtotal" />
-
-                <TextView
-                    android:id="@+id/text_label_adjustment"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Ajuste"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_subtotal" />
-
-                <TextView
-                    android:id="@+id/text_adjustment"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.adjustment))}"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_adjustment" />
-
-                <TextView
-                    android:id="@+id/text_label_tax"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Impuestos"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_adjustment" />
-
-                <TextView
-                    android:id="@+id/text_tax"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.tax))}"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_tax" />
-
-                <TextView
-                    android:id="@+id/text_label_total"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Total"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_tax" />
-
-                <TextView
-                    android:id="@+id/text_total"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_item_list"
-                    android:paddingBottom="16dp"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.total))}"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:textColor="@color/colorPrimary"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_total" />
 
                 <TextView
                     android:id="@+id/text_label_customer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_text_section_title"
                     android:text="Cliente"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_total" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:id="@+id/linear_customer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_label_customer">
 
                     <Spinner
@@ -292,10 +139,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_text_section_title"
                     android:text="Pago"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linear_customer" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
@@ -304,8 +151,8 @@
                     android:layout_height="wrap_content"
                     android:checked="@={viewModel.isCredit}"
                     android:text="Crédito"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_label_pay" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -313,20 +160,19 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switch_no_cobrada">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_abono"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_money"
                         android:hint="Abono inicial"
                         android:inputType="number|numberDecimal"
-                        android:maxLength="11"
-                        android:drawableStart="@drawable/ic_money"/>
+                        android:maxLength="11" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.constraintlayout.widget.Group
@@ -335,6 +181,177 @@
                     android:layout_height="wrap_content"
                     android:visibility="@{viewModel.isCredit ? View.VISIBLE : View.GONE}"
                     app:constraint_referenced_ids="input_layout_abono" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_section"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cosntraint_customer">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="16dp"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="16dp" />
+
+                <TextView
+                    android:id="@+id/text_label_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_text_section_title"
+                    android:text="Detalle de la venta"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_label_cost"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Costo"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_detail" />
+
+                <TextView
+                    android:id="@+id/text_cost"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.cost))}"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_cost" />
+
+                <TextView
+                    android:id="@+id/text_label_profit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Ganancia"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_cost" />
+
+                <TextView
+                    android:id="@+id/text_profit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.profit))}"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_profit" />
+
+                <TextView
+                    android:id="@+id/text_label_subtotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Subtotal"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_profit" />
+
+                <TextView
+                    android:id="@+id/text_subtotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_text_section_title"
+                    android:paddingBottom="16dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.subtotal))}"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_subtotal" />
+
+                <TextView
+                    android:id="@+id/text_label_adjustment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Ajuste"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_subtotal" />
+
+                <TextView
+                    android:id="@+id/text_adjustment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.adjustment))}"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_adjustment" />
+
+                <TextView
+                    android:id="@+id/text_label_tax"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Impuestos"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_adjustment" />
+
+                <TextView
+                    android:id="@+id/text_tax"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.tax))}"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_tax" />
+
+                <TextView
+                    android:id="@+id/text_label_total"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Total"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_tax" />
+
+                <TextView
+                    android:id="@+id/text_total"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:paddingBottom="16dp"
+                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.total))}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_total" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
