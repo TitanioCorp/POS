@@ -43,6 +43,7 @@
 
     <!-- Fragment -->
     <string name="fragment_pos">Punto de venta</string>
+    <string name="fragment_pos_add_product">Agregar artículo</string>
 
     <!-- Title -->
     <string name="title_settings_fragment">Configuraciones</string>
@@ -52,9 +53,16 @@
     <string name="title_pos">Punto de venta</string>
     <string name="title_database">Base de datos</string>
 
+    <string name="title_info_product">Información del artículo</string>
+    <string name="title_prices">Precios</string>
+    <string name="title_profit">Ganancia</string>
+    <string name="title_quantity">Cantidad</string>
+    <string name="title_overview">Resumen</string>
+
     <!-- Subtitle -->
     <string name="title_subtitle_pos">Genera una nueva venta</string>
     <string name="title_subtitle_database">Exporta/importa la base de datos.</string>
+
 
     <!-- Text -->
     <string name="text_results">Resultados</string>
@@ -99,6 +107,7 @@
     <string name="action_cancel">Cancelar</string>
     <string name="action_delete">Eliminar</string>
     <string name="action_delete_product">Eliminar producto</string>
+    <string name="action_add">Agregar</string>
 
     <!-- Error -->
     <string name="error_title_error">Error</string>

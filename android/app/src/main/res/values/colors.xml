@@ -23,6 +23,7 @@
     <color name="colorBackgrounItem">#b8eae6</color>
     <color name="colorBackgroundItemSelected">#E8E8E8</color>
     <color name="lineSearch">#FFDDDD</color>
+    <color name="colorBorderPrimary">#FFDDDDDD</color>
 
     <!-- Theme -->
     <color name="colorBackgroundPrimary">#f1f1f1</color>

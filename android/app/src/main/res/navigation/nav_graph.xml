@@ -98,8 +98,8 @@
         tools:layout="@layout/fragment_profit_dashboard"/>
     <fragment
         android:id="@+id/addProductPOSFragment"
-        android:name="com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPOSFragment"
-        android:label="Agregar Producto"
+        android:name="com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPosFragment"
+        android:label="@string/fragment_pos_add_product"
         tools:layout="@layout/fragment_pos_add_product">
         <argument
             android:name="ARG_POSITION"

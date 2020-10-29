@@ -9,7 +9,6 @@ import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
@@ -24,7 +23,6 @@ import com.titaniocorp.pos.util.AppCode.Companion.ERROR_EMPTY_PROFIT_LIST
 import com.titaniocorp.pos.util.process
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * Fragmento que lista las peliculas
@@ -32,7 +30,7 @@ import javax.inject.Inject
  * @author Juan Ortiz
  * @date 10/09/2019
  */
-class AddProductPOSFragment: BaseFragment(), View.OnClickListener{
+class AddProductPosFragment: BaseFragment(), View.OnClickListener{
 
     private lateinit var binding: FragmentPosAddProductBinding
     val viewModel: POSViewModel by viewModels { viewModelFactory }
@@ -40,6 +38,12 @@ class AddProductPOSFragment: BaseFragment(), View.OnClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.menu_options_pos_add_product, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,13 +60,13 @@ class AddProductPOSFragment: BaseFragment(), View.OnClickListener{
 
             with(binding) {
                 lifecycleOwner = viewLifecycleOwner
-                clickListener = this@AddProductPOSFragment
-                viewModel = this@AddProductPOSFragment.viewModel
+                clickListener = this@AddProductPosFragment
+                viewModel = this@AddProductPosFragment.viewModel
 
                 spinnerProfits.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long){
-                        this@AddProductPOSFragment.viewModel.profits.value?.data?.get(position)?.let {profit ->
-                            this@AddProductPOSFragment.viewModel.selectProfit(profit)
+                        this@AddProductPosFragment.viewModel.profits.value?.data?.get(position)?.let { profit ->
+                            this@AddProductPosFragment.viewModel.selectProfit(profit)
                         }
                     }
 
@@ -70,10 +74,10 @@ class AddProductPOSFragment: BaseFragment(), View.OnClickListener{
                 }
 
                 val adapter = DialogAddProductAdapter(
-                    this@AddProductPOSFragment.viewModel.searchedList.value?.data?.get(positionSelected)?.priceId,
+                    this@AddProductPosFragment.viewModel.searchedList.value?.data?.get(positionSelected)?.priceId,
                     object : DialogAddProductAdapter.DialogAddProductListener{
                     override fun selectedPrice(priceId: Long, cost: Double, stock: Int, isInitialProfit: Boolean) {
-                        this@AddProductPOSFragment.viewModel.selectPrice(priceId, cost, stock, isInitialProfit)
+                        this@AddProductPosFragment.viewModel.selectPrice(priceId, cost, stock, isInitialProfit)
                     }
                 })
 
@@ -85,17 +89,11 @@ class AddProductPOSFragment: BaseFragment(), View.OnClickListener{
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.menu_options_pos_add_product, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId){
         R.id.action_add_price_purchase -> {
             when(val code = viewModel.addProduct()){
                 AppCode.VALIDATE_SUCCESS -> {
-                    val direction = AddProductPOSFragmentDirections.toDashboardPosFragment()
+                    val direction = AddProductPosFragmentDirections.toDashboardPosFragment()
                     findNavController().navigate(direction)
                 }
 
@@ -158,8 +156,8 @@ class AddProductPOSFragment: BaseFragment(), View.OnClickListener{
                                 binding.spinnerProfits.adapter =
                                     ArrayAdapter(
                                         it,
-                                        android.R.layout.simple_list_item_1,
-                                        profitList.map {item -> "${item.percent}% - ${item.name}" }
+                                        android.R.layout.simple_spinner_dropdown_item,
+                                        profitList.map {item -> "${item.percent}% | ${item.name}" }
                                     )
 
                                 viewModel.selectProfit(profitList[0])

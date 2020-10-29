@@ -17,228 +17,276 @@
     </data>
 
     <androidx.core.widget.NestedScrollView
-            android:id="@+id/nested_scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBackgroundPrimary"
-            android:fillViewport="true"
-            android:overScrollMode="never"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        android:id="@+id/nested_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/medium_padding"
+            android:paddingEnd="@dimen/medium_padding"
             android:tag="layout/dialog_new_category">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_left"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linear_costs"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_section_primary"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="24dp"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_end="24dp" />
-
-            <TextView
-                android:id="@+id/text_label_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Nombre"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/text_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.product.name}"
+                android:padding="@dimen/default_padding"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/text_label_name" />
+                app:layout_constraintTop_toBottomOf="@+id/linear_quantity">
 
-            <TextView
-                android:id="@+id/text_label_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Categoria"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/text_name" />
-
-            <TextView
-                android:id="@+id/text_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{category.name}"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/text_label_category" />
-
-            <TextView
-                android:id="@+id/text_label_prices"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Precios"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/text_category" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:nestedScrollingEnabled="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/text_label_prices"
-                tools:listitem="@layout/item_list_dialog_add_product" />
-
-            <TextView
-                android:id="@+id/text_label_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Cantidad"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                app:layout_constraintEnd_toEndOf="@+id/button_remove"
-                app:layout_constraintStart_toStartOf="@+id/button_add"
-                app:layout_constraintTop_toBottomOf="@+id/recycler" />
-
-            <TextView
-                android:id="@+id/text_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:background="@color/colorBackgroundAccent"
-                android:elevation="2dp"
-                android:gravity="center"
-                android:padding="16dp"
-                android:text="@{Integer.toString(viewModel.pricePurchase.quantity)}"
-                app:layout_constraintBottom_toBottomOf="@+id/button_add"
-                app:layout_constraintEnd_toStartOf="@+id/button_remove"
-                app:layout_constraintTop_toTopOf="@+id/button_add" />
-
-            <ImageButton
-                android:id="@+id/button_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/image_description"
-                android:onClick="@{clickListener}"
-                android:padding="16dp"
-                app:layout_constraintEnd_toStartOf="@+id/text_quantity"
-                app:layout_constraintTop_toBottomOf="@+id/text_label_quantity"
-                app:srcCompat="@drawable/ic_add" />
-
-            <ImageButton
-                android:id="@+id/button_remove"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/image_description"
-                android:onClick="@{clickListener}"
-                android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/text_quantity"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                app:layout_constraintTop_toTopOf="@+id/text_quantity"
-                app:srcCompat="@drawable/ic_remove" />
-
-            <TextView
-                android:id="@+id/text_label_tipo_cobro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tipo de cobro"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toTopOf="@+id/text_label_quantity" />
-
-            <Spinner
-                android:id="@+id/spinner_profits"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:drawSelectorOnTop="true"
-                android:overlapAnchor="false"
-                android:spinnerMode="dropdown"
-                app:layout_constraintBottom_toBottomOf="@+id/button_add"
-                app:layout_constraintEnd_toStartOf="@+id/button_add"
-                app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toTopOf="@+id/button_add" />
-
-            <TextView
+                <TextView
                     android:id="@+id/text_label_unidad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:text="Costo + Ganancia"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/spinner_profits" />
+                    android:textColor="@color/colorOnPrimary"
+                    android:textSize="8sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/text_unidad"
-                android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/text_unidad"
+                    asMoney="@{viewModel.pricePurchase.getCostProfit()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorOnPrimary"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_unidad" />
+
+                <TextView
+                    android:id="@+id/text_label_tax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="Impuesto"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    android:textColor="@color/colorOnPrimary"
+                    android:textSize="8sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_unidad" />
+
+                <TextView
+                    android:id="@+id/text_tax"
+                    asMoney="@{viewModel.pricePurchase.tax}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorOnPrimary"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_tax" />
+
+                <TextView
+                    android:id="@+id/text_label_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                    android:textColor="@color/colorOnPrimary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_total"
+                    asMoney="@{viewModel.pricePurchase.getTotal()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:textColor="@color/colorOnPrimary"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/text_label_total"
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_total" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_info_product"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                asMoney="@{viewModel.pricePurchase.getCostProfit()}"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:background="@drawable/bg_section"
+                android:orientation="vertical"
+                android:padding="@dimen/default_padding"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/text_label_unidad" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/text_label_tax"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Impuesto"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/text_unidad" />
+                <TextView
+                    android:id="@+id/text_title_info_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_text_section_title"
+                    android:text="@string/title_info_product" />
 
-            <TextView
-                android:id="@+id/text_tax"
-                android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/text_label_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="Nombre"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
+
+                <TextView
+                    android:id="@+id/text_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.product.name}" />
+
+                <TextView
+                    android:id="@+id/text_label_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="Categoria"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
+
+                <TextView
+                    android:id="@+id/text_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{category.name}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_profit"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                asMoney="@{viewModel.pricePurchase.tax}"
+                android:layout_marginTop="@dimen/default_margin"
+                android:background="@drawable/bg_section"
+                android:orientation="vertical"
+                android:padding="@dimen/default_padding"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/text_label_tax" />
+                app:layout_constraintTop_toBottomOf="@+id/linear_prices">
 
-            <TextView
-                android:id="@+id/text_label_total"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text_title_profit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_text_section_title"
+                    android:text="@string/title_profit" />
+
+                <Spinner
+                    android:id="@+id/spinner_profits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawSelectorOnTop="true"
+                    android:overlapAnchor="false"
+                    android:spinnerMode="dropdown" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linear_quantity"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Total"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:layout_marginTop="@dimen/default_margin"
+                android:background="@drawable/bg_section"
+                android:orientation="vertical"
+                android:padding="@dimen/default_padding"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/text_tax" />
+                app:layout_constraintTop_toBottomOf="@+id/linear_profit">
 
-            <TextView
-                android:id="@+id/text_total"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text_title_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_text_section_title"
+                    android:text="@string/title_quantity"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@{Integer.toString(viewModel.pricePurchase.quantity)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/button_remove"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/button_remove" />
+
+                <ImageButton
+                    android:id="@+id/button_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/image_description"
+                    android:onClick="@{clickListener}"
+                    android:padding="16dp"
+                    app:layout_constraintStart_toEndOf="@+id/text_quantity"
+                    app:layout_constraintTop_toBottomOf="@+id/text_title_quantity"
+                    app:srcCompat="@drawable/ic_add" />
+
+                <ImageButton
+                    android:id="@+id/button_remove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/image_description"
+                    android:onClick="@{clickListener}"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toStartOf="@+id/text_quantity"
+                    app:layout_constraintTop_toBottomOf="@+id/text_title_quantity"
+                    app:srcCompat="@drawable/ic_remove" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_prices"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                asMoney="@{viewModel.pricePurchase.getTotal()}"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                android:textColor="@color/colorPrimary"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:background="@drawable/bg_section"
+                android:orientation="vertical"
+                android:padding="@dimen/default_padding"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/text_label_total" />
+                app:layout_constraintTop_toBottomOf="@+id/linear_info_product">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/text_label_prices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_text_section_title"
+                    android:text="@string/title_prices"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_list_dialog_add_product" />
+            </LinearLayout>
+
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

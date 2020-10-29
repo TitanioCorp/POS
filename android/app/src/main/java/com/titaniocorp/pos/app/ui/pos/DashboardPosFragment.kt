@@ -124,23 +124,15 @@ class DashboardPosFragment: BaseFragment(),
             it.process(
                 {
                     context?.let {context ->
-                        it?.data?.let {list ->
-                            binding.mSearchSrcTextView?.setAdapter(
-                                ArrayAdapter(
-                                    context,
-                                    android.R.layout.simple_dropdown_item_1line,
-                                    list.map {item -> "${item.productName} - ${item.priceName}" }
-                                )
+                        binding.mSearchSrcTextView?.setAdapter(
+                            ArrayAdapter(
+                                context,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                it.data?.let {list ->
+                                    list.map{item -> "${item.productName} - ${item.priceName}"}
+                                } ?: run {listOf()}
                             )
-                        } ?: run {
-                            binding.mSearchSrcTextView?.setAdapter(
-                                ArrayAdapter(
-                                    context,
-                                    android.R.layout.simple_dropdown_item_1line,
-                                    listOf<String>()
-                                )
-                            )
-                        }
+                        )
                     }
                 }
             )
