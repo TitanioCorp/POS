@@ -50,8 +50,8 @@ object DialogHelper {
         activity: Activity?,
         positiveCallBack: ((Double)) -> Unit,
         negativeCallBack: (() -> Unit) ?= null,
-        item: Double = 0.0
-    ): AlertDialog? = DialogPOSHelper.addAdjustment(activity, positiveCallBack, negativeCallBack, item)
+        total: Double = 0.0,
+    ): AlertDialog? = DialogPOSHelper.addAdjustment(activity, positiveCallBack, negativeCallBack, total)
 
     fun newProfit(
         activity: Activity?,

@@ -10,13 +10,15 @@ import com.titaniocorp.pos.databinding.DialogAddAdjustmentBinding
 import com.titaniocorp.pos.util.addMoneyTextWatcher
 import com.titaniocorp.pos.util.asMoney
 import com.titaniocorp.pos.util.getValueMoney
+import com.titaniocorp.pos.util.validations.ValidateType
+import com.titaniocorp.pos.util.validations.validate
 
 object DialogPOSHelper {
     fun addAdjustment(
         activity: Activity?,
         positiveCallBack: (Double) -> Unit,
         negativeCallBack: (() -> Unit) ?= null,
-        item: Double = 0.0
+        total: Double = 0.0
     ): AlertDialog? = activity?.let {
         val binding: DialogAddAdjustmentBinding = DataBindingUtil.inflate(
             it.layoutInflater,
@@ -28,13 +30,21 @@ object DialogPOSHelper {
         val dialog = MaterialAlertDialogBuilder(activity)
             .setBackground(it.getDrawable(R.drawable.bg_dialog_rounded))
             .setView(binding.root)
-            .setTitle("Ajustar valor")
+            .setTitle("Ingrese el valor")
             .show()
 
 
         with(binding){
-            inputValue.addMoneyTextWatcher()
-            inputValue.setText(item.asMoney())
+            currentTotal = total
+            adjustment = 0.0
+            finalTotal = 0.0
+
+            inputValue.addMoneyTextWatcher{value ->
+                val valueAdjustment = value - total
+
+                adjustment = valueAdjustment
+                finalTotal = value
+            }
 
             clickListener = View.OnClickListener { view ->
                 when(view.id){
@@ -44,17 +54,11 @@ object DialogPOSHelper {
                     }
 
                     R.id.button_positive -> {
-                        val value = when{
-                            radioSum.isChecked -> {inputValue.text.toString().getValueMoney()}
-                            radioSub.isChecked -> {inputValue.text.toString().getValueMoney() * -1}
-                            else -> { 0.0}
-                        }
-
-                        if(radioSum.isChecked || radioSub.isChecked){
+                        if(inputValue.validate(ValidateType.MONEY)){
                             dialog.dismiss()
-                            positiveCallBack(value)
-                        }else{
-                            inputValue.error = "Debes seleccionar una opción"
+                            val value = inputValue.editableText.toString().getValueMoney()
+                            val adjustment = value - total
+                            positiveCallBack(adjustment)
                         }
                     }
                 }

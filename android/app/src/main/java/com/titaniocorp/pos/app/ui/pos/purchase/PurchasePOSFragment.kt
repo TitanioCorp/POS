@@ -100,7 +100,7 @@ class PurchasePOSFragment: BaseFragment(), View.OnClickListener{
             R.id.button_add_adjustment -> {
                 DialogHelper.addAdjustment(activity, {
                     viewModel.setAdjustment(it)
-                }, item = viewModel.purchase.adjustment)?.show()
+                }, total = viewModel.purchase.total)?.show()
             }
         }
     }
