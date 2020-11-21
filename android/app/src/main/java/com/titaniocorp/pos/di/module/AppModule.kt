@@ -83,6 +83,10 @@ class AppModule {
 
     @Singleton
     @Provides
+    fun provideInitialProfitDao(db: AppDatabase) = db.initialProfitDao()
+
+    @Singleton
+    @Provides
     fun provideCustomerDao(db: AppDatabase): CustomerDao = db.customerDao()
 
     @Singleton

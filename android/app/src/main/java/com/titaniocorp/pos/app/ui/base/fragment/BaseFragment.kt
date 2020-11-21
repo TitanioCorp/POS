@@ -6,11 +6,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.ErrorResource
+import com.titaniocorp.pos.app.model.Resource
 import com.titaniocorp.pos.app.viewmodel.BaseViewModel
 import com.titaniocorp.pos.di.Injectable
 import com.titaniocorp.pos.util.AppCode
@@ -19,6 +21,7 @@ import com.titaniocorp.pos.util.AppCode.Companion.ERROR_PURCHASE_NO_CUSTOMER
 import com.titaniocorp.pos.util.Constants
 import com.titaniocorp.pos.util.ui.DialogUtil
 import com.titaniocorp.pos.util.hideKeyboard
+import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogHelper
 import timber.log.Timber
 import java.net.HttpURLConnection
@@ -81,5 +84,19 @@ open class BaseFragment: Fragment(), Injectable {
 
     protected fun setLoading(isLoading: Boolean) {
         baseViewModel.setLoading(isLoading)
+    }
+
+    protected fun <T: Resource<T>> LiveData<T>.runLiveData(
+        onSuccess: (T) -> Unit,
+        onError: (()-> Unit) ?= null,
+        onLoading: ((Boolean) -> Unit) ?= null
+    ){
+        observe(viewLifecycleOwner){
+            it.process(
+                { onSuccess(it) },
+                onError ?: { baseViewModel.setError(it.code, it.message) },
+                onLoading ?: {boolean -> setLoading(boolean)},
+            )
+        }
     }
 }

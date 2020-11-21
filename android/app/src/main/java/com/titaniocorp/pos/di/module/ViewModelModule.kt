@@ -9,6 +9,7 @@ import com.titaniocorp.pos.app.ui.pos.POSViewModel
 import com.titaniocorp.pos.app.ui.product.DashboardProductViewModel
 import com.titaniocorp.pos.app.ui.product.detail.DetailProductViewModel
 import com.titaniocorp.pos.app.ui.profit.DashboardProfitViewModel
+import com.titaniocorp.pos.app.ui.profit.initial.DashboardInitialProfitViewModel
 import com.titaniocorp.pos.app.ui.purchase.DashboardPurchaseViewModel
 import com.titaniocorp.pos.app.ui.purchase.detail.DetailPurchaseViewModel
 import com.titaniocorp.pos.app.ui.report.DashboardReportViewModel
@@ -125,4 +126,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(StockReportViewModel::class)
     abstract fun stockReportViewModel(viewModel: StockReportViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DashboardInitialProfitViewModel::class)
+    abstract fun dashboardInitialProfitViewModel(viewModel: DashboardInitialProfitViewModel): ViewModel
 }

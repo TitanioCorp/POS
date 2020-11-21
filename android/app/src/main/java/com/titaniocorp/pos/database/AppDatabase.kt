@@ -20,6 +20,7 @@ import com.titaniocorp.pos.database.entity.*
         ProductEntity::class,
         PriceEntity::class,
         ProfitEntity::class,
+        InitialProfitEntity::class,
         PurchaseEntity::class,
         PaymentPurchaseEntity::class,
         PricePurchaseEntity::class,
@@ -38,6 +39,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun productDao(): ProductDao
     abstract fun priceDao(): PriceDao
     abstract fun profitDao(): ProfitDao
+    abstract fun initialProfitDao(): InitialProfitDao
     abstract fun customerDao(): CustomerDao
     abstract fun purchaseDao(): PurchaseDao
     abstract fun paymentPurchaseDao(): PaymentPurchaseDao

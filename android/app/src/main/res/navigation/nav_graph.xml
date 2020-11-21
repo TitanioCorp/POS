@@ -96,6 +96,13 @@
         android:name="com.titaniocorp.pos.app.ui.profit.DashboardProfitFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_profit_dashboard"/>
+
+    <fragment
+        android:id="@+id/dashboardInitialProfitFragment"
+        android:name="com.titaniocorp.pos.app.ui.profit.initial.DashboardInitialProfitFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_initial_profit_dashboard"/>
+
     <fragment
         android:id="@+id/addProductPOSFragment"
         android:name="com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPosFragment"
