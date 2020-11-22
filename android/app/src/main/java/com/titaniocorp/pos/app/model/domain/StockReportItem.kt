@@ -24,7 +24,7 @@ data class StockReportItem(
     val isInitialProfit: Boolean
 ){
     @Ignore
-    val tax = cost.calculateTax(isInitialProfit)
+    val tax = cost.calculateTax()
 
     @Ignore
     val total = (cost + tax) * stock

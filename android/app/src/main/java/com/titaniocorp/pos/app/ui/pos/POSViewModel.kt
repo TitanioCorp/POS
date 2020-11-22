@@ -213,7 +213,7 @@ class POSViewModel @Inject constructor(
         with(pricePurchase){
             this.priceId = priceId
 
-            this.tax = cost.calculateTax(isInitialProfit)
+            this.tax = cost.calculateTax()
             this.cost = cost
 
 

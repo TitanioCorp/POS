@@ -80,6 +80,9 @@
                 android:name="productId"
                 app:argType="long"
                 android:defaultValue="0L" />
+        <action
+            android:id="@+id/to_addPriceProductFragment"
+            app:destination="@id/addPriceProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/purchasePOSFragment"
@@ -222,4 +225,14 @@
         android:name="com.titaniocorp.pos.app.ui.report.products.stock.StockReportFragment"
         android:label="Reporte de inventario"
         tools:layout="@layout/fragment_stock_report"/>
+    <fragment
+        android:id="@+id/addPriceProductFragment"
+        android:name="com.titaniocorp.pos.app.ui.product.detail.price.AddPriceProductFragment"
+        android:label="@string/fragment_add_price_product">
+
+        <argument
+            android:name="priceId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
 </navigation>

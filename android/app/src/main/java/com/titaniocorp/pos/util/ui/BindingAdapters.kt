@@ -52,16 +52,11 @@ fun bindTotal(textView: TextView, cost: Double, profit: Double, tax: Double, qua
 
 @BindingAdapter("asPercent")
 fun bindAsPercent(textView: TextView, value: Double) {
-    if(value > 0){
-        textView.text = textView.context.getString(R.string.text_as_percent, value.toString())
-    }
+    textView.text = textView.context.getString(R.string.text_as_percent, value.toString())
 }
-
 
 @BindingAdapter("asInputPercent")
 fun bindAsInputPercent(editText: TextInputEditText, value: Double) {
-    if(value > 0){
-        editText.setText(value.toString())
-    }
+    editText.setText(value.toString())
 }
 

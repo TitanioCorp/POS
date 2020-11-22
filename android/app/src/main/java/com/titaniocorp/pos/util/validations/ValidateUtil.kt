@@ -91,7 +91,7 @@ fun String.validate(type: ValidateType = ValidateType.SINGLE): Int{
             type == ValidateType.PERCENT -> {
                 when{
                     length > 6 -> VALIDATE_LONG_NUMBER_LENGTH
-                    toDouble() <= 0 -> VALIDATE_NUMBER_ZERO
+                    toDouble() < 0 -> VALIDATE_NUMBER_ZERO
                     else -> VALIDATE_SUCCESS
                 }
             }

@@ -50,11 +50,12 @@ fun List<PriceEntity>.asDomainModel(): List<Price>{
         Price(
             it.id,
             it.productId,
+            0,
+            it.isInitialProfit,
             it.name,
             it.sku,
             it.cost,
             it.stock,
-            it.isInitialProfit,
             it.active,
             it.createdDate
         )
@@ -65,11 +66,12 @@ fun PriceEntity.asDomainModel(): Price {
     return Price(
         id,
         productId,
+        0,
+        isInitialProfit,
         name,
         sku,
         cost,
         stock,
-        isInitialProfit,
         active,
         createdDate
     )

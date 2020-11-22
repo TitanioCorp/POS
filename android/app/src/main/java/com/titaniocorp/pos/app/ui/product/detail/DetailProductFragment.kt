@@ -199,10 +199,12 @@ class DetailProductFragment: BaseFragment(),
     }
 
     private fun actionNewPrice(){
-        DialogHelper.showPrice(activity, { price ->
+        /*DialogHelper.showPrice(activity, { price ->
             viewModel.addPrice(price)
             binding.recycler.adapter?.notifyDataSetChanged()
-        })
+        })*/
+        val direction = DetailProductFragmentDirections.toAddPriceProductFragment()
+        findNavController().navigate(direction)
     }
 
     private fun validate(): Boolean{

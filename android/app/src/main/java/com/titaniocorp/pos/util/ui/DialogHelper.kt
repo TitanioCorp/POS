@@ -145,7 +145,7 @@ object DialogHelper {
 
                 switchProfitPercent.isChecked = price.isInitialProfit
 
-                val tax: Double = price.cost.calculateTax(price.isInitialProfit)
+                val tax: Double = price.cost.calculateTax()
 
                 val total = price.cost + tax
                 textTax.text = root.context.getString(R.string.text_money, tax.asMoney())
@@ -195,11 +195,12 @@ object DialogHelper {
                                 positiveCallBack(Price(
                                     price?.id ?: 0,
                                     price?.productId ?: 0,
+                                    0,
+                                    switchProfitPercent.isChecked,
                                     inputName.text.toString(),
                                     inputSku.text.toString(),
                                     inputCost.text.toString().getValueMoney(),
                                     inputStock.text.toString().toInt(),
-                                    switchProfitPercent.isChecked,
                                     price?.active ?: true)
                                 )
                             }

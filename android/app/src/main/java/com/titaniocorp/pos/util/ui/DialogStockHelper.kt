@@ -41,7 +41,7 @@ object DialogStockHelper {
             price = selectedPrice
             productName = product.name
 
-            val tax: Double = selectedPrice?.cost?.calculateTax(selectedPrice.isInitialProfit) ?: 0.0
+            val tax: Double = selectedPrice?.cost?.calculateTax() ?: 0.0
             this.tax = tax
 
             clickListener = View.OnClickListener { view ->

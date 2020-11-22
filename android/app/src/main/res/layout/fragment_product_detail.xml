@@ -76,10 +76,10 @@
                 android:inputType="textPersonName"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
+                android:text="@={viewModel.product.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@={viewModel.product.name}"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_hint_category"
