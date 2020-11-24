@@ -30,7 +30,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 /**
- * Fragmento que lista las peliculas
+ * Fragmento que muestra el detalle  de un producto
  * @author Juan Ortiz
  * @date 19/12/2019
  */
@@ -45,6 +45,12 @@ class DetailProductFragment: BaseFragment(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.menu_options_detail_item, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -82,14 +88,8 @@ class DetailProductFragment: BaseFragment(),
 
             binding.recycler.adapter = adapter
 
-            subcribeUi(adapter)
+            subscribeUi(adapter)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.menu_options_detail_item, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId){
@@ -114,28 +114,7 @@ class DetailProductFragment: BaseFragment(),
         }
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        viewModel.product.categoryId =
-            (binding.spinnerCategory.adapter.getItem(position) as Category).id ?: 0
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-    override fun onClickItem(position: Int) {
-        DialogHelper.showPrice(activity, {price ->
-            viewModel.updatePrice(position, price)
-            binding.recycler.adapter?.notifyDataSetChanged()
-        },
-            price = viewModel.getPrice(position)
-        )
-    }
-
-    override fun onRemoveItem(position: Int) {
-        viewModel.removePrice(position)
-        binding.recycler.adapter?.notifyDataSetChanged()
-    }
-
-    private fun subcribeUi(adapter: DetailProductAdapter){
+    private fun subscribeUi(adapter: DetailProductAdapter){
         viewModel.getProduct().observe(viewLifecycleOwner, Observer {
             it.process(
                 onLoading = {boolean -> setLoading(boolean)},
@@ -180,6 +159,7 @@ class DetailProductFragment: BaseFragment(),
         })
     }
 
+    //Category Spinner
     private fun actionNewCategory(){
         DialogHelper.newCategory(
             activity,
@@ -198,13 +178,27 @@ class DetailProductFragment: BaseFragment(),
         )?.show()
     }
 
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        viewModel.product.categoryId =
+            (binding.spinnerCategory.adapter.getItem(position) as Category).id ?: 0
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    //Price
     private fun actionNewPrice(){
-        /*DialogHelper.showPrice(activity, { price ->
-            viewModel.addPrice(price)
-            binding.recycler.adapter?.notifyDataSetChanged()
-        })*/
         val direction = DetailProductFragmentDirections.toAddPriceProductFragment()
         findNavController().navigate(direction)
+    }
+
+    override fun onClickItem(position: Int) {
+        val direction = DetailProductFragmentDirections.toAddPriceProductFragment(position)
+        findNavController().navigate(direction)
+    }
+
+    override fun onRemoveItem(position: Int) {
+        viewModel.removePrice(position)
+        binding.recycler.adapter?.notifyDataSetChanged()
     }
 
     private fun validate(): Boolean{
@@ -237,6 +231,7 @@ class DetailProductFragment: BaseFragment(),
         }
     }
 
+    //Product
     private fun addProduct(){
         viewModel.addProduct().observe(viewLifecycleOwner, Observer {
             it.process(

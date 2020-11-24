@@ -231,8 +231,8 @@
         android:label="@string/fragment_add_price_product">
 
         <argument
-            android:name="priceId"
-            app:argType="long"
-            android:defaultValue="0L" />
+            android:name="position"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>

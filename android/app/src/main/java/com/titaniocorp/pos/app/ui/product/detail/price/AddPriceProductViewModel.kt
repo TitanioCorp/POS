@@ -16,20 +16,26 @@ class AddPriceProductViewModel @Inject constructor(
     val initialProfits = initialProfitRepository.getAll().asLiveData()
 
     @Bindable
-    var product = Price(0)
+    var price = Price(0)
+
+    fun updatePrice(price: Price){
+        this.price = price
+        price.compute()
+        notifyPropertyChanged(BR.price)
+    }
 
     fun setCost(cost: Double){
-        product.cost = cost
-        product.compute()
-        notifyPropertyChanged(BR.product)
+        price.cost = cost
+        price.compute()
+        notifyPropertyChanged(BR.price)
     }
 
     fun selectInitialProfit(position: Int){
         initialProfits.value?.data?.get(position)?.let{
-            product.initialProfitId = it.id
-            product.initialProfitSelected = it
-            product.compute()
-            notifyPropertyChanged(BR.product)
+            price.initialProfitId = it.id
+            price.initialProfitSelected = it
+            price.compute()
+            notifyPropertyChanged(BR.price)
         }
     }
 }

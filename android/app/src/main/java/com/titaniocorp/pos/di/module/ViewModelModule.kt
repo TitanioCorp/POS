@@ -56,6 +56,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(DetailProductViewModel::class)
+    @Reusable
     abstract fun detailProductViewModel(viewModel: DetailProductViewModel): ViewModel
 
     @Binds

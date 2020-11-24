@@ -19,22 +19,20 @@ class DetailProductViewModel @Inject constructor(
     private val productRepository: ProductRepository
     ): ObservableViewModel() {
 
-    @Bindable
-    var product = Product()
-
-    @Bindable
-    var categories = listOf<Category>()
-
+    @Bindable var product = Product()
+    @Bindable var categories = listOf<Category>()
     val mProductId = MutableLiveData<Long>()
 
+    //Price
     fun getPrice(position: Int) = product.prices[position]
-    fun updatePrice(position: Int, price: Price) {
-        product.prices[position] = price
-        notifyPropertyChanged(BR.product)
-    }
 
     fun addPrice(price: Price){
         product.prices.add(price)
+        notifyPropertyChanged(BR.product)
+    }
+
+    fun updatePrice(index: Int, price: Price) {
+        product.prices[index] = price
         notifyPropertyChanged(BR.product)
     }
 
@@ -50,9 +48,11 @@ class DetailProductViewModel @Inject constructor(
         notifyPropertyChanged(BR.product)
     }
 
+    //Category
     fun getAllCategory() = categoryRepository.getAll()
     fun addCategory(category: Category) = categoryRepository.add(category)
 
+    //Product
     fun getProduct() = Transformations.switchMap(mProductId){ productId ->
         productRepository.getProductById(productId)
     }

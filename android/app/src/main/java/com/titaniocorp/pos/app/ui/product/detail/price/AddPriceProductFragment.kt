@@ -6,17 +6,24 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.onNavDestinationSelected
 import com.google.android.material.snackbar.Snackbar
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.InitialProfit
 import com.titaniocorp.pos.app.ui.base.adapter.CategorySpinnerAdapter
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
+import com.titaniocorp.pos.app.ui.product.detail.DetailProductViewModel
 import com.titaniocorp.pos.app.ui.profit.initial.dialog.showInitialProfitDialog
 import com.titaniocorp.pos.databinding.FragmentInitialProfitDashboardBinding
 import com.titaniocorp.pos.databinding.FragmentProductAddPriceBinding
 import com.titaniocorp.pos.util.*
 import com.titaniocorp.pos.util.ui.DialogHelper
 import com.titaniocorp.pos.util.ui.showDefaultDialog
+import com.titaniocorp.pos.util.validations.ValidateType
+import com.titaniocorp.pos.util.validations.ValidateUtil
+import com.titaniocorp.pos.util.validations.toValidate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 
@@ -28,9 +35,11 @@ import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
+    val args: AddPriceProductFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentProductAddPriceBinding
     val viewModel: AddPriceProductViewModel by viewModels { viewModelFactory }
+    private val detailProductViewModel: DetailProductViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +67,41 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
             mViewModel = viewModel
             subscribeUi()
         }
+
+        if(args.position >= 0){
+            detailProductViewModel.getPrice(args.position).let{
+                viewModel.updatePrice(it)
+                binding.inputName.setText(it.name)
+                binding.inputSku.setText(it.sku)
+                binding.inputCost.setText(it.cost.toString())
+            }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId){
+        R.id.action_save_price -> {
+            if(validate()){
+                with(viewModel.price){
+                    name = binding.inputName.text.toString()
+                    sku = binding.inputSku.text.toString()
+                }
+
+                if(args.position >= 0){
+                    detailProductViewModel.updatePrice(args.position, viewModel.price)
+                }else{
+                    detailProductViewModel.addPrice(viewModel.price)
+                }
+
+                findNavController().navigateUp()
+            }
+            true
+        }
+        else -> { item.onNavDestinationSelected(findNavController()) || super.onOptionsItemSelected(item) }
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+        }
     }
 
     private fun subscribeUi(){
@@ -68,6 +112,16 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
                     android.R.layout.simple_spinner_dropdown_item,
                     it.data?.map {item -> "${item.percent}% | ${item.name}" } ?: listOf()
                 )
+
+                if((viewModel.price.initialProfitId ?: 0) > 0){
+                    it.data?.forEachIndexed { index, initialProfit ->
+                        if(initialProfit.id == viewModel.price.initialProfitId){
+                            binding.spinnerInitialProfits.setSelection(index)
+                        }
+                    }
+                } else {
+                    binding.spinnerInitialProfits.setSelection(0)
+                }
 
                 binding.spinnerInitialProfits.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long){
@@ -84,11 +138,13 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
         }
     }
 
-    override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.button_new_item -> {
+    private fun validate(): Boolean{
+        val isInputsSuccess = ValidateUtil.inputs(
+            binding.inputName.toValidate(),
+            binding.inputSku.toValidate(),
+            binding.inputCost.toValidate(ValidateType.MONEY)
+        )
 
-            }
-        }
+        return isInputsSuccess && (viewModel.price.initialProfitId ?: 0) > 0
     }
 }

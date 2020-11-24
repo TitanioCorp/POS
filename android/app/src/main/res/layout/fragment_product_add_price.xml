@@ -185,7 +185,7 @@
 
                 <TextView
                     android:id="@+id/text_total_bill"
-                    asMoney="@{mViewModel.product.totalBill}"
+                    asMoney="@{mViewModel.price.totalBill}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd"
@@ -223,7 +223,7 @@
                     android:id="@+id/text_tax"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    asMoney="@{mViewModel.product.tax}"
+                    asMoney="@{mViewModel.price.tax}"
                     android:textAlignment="textEnd"
                     android:textColor="@color/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -257,7 +257,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_label_total"
 
-                    asMoney="@{mViewModel.product.totalUnit}"/>
+                    asMoney="@{mViewModel.price.totalUnit}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
