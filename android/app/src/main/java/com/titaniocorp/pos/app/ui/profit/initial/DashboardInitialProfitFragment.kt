@@ -83,16 +83,24 @@ class DashboardInitialProfitFragment: BaseFragment(),
     }
 
     override fun onClickRemoveItem(item: InitialProfit) {
-        context?.showDefaultDialog(
-            "Esta acción no podrá deshacerse.",
-            "Remover la ganancia de la lista",
-            positiveString = "Remover",
-            positiveCallback = {
-                viewModel.delete(item).runLiveData({
-                    Timber.tag(Constants.TAG_APP_DEBUG).d("Ganancia inicial [${item.id}] eliminada!")
-                    Snackbar.make(binding.root,"Ganancia inicial [${item.id}] eliminada!", Snackbar.LENGTH_SHORT).show()
-                })
-            }
-        )
+        if(item.id > 1){
+            context?.showDefaultDialog(
+                "Esta acción no podrá deshacerse.",
+                "Remover la ganancia de la lista",
+                positiveString = "Remover",
+                positiveCallback = {
+                    viewModel.delete(item).runLiveData({
+                        Timber.tag(Constants.TAG_APP_DEBUG).d("Ganancia inicial [${item.id}] eliminada!")
+                        Snackbar.make(binding.root,"Ganancia inicial [${item.id}] eliminada!", Snackbar.LENGTH_SHORT).show()
+                    })
+                }
+            )
+        } else {
+            context?.showDefaultDialog(
+                "Este elemento no puede ser removido.",
+                "Elemento necesario",
+                negativeString = null
+            )
+        }
     }
 }
