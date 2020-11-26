@@ -60,3 +60,7 @@ fun bindAsInputPercent(editText: TextInputEditText, value: Double) {
     editText.setText(value.toString())
 }
 
+@BindingAdapter("asTotalProducts")
+fun bindAsTotalProducts(textView: TextView, size: Int) {
+    textView.text = textView.context.getString(R.string.text_as_total_products, size.toString())
+}

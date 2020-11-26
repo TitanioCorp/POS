@@ -30,7 +30,7 @@ import javax.inject.Inject
  * @author Juan Ortiz
  * @date 10/09/2019
  */
-class PurchasePOSFragment: BaseFragment(), View.OnClickListener{
+class PurchasePosFragment: BaseFragment(), View.OnClickListener{
 
     private lateinit var binding: FragmentPosPurchaseBinding
     val viewModel: POSViewModel by viewModels { viewModelFactory }
@@ -168,7 +168,7 @@ class PurchasePOSFragment: BaseFragment(), View.OnClickListener{
                                 "Transacción exitosa",
                                 "Aceptar",
                                 positiveCallback = {
-                                    val direction = PurchasePOSFragmentDirections.toDashboardPosFragment()
+                                    val direction = PurchasePosFragmentDirections.toDashboardPosFragment()
                                     findNavController().navigate(direction)
 
                                     viewModel.resetPurchase()

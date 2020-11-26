@@ -6,6 +6,8 @@ import com.titaniocorp.pos.app.ui.billing.DashboardBillingViewModel
 import com.titaniocorp.pos.app.ui.category.DashboardCategoryViewModel
 import com.titaniocorp.pos.app.ui.customer.DashboardCustomerViewModel
 import com.titaniocorp.pos.app.ui.pos.POSViewModel
+import com.titaniocorp.pos.app.ui.pos.PurchasePosViewModel
+import com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPosViewModel
 import com.titaniocorp.pos.app.ui.product.DashboardProductViewModel
 import com.titaniocorp.pos.app.ui.product.detail.DetailProductViewModel
 import com.titaniocorp.pos.app.ui.product.detail.price.AddPriceProductViewModel
@@ -28,9 +30,11 @@ import dagger.Binds
 import dagger.Module
 import dagger.Reusable
 import dagger.multibindings.IntoMap
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Singleton
 
 @Suppress("unused")
+@ExperimentalCoroutinesApi
 @Module
 abstract class ViewModelModule {
     @Binds
@@ -47,6 +51,17 @@ abstract class ViewModelModule {
     @Reusable
     @ViewModelKey(POSViewModel::class)
     abstract fun dashboardPOSViewModel(viewModel: POSViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @Reusable
+    @ViewModelKey(PurchasePosViewModel::class)
+    abstract fun purchasePosViewModel(viewModel: PurchasePosViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddProductPosViewModel::class)
+    abstract fun addProductPosViewModel(viewModel: AddProductPosViewModel): ViewModel
 
     @Binds
     @IntoMap

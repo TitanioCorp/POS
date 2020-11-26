@@ -8,8 +8,8 @@
             type="android.view.View.OnClickListener"/>
 
         <variable
-            name="viewModel"
-            type="com.titaniocorp.pos.app.ui.pos.POSViewModel"/>
+            name="mViewModel"
+            type="com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPosViewModel"/>
 
         <variable
             name="category"
@@ -60,7 +60,7 @@
 
                 <TextView
                     android:id="@+id/text_unidad"
-                    asMoney="@{viewModel.pricePurchase.getCostProfit()}"
+                    asMoney="@{mViewModel.pricePurchase.getCostProfit()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorOnPrimary"
@@ -82,7 +82,7 @@
 
                 <TextView
                     android:id="@+id/text_tax"
-                    asMoney="@{viewModel.pricePurchase.tax}"
+                    asMoney="@{mViewModel.pricePurchase.tax}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorOnPrimary"
@@ -103,7 +103,7 @@
 
                 <TextView
                     android:id="@+id/text_total"
-                    asMoney="@{viewModel.pricePurchase.getTotal()}"
+                    asMoney="@{mViewModel.pricePurchase.getTotal()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
@@ -145,7 +145,7 @@
                     android:id="@+id/text_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.product.name}" />
+                    android:text="@{mViewModel.product.name}" />
 
                 <TextView
                     android:id="@+id/text_label_category"
@@ -220,7 +220,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@{Integer.toString(viewModel.pricePurchase.quantity)}"
+                    android:text="@{Integer.toString(mViewModel.pricePurchase.quantity)}"
                     app:layout_constraintBottom_toBottomOf="@+id/button_remove"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

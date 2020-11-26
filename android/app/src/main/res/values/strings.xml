@@ -77,6 +77,7 @@
     <string name="text_preferences_language">Defina el idioma de la aplicación</string>
     <string name="text_money">$%1$s</string>
     <string name="text_as_percent">%1$s%%</string>
+    <string name="text_as_total_products">%1$s artículos</string>
     <string name="text_binding_tax">IVA $%1$s</string>
     <string name="text_quantity">x %1$s</string>
     <string name="text_new_price_init_profit">Ganancia inicial - %1$s%%</string>

@@ -10,18 +10,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.onNavDestinationSelected
 import com.titaniocorp.pos.R
+import com.titaniocorp.pos.app.model.InitialProfit
 import com.titaniocorp.pos.app.model.PriceAddProductAdapter
 import com.titaniocorp.pos.app.ui.base.adapter.DialogAddProductAdapter
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.app.ui.pos.POSViewModel
+import com.titaniocorp.pos.app.ui.pos.PurchasePosViewModel
 import com.titaniocorp.pos.databinding.FragmentPosAddProductBinding
 import com.titaniocorp.pos.util.AppCode
 import com.titaniocorp.pos.util.AppCode.Companion.ERROR_EMPTY_PROFIT_LIST
 import com.titaniocorp.pos.util.process
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
 /**
@@ -30,10 +35,14 @@ import kotlinx.coroutines.launch
  * @author Juan Ortiz
  * @date 10/09/2019
  */
+
+@ExperimentalCoroutinesApi
 class AddProductPosFragment: BaseFragment(), View.OnClickListener{
 
+    private val args: AddProductPosFragmentArgs by navArgs()
     private lateinit var binding: FragmentPosAddProductBinding
-    val viewModel: POSViewModel by viewModels { viewModelFactory }
+    val viewModel: AddProductPosViewModel by viewModels { viewModelFactory }
+    val purchaseViewModel: PurchasePosViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,43 +64,29 @@ class AddProductPosFragment: BaseFragment(), View.OnClickListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            val positionSelected = it.getInt(ARG_POSITION)
-
-            with(binding) {
-                lifecycleOwner = viewLifecycleOwner
-                clickListener = this@AddProductPosFragment
-                viewModel = this@AddProductPosFragment.viewModel
-
-                spinnerProfits.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long){
-                        this@AddProductPosFragment.viewModel.profits.value?.data?.get(position)?.let { profit ->
-                            this@AddProductPosFragment.viewModel.selectProfit(profit)
-                        }
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                }
-
-                val adapter = DialogAddProductAdapter(
-                    this@AddProductPosFragment.viewModel.searchedList.value?.data?.get(positionSelected)?.priceId,
-                    object : DialogAddProductAdapter.DialogAddProductListener{
-                    override fun selectedPrice(priceId: Long, cost: Double, stock: Int, isInitialProfit: Boolean) {
-                        this@AddProductPosFragment.viewModel.selectPrice(priceId, cost, stock, isInitialProfit)
-                    }
-                })
-
-                recycler.adapter = adapter
-                subcribeUi(adapter)
-            }
-
-            viewModel.selectProduct(positionSelected)
+        with(binding) {
+            lifecycleOwner = viewLifecycleOwner
+            clickListener = this@AddProductPosFragment
+            mViewModel = viewModel
         }
+
+        val adapter = DialogAddProductAdapter(
+            args.priceId,
+            object : DialogAddProductAdapter.DialogAddProductListener{
+                override fun selectedPrice(priceId: Long, cost: Double, stock: Int, initialProfitId: Long?) {
+                    viewModel.selectPrice(priceId, cost, stock, initialProfitId ?: InitialProfit.DEFAULT_INITIAL_PROFIT_ID)
+                }
+            }
+        )
+
+        binding.recycler.adapter = adapter
+
+        subscribeUi(adapter)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId){
         R.id.action_add_price_purchase -> {
-            when(val code = viewModel.addProduct()){
+            when(val code = validate()){
                 AppCode.VALIDATE_SUCCESS -> {
                     val direction = AddProductPosFragmentDirections.toDashboardPosFragment()
                     findNavController().navigate(direction)
@@ -111,7 +106,7 @@ class AddProductPosFragment: BaseFragment(), View.OnClickListener{
         }
     }
 
-    private fun subcribeUi(adapter: DialogAddProductAdapter){
+    private fun subscribeUi(adapter: DialogAddProductAdapter){
         val toolbar = (activity as AppCompatActivity).appbar
         binding.nestedScrollView.setOnScrollChangeListener(
             NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
@@ -120,30 +115,36 @@ class AddProductPosFragment: BaseFragment(), View.OnClickListener{
             }
         )
 
-        viewModel.searchProduct.observe(viewLifecycleOwner, Observer { response ->
-            response.process(
-                onLoading = {boolean -> setLoading(boolean)},
-                onSuccess = {
-                    response?.data?.let {product ->
-                        viewModel.setProductSelected(product)
+        binding.spinnerProfits.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long){
+                viewModel.profits.value?.data?.get(position)?.let { profit ->
+                    viewModel.selectProfit(profit)
+                }
+            }
 
-                        adapter.submitList(viewModel.product.prices.map {price ->
-                            PriceAddProductAdapter(price, false)
-                        })
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
 
-                        lifecycleScope.launch {
-                            viewModel.searchedList.value?.data?.get(arguments?.getInt(ARG_POSITION) ?: 0)?.let {_ ->
-                                //val profit = product.prices.find { it.id == searchSelected.priceId }
-                            }
+        viewModel.getProduct(args.productId).runLiveData({
+            it.data?.let{product ->
+                viewModel.setGotProduct(product)
 
+                adapter.submitList(product.prices.map {price ->
+                    PriceAddProductAdapter(price, false)
+                })
 
-                            viewModel.getCategory(product.categoryId).also {
-                                it.process({ binding.category = it.data }, null, null)
-                            }
-                        }
+                lifecycleScope.launch {
+                    viewModel.getCategory(product.categoryId).also {resource ->
+                        resource.process(
+                            {
+                                binding.category = resource.data
+                            },
+                            null,
+                            null
+                        )
                     }
                 }
-            )
+            }
         })
 
         viewModel.profits.observe(viewLifecycleOwner, Observer {response ->
@@ -174,7 +175,32 @@ class AddProductPosFragment: BaseFragment(), View.OnClickListener{
         })
     }
 
-    companion object{
-        const val ARG_POSITION = "ARG_POSITION"
+    fun validate(): Int{
+        if(viewModel.pricePurchase.quantity !=0 ){
+            val totalQuantity = viewModel.product.prices.find { it.id == viewModel.pricePurchase.priceId }?.stock ?: 0
+            var currentQuantity = 0
+
+            purchaseViewModel.purchase.prices.forEach {
+                if(it.priceId == viewModel.pricePurchase.priceId){
+                    currentQuantity += it.quantity
+                }
+            }
+
+            return if(viewModel.pricePurchase.quantity + currentQuantity > totalQuantity){
+                AppCode.ERROR_QUANTITY_PRICE_PURCHASE
+            }else{
+                with(viewModel.pricePurchase){
+                    productName = viewModel.product.name
+                    priceName = viewModel.product.prices.find { it.id == priceId }?.name ?: ""
+                    profitName = viewModel.profitSelected.name
+                }
+
+                purchaseViewModel.addProduct(viewModel.pricePurchase)
+
+                AppCode.VALIDATE_SUCCESS
+            }
+        }else{
+            return AppCode.ERROR_ZERO_QUANTITY_PRICE
+        }
     }
 }

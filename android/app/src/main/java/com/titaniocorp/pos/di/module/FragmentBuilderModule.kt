@@ -5,7 +5,7 @@ import com.titaniocorp.pos.app.ui.category.DashboardCategoryFragment
 import com.titaniocorp.pos.app.ui.customer.DashboardCustomerFragment
 import com.titaniocorp.pos.app.ui.pos.DashboardPosFragment
 import com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPosFragment
-import com.titaniocorp.pos.app.ui.pos.purchase.PurchasePOSFragment
+import com.titaniocorp.pos.app.ui.pos.purchase.PurchasePosFragment
 import com.titaniocorp.pos.app.ui.product.DashboardProductFragment
 import com.titaniocorp.pos.app.ui.product.detail.DetailProductFragment
 import com.titaniocorp.pos.app.ui.product.detail.price.AddPriceProductFragment
@@ -35,7 +35,7 @@ abstract class FragmentBuildersModule {
     abstract fun dashboardPOSFragment(): DashboardPosFragment
 
     @ContributesAndroidInjector
-    abstract fun purchasePOSFragment(): PurchasePOSFragment
+    abstract fun purchasePosFragment(): PurchasePosFragment
 
     @ContributesAndroidInjector
     abstract fun addProductPOSFragment(): AddProductPosFragment

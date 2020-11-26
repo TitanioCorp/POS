@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="android.view.View" />
-        <import type="com.titaniocorp.pos.util.MoneyUtilKt"/>
+
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener"/>
+
         <variable
             name="mSearchSrcTextView"
             type="androidx.appcompat.widget.SearchView.SearchAutoComplete"/>
+
         <variable
             name="mViewModel"
-            type="com.titaniocorp.pos.app.ui.pos.POSViewModel"/>
+            type="com.titaniocorp.pos.app.ui.pos.PurchasePosViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -184,12 +186,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="2 Artículos"
                 android:textColor="@color/white"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_value" />
+                app:layout_constraintTop_toBottomOf="@+id/text_value"
+                asTotalProducts="@{mViewModel.purchase.prices.size}"/>
 
             <ImageView
                 android:id="@+id/imageView2"
