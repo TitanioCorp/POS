@@ -9,11 +9,17 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.hadilq.liveevent.LiveEvent
 import com.titaniocorp.pos.BR
 import com.titaniocorp.pos.app.model.Price
 import com.titaniocorp.pos.app.model.Resource
 import com.titaniocorp.pos.app.viewmodel.ObservableViewModel
+import com.titaniocorp.pos.repository.processor.asLiveEvent
+import com.titaniocorp.pos.util.toLiveEvent
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 
+@ExperimentalCoroutinesApi
 class DetailProductViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val productRepository: ProductRepository
@@ -21,7 +27,6 @@ class DetailProductViewModel @Inject constructor(
 
     @Bindable var product = Product()
     @Bindable var categories = listOf<Category>()
-    val mProductId = MutableLiveData<Long>()
 
     //Price
     fun getPrice(position: Int) = product.prices[position]
@@ -31,10 +36,7 @@ class DetailProductViewModel @Inject constructor(
         notifyPropertyChanged(BR.product)
     }
 
-    fun updatePrice(index: Int, price: Price) {
-        product.prices[index] = price
-        notifyPropertyChanged(BR.product)
-    }
+    fun updatePrice(price: Price) = productRepository.updatePrice(price).asLiveEvent()
 
     fun removePrice(position: Int){
         product.prices[position].let {
@@ -49,13 +51,11 @@ class DetailProductViewModel @Inject constructor(
     }
 
     //Category
-    fun getAllCategory() = categoryRepository.getAll()
+    fun getAllCategory() = categoryRepository.getAll().toLiveEvent()
     fun addCategory(category: Category) = categoryRepository.add(category)
 
     //Product
-    fun getProduct() = Transformations.switchMap(mProductId){ productId ->
-        productRepository.getProductById(productId)
-    }
+    fun getProduct(productId: Long) = productRepository.getProductById(productId).toLiveEvent()
     fun addProduct() = productRepository.addProduct(product)
     fun updateProduct() = productRepository.updateProduct(product)
     fun deleteProduct(): LiveData<Resource<Pair<Int, Int>>> {

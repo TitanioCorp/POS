@@ -62,13 +62,6 @@ class DetailProductFragment: BaseFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            val productId = it.getLong("productId", 0)
-            if(productId > 0){
-                viewModel.mProductId.value = arguments?.getLong("productId")
-            }
-        }
-
         with(binding){
 
             lifecycleOwner = viewLifecycleOwner
@@ -115,10 +108,10 @@ class DetailProductFragment: BaseFragment(),
     }
 
     private fun subscribeUi(adapter: DetailProductAdapter){
-        viewModel.getProduct().observe(viewLifecycleOwner, Observer {
-            it.process(
-                onLoading = {boolean -> setLoading(boolean)},
-                onSuccess = {
+        arguments?.let {arguments ->
+            val productId = arguments.getLong("productId", 0)
+            if(productId > 0){
+                viewModel.getProduct(productId).runLiveData({
                     it.data?.let{ data ->
                         viewModel.product = data
                         adapter.submitList(viewModel.product.prices)
@@ -133,9 +126,9 @@ class DetailProductFragment: BaseFragment(),
 
                         (activity as AppCompatActivity).toolbar.title = viewModel.product.name
                     }
-                }
-            )
-        })
+                })
+            }
+        }
 
         viewModel.getAllCategory().observe(viewLifecycleOwner, Observer {
             it.process(

@@ -12,7 +12,8 @@ import java.util.*
     indices = [
         Index(value = ["price_id"], unique = true),
         Index(value = ["product_id"]),
-        Index(value = ["created_date"], unique = true)
+        Index(value = ["created_date"], unique = true),
+        Index(value = ["initial_profit_id"], unique = true),
     ]
 )
 data class PriceEntity(
@@ -42,7 +43,10 @@ data class PriceEntity(
     var active: Boolean,
 
     @ColumnInfo(name = "created_date")
-    var createdDate: Date = Date()
+    var createdDate: Date = Date(),
+
+    @ColumnInfo(name = "initial_profit_id")
+    var initialProfitId: Long ?= null,
 )
 
 fun List<PriceEntity>.asDomainModel(): List<Price>{
@@ -50,7 +54,7 @@ fun List<PriceEntity>.asDomainModel(): List<Price>{
         Price(
             it.id,
             it.productId,
-            0,
+            it.initialProfitId,
             it.isInitialProfit,
             it.name,
             it.sku,
@@ -66,7 +70,7 @@ fun PriceEntity.asDomainModel(): Price {
     return Price(
         id,
         productId,
-        0,
+        initialProfitId,
         isInitialProfit,
         name,
         sku,

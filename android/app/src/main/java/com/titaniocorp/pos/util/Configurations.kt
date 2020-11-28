@@ -1,12 +1,15 @@
 package com.titaniocorp.pos.util
 
 import android.content.Context
+import com.titaniocorp.pos.app.model.InitialProfit
 import java.io.File
 
 object Configurations {
     const val PROFIT_PERCENT_PREFERENCE = "PROFIT_PERCENT_PREFERENCE"
     const val TAX_PERCENT_PREFERENCE = "TAX_PERCENT_PREFERENCE"
     const val EMAIL_ADMINISTRATOR_PREFERENCE = "EMAIL_ADMINISTRATOR_PREFERENCE"
+
+    var initialProfits = listOf<InitialProfit>()
 
     var profitPercent: Double = 0.0
         private set
@@ -40,5 +43,16 @@ object Configurations {
 
     fun setDirectory(file: File?) {
         directory = file
+    }
+}
+
+fun Long.getInitialProfit(): InitialProfit{
+    val id = this
+    return with(Configurations.initialProfits){
+        if(size > 0){
+            find { it.id == id } ?: get(0)
+        } else {
+            InitialProfit()
+        }
     }
 }

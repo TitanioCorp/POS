@@ -37,11 +37,13 @@ abstract class SingleFlowProcessor<Result, Query> {
                 if(code > 0) {
                     val result = onResult(query)
 
-                    Resource.success<Result>(result, 0).also {resource ->
+                    val resource = Resource.success<Result>(result, 0).also {resource ->
                         Logger.d("[${Constants.TAG_DATABASE}]: ${resource?.toJson()}")
                     }
+
+                    emit(resource)
                 } else {
-                    Resource.error<Result>(null, code)
+                    emit(Resource.error<Result>(null, code))
                 }
             }
         }.onStart {

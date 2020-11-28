@@ -12,6 +12,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class AddPriceProductViewModel @Inject constructor(
     initialProfitRepository: InitialProfitRepository
+
 ): ObservableViewModel() {
     val initialProfits = initialProfitRepository.getAll().asLiveData()
 

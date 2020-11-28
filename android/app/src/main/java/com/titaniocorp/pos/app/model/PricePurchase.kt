@@ -4,7 +4,6 @@ import com.titaniocorp.pos.database.entity.PricePurchaseEntity
 import com.titaniocorp.pos.util.calculateTax
 import com.titaniocorp.pos.util.calculateTotalReal
 import java.util.*
-import kotlin.math.max
 
 data class PricePurchase(
     var id: Long = 0,

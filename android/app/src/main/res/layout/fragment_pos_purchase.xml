@@ -9,8 +9,8 @@
             name="clickListener"
             type="android.view.View.OnClickListener"/>
         <variable
-            name="viewModel"
-            type="com.titaniocorp.pos.app.ui.pos.POSViewModel" />
+            name="mViewModel"
+            type="com.titaniocorp.pos.app.ui.pos.PurchasePosViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -50,11 +50,11 @@
                     android:id="@+id/text_valor_cobrar"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.total))}"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                     app:layout_constraintEnd_toEndOf="@+id/text_label_valor_cobrar"
                     app:layout_constraintStart_toStartOf="@+id/text_label_valor_cobrar"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_valor_cobrar" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_valor_cobrar"
+                    asMoney="@{mViewModel.purchase.total}"/>
 
                 <Button
                     android:id="@+id/button_add_adjustment"
@@ -149,7 +149,7 @@
                     android:id="@+id/switch_no_cobrada"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:checked="@={viewModel.isCredit}"
+                    android:checked="@={mViewModel.isCredit}"
                     android:text="Crédito"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -179,7 +179,7 @@
                     android:id="@+id/group_abono"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.isCredit ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{mViewModel.isCredit ? View.VISIBLE : View.GONE}"
                     app:constraint_referenced_ids="input_layout_abono" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -238,10 +238,10 @@
                     android:id="@+id/text_cost"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.cost))}"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                     app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_cost" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_cost"
+                    asMoney="@{mViewModel.purchase.cost}"/>
 
                 <TextView
                     android:id="@+id/text_label_profit"
@@ -258,10 +258,10 @@
                     android:id="@+id/text_profit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.profit))}"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                     app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_profit" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_profit"
+                    asMoney="@{mViewModel.purchase.profit}"/>
 
                 <TextView
                     android:id="@+id/text_label_subtotal"
@@ -281,11 +281,11 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_text_section_title"
                     android:paddingBottom="16dp"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.subtotal))}"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                     app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_subtotal" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_subtotal"
+                    asMoney="@{mViewModel.purchase.subtotal}"/>
 
                 <TextView
                     android:id="@+id/text_label_adjustment"
@@ -302,10 +302,10 @@
                     android:id="@+id/text_adjustment"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.adjustment))}"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                     app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_adjustment" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_adjustment"
+                    asMoney="@{mViewModel.purchase.adjustment}"/>
 
                 <TextView
                     android:id="@+id/text_label_tax"
@@ -322,10 +322,10 @@
                     android:id="@+id/text_tax"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.tax))}"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                     app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_tax" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_tax"
+                    asMoney="@{mViewModel.purchase.tax}"/>
 
                 <TextView
                     android:id="@+id/text_label_total"
@@ -345,13 +345,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:paddingBottom="16dp"
-                    android:text="@{@string/text_money(MoneyUtilKt.asMoney(viewModel.purchase.total))}"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                     app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                    app:layout_constraintTop_toBottomOf="@+id/text_label_total" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_label_total"
+                    asMoney="@{mViewModel.purchase.total}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

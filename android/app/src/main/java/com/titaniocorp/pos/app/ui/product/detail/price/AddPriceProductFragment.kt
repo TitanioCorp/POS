@@ -87,12 +87,13 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
                 }
 
                 if(args.position >= 0){
-                    detailProductViewModel.updatePrice(args.position, viewModel.price)
+                    detailProductViewModel.updatePrice(viewModel.price).runLiveData({
+                        findNavController().navigateUp()
+                    })
                 }else{
                     detailProductViewModel.addPrice(viewModel.price)
+                    findNavController().navigateUp()
                 }
-
-                findNavController().navigateUp()
             }
             true
         }

@@ -2,10 +2,10 @@ package com.titaniocorp.pos.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.titaniocorp.pos.app.ui.MainActivityViewModel
 import com.titaniocorp.pos.app.ui.billing.DashboardBillingViewModel
 import com.titaniocorp.pos.app.ui.category.DashboardCategoryViewModel
 import com.titaniocorp.pos.app.ui.customer.DashboardCustomerViewModel
-import com.titaniocorp.pos.app.ui.pos.POSViewModel
 import com.titaniocorp.pos.app.ui.pos.PurchasePosViewModel
 import com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPosViewModel
 import com.titaniocorp.pos.app.ui.product.DashboardProductViewModel
@@ -48,9 +48,9 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @Reusable
-    @ViewModelKey(POSViewModel::class)
-    abstract fun dashboardPOSViewModel(viewModel: POSViewModel): ViewModel
+    @Singleton
+    @ViewModelKey(MainActivityViewModel::class)
+    abstract fun mainActivityViewModel(viewModel: MainActivityViewModel): ViewModel
 
     @Binds
     @IntoMap

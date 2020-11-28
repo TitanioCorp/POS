@@ -25,7 +25,6 @@ class PurchasePosViewModel @Inject constructor(
     @Bindable var purchase = Purchase()
 
     private val mSearchQuery = LiveEvent<String>()
-    private val searchedId = MutableLiveData<Long>()
 
     val adapterUpdated = LiveEvent<Pair<Int, Int>>()
 

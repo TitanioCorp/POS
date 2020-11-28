@@ -9,20 +9,19 @@ import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.database.entity.CustomerEntity
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
-import com.titaniocorp.pos.app.ui.pos.POSViewModel
+import com.titaniocorp.pos.app.ui.pos.PurchasePosViewModel
 import com.titaniocorp.pos.databinding.FragmentPosPurchaseBinding
 import com.titaniocorp.pos.util.addMoneyTextWatcher
 import com.titaniocorp.pos.util.getValueMoney
 import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogHelper
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
  * Fragmento que lista las peliculas
@@ -30,10 +29,11 @@ import javax.inject.Inject
  * @author Juan Ortiz
  * @date 10/09/2019
  */
+@ExperimentalCoroutinesApi
 class PurchasePosFragment: BaseFragment(), View.OnClickListener{
 
     private lateinit var binding: FragmentPosPurchaseBinding
-    val viewModel: POSViewModel by viewModels { viewModelFactory }
+    val viewModel: PurchasePosViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,7 @@ class PurchasePosFragment: BaseFragment(), View.OnClickListener{
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
+        binding.mViewModel = viewModel
         binding.clickListener = this
         binding.inputAbono.addMoneyTextWatcher()
 
@@ -62,7 +62,7 @@ class PurchasePosFragment: BaseFragment(), View.OnClickListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        subcribeUi()
+        subscribeUi()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -105,7 +105,7 @@ class PurchasePosFragment: BaseFragment(), View.OnClickListener{
         }
     }
 
-    private fun subcribeUi(){
+    private fun subscribeUi(){
         val toolbar = (activity as AppCompatActivity).appbar
         binding.nestedScrollView.setOnScrollChangeListener(
             NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->

@@ -36,5 +36,5 @@ interface PriceDao {
     suspend fun addStock(priceId: Long, quantity: Int): Int
 
     @Update
-    suspend fun update(vararg item: PriceEntity): Int
+    fun update(vararg item: PriceEntity): Int
 }

@@ -11,6 +11,6 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface ReportDao {
-    @Query("SELECT price.price_id, product.name as 'product_name', price.name as 'price_name', price.cost, price.stock, price.initial_profit FROM price INNER JOIN product ON product.product_id = price.product_id WHERE price.stock > 0 AND price.active = 1")
+    @Query("SELECT price.price_id, product.name as 'product_name', price.name as 'price_name', price.cost, price.stock, price.initial_profit, price.initial_profit_id FROM price INNER JOIN product ON product.product_id = price.product_id WHERE price.stock > 0 AND price.active = 1")
     fun getPricesForStockReport(): Flow<List<StockReportItem>>
 }

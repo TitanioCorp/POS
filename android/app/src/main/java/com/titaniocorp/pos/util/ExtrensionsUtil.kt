@@ -43,10 +43,12 @@ fun <T> Resource<T>.process(
         Status.LOADING -> {
             onLoading?.invoke(true)
         }
+
         Status.SUCCESS -> {
             onLoading?.invoke(false)
             onSuccess()
         }
+
         Status.ERROR -> {
             onLoading?.invoke(false)
             Timber.tag(Constants.TAG_APP_DEBUG).e("Code: $code - Message: $message")

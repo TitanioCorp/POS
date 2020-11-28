@@ -77,7 +77,9 @@ fun String.getValueMoney(): Double{
 }
 
 fun Double.calculateTotalReal(initialProfit: Double? = 0.0): Double {
-    val percent: Double = initialProfit?.let { 1 - (it/100) } ?: 1.0
+    val percent: Double = initialProfit?.let {
+        1 - (it/100)
+    } ?: 1.0
     return (this / percent)
 }
 

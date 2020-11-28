@@ -10,6 +10,7 @@ import com.titaniocorp.pos.app.model.PriceStock
 import com.titaniocorp.pos.app.model.Product
 import com.titaniocorp.pos.databinding.DialogAddPriceStockBinding
 import com.titaniocorp.pos.util.calculateTax
+import com.titaniocorp.pos.util.getInitialProfit
 import com.titaniocorp.pos.util.validations.ValidateType
 import com.titaniocorp.pos.util.validations.validate
 
@@ -41,7 +42,8 @@ object DialogStockHelper {
             price = selectedPrice
             productName = product.name
 
-            val tax: Double = selectedPrice?.cost?.calculateTax() ?: 0.0
+            val initialProfitPercent = selectedPrice?.initialProfitId?.getInitialProfit()?.percent
+            val tax: Double = selectedPrice?.cost?.calculateTax(initialProfitPercent) ?: 0.0
             this.tax = tax
 
             clickListener = View.OnClickListener { view ->
@@ -65,7 +67,8 @@ object DialogStockHelper {
                                 selectedPrice?.cost ?: 0.0,
                                 tax,
                                 product.name,
-                                selectedPrice?.name ?: ""
+                                selectedPrice?.name ?: "",
+                                selectedPrice?.initialProfitId ?: 1
                                 )
 
                             positiveCallBack(priceStockDto)

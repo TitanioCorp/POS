@@ -41,7 +41,8 @@ fun Price.asDatabaseModel(): PriceEntity {
         stock,
         isInitialProfit,
         active,
-        createdDate
+        createdDate,
+        initialProfitId
     )
 }
 
@@ -56,7 +57,8 @@ fun List<Price>.asDatabaseModel(): List<PriceEntity> {
             it.stock,
             it.isInitialProfit,
             it.active,
-            it.createdDate
+            it.createdDate,
+            it.initialProfitId
         )
     }
 }

@@ -89,13 +89,13 @@ open class BaseFragment: Fragment(), Injectable {
     protected fun <T: Resource<T>> LiveData<T>.runLiveData(
         onSuccess: (T) -> Unit,
         onError: (()-> Unit) ?= null,
-        onLoading: ((Boolean) -> Unit) ?= null
+        onLoading: ((Boolean) -> Unit) = {boolean -> setLoading(boolean)}
     ){
         observe(viewLifecycleOwner){
             it.process(
                 { onSuccess(it) },
                 onError ?: { baseViewModel.setError(it.code, it.message) },
-                onLoading ?: {boolean -> setLoading(boolean)},
+                onLoading,
             )
         }
     }

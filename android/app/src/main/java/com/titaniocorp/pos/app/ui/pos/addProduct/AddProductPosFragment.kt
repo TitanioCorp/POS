@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.onNavDestinationSelected
@@ -19,7 +18,6 @@ import com.titaniocorp.pos.app.model.InitialProfit
 import com.titaniocorp.pos.app.model.PriceAddProductAdapter
 import com.titaniocorp.pos.app.ui.base.adapter.DialogAddProductAdapter
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
-import com.titaniocorp.pos.app.ui.pos.POSViewModel
 import com.titaniocorp.pos.app.ui.pos.PurchasePosViewModel
 import com.titaniocorp.pos.databinding.FragmentPosAddProductBinding
 import com.titaniocorp.pos.util.AppCode
