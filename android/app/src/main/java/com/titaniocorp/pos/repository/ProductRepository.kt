@@ -134,6 +134,17 @@ class ProductRepository @Inject constructor(
         }.asResult()
     }
 
+    fun insertPrice(item: Price): Flow<Resource<Long>> {
+        return object : SingleFlowProcessor<Long, Long>(){
+            override fun query(): Long = priceDao.insert(item.asDatabaseModel())
+            override fun validate(response: Long): Int = if(response > 0){
+                AppCode.SUCCESS_QUERY_DATABASE
+            }else{
+                AppCode.ERROR_QUERY_DATABASE
+            }
+        }.process()
+    }
+
     fun updatePrice(item: Price): Flow<Resource<Int>> {
         return object : SingleFlowProcessor<Int, Int>(){
             override fun query(): Int = priceDao.update(item.asDatabaseModel())

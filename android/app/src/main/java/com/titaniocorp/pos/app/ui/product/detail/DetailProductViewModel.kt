@@ -9,15 +9,21 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import com.titaniocorp.pos.BR
 import com.titaniocorp.pos.app.model.Price
 import com.titaniocorp.pos.app.model.Resource
 import com.titaniocorp.pos.app.viewmodel.ObservableViewModel
 import com.titaniocorp.pos.repository.processor.asLiveEvent
+import com.titaniocorp.pos.util.Logger
+import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.toLiveEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @ExperimentalCoroutinesApi
 class DetailProductViewModel @Inject constructor(
@@ -32,8 +38,19 @@ class DetailProductViewModel @Inject constructor(
     fun getPrice(position: Int) = product.prices[position]
 
     fun addPrice(price: Price){
-        product.prices.add(price)
-        notifyPropertyChanged(BR.product)
+        if(product.id == 0L){
+            product.prices.add(price)
+            notifyPropertyChanged(BR.product)
+        } else {
+            runBlocking{
+                price.productId = product.id
+                productRepository.insertPrice(price).collect {
+                    it.process({
+                        Logger.d("Price [${it.data}] inserted on [${product.id}] product!")
+                    })
+                }
+            }
+        }
     }
 
     fun updatePrice(price: Price) = productRepository.updatePrice(price).asLiveEvent()

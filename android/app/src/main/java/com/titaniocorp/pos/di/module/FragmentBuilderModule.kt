@@ -22,6 +22,7 @@ import com.titaniocorp.pos.app.ui.stock.add.AddStockFragment
 import com.titaniocorp.pos.app.ui.stock.detail.DetailStockFragment
 import com.titaniocorp.pos.app.ui.warehouse.DashboardWarehouseFragment
 import com.titaniocorp.pos.app.ui.warehouse.add.AddPaymentWarehouseFragment
+import com.titaniocorp.pos.di.annotation.FragmentScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

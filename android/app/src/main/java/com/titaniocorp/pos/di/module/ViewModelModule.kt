@@ -25,6 +25,7 @@ import com.titaniocorp.pos.app.ui.warehouse.DashboardWarehouseViewModel
 import com.titaniocorp.pos.app.ui.warehouse.add.AddPaymentWarehouseViewModel
 import com.titaniocorp.pos.app.viewmodel.AppViewModelFactory
 import com.titaniocorp.pos.app.viewmodel.BaseViewModel
+import com.titaniocorp.pos.di.annotation.FragmentScope
 import com.titaniocorp.pos.di.key.ViewModelKey
 import dagger.Binds
 import dagger.Module
@@ -68,10 +69,10 @@ abstract class ViewModelModule {
     @ViewModelKey(DashboardProductViewModel::class)
     abstract fun dashboardProductViewModel(viewModel: DashboardProductViewModel): ViewModel
 
+    //@FragmentScope
     @Binds
     @IntoMap
     @ViewModelKey(DetailProductViewModel::class)
-    @Reusable
     abstract fun detailProductViewModel(viewModel: DetailProductViewModel): ViewModel
 
     @Binds

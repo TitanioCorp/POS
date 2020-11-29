@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.titaniocorp.pos.BR
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.Category
+import com.titaniocorp.pos.app.model.Product
 import com.titaniocorp.pos.app.ui.base.adapter.CategorySpinnerAdapter
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentProductDetailBinding
@@ -26,6 +27,7 @@ import com.titaniocorp.pos.util.ui.DialogHelper
 import com.titaniocorp.pos.util.validations.ValidateUtil
 import com.titaniocorp.pos.util.validations.toValidate
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -34,13 +36,14 @@ import javax.inject.Inject
  * @author Juan Ortiz
  * @date 19/12/2019
  */
+@ExperimentalCoroutinesApi
 class DetailProductFragment: BaseFragment(),
     View.OnClickListener,
     AdapterView.OnItemSelectedListener,
     DetailProductAdapter.DetailProductItemListener{
 
     private lateinit var binding: FragmentProductDetailBinding
-    val viewModel: DetailProductViewModel by viewModels { viewModelFactory }
+    val viewModel: DetailProductViewModel by viewModels ({requireActivity()}) { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,6 +130,8 @@ class DetailProductFragment: BaseFragment(),
                         (activity as AppCompatActivity).toolbar.title = viewModel.product.name
                     }
                 })
+            } else {
+                viewModel.product = Product()
             }
         }
 

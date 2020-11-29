@@ -13,7 +13,7 @@ import java.util.*
         Index(value = ["price_id"], unique = true),
         Index(value = ["product_id"]),
         Index(value = ["created_date"], unique = true),
-        Index(value = ["initial_profit_id"], unique = true),
+        Index(value = ["initial_profit_id"]),
     ]
 )
 data class PriceEntity(

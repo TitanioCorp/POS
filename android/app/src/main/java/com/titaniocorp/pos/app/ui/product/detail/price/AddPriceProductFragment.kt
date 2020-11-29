@@ -39,7 +39,7 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentProductAddPriceBinding
     val viewModel: AddPriceProductViewModel by viewModels { viewModelFactory }
-    private val detailProductViewModel: DetailProductViewModel by viewModels { viewModelFactory }
+    private val detailProductViewModel: DetailProductViewModel by viewModels ({requireActivity()}) { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -33,7 +33,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName "1.4.0"
+        versionName "1.6.1"
         testInstrumentationRunner "com.titaniocorp.pos.util.AppTestRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -200,9 +200,12 @@ dependencies {
     def firebase_analytics_version = "17.5.0"
     def firebase_crashlytics_version = "17.2.1"
     def firebase_storage_version = "19.2.0"
-    implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
-    implementation "com.google.firebase:firebase-crashlytics:$firebase_crashlytics_version"
-    implementation "com.google.firebase:firebase-storage:$firebase_storage_version"
+
+    implementation platform('com.google.firebase:firebase-bom:26.0.0')
+
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
 
     /* LiveEvent */
     def live_event_version = "1.2.0"
