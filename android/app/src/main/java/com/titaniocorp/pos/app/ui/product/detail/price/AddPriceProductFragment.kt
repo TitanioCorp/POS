@@ -9,23 +9,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.onNavDestinationSelected
-import com.google.android.material.snackbar.Snackbar
 import com.titaniocorp.pos.R
-import com.titaniocorp.pos.app.model.InitialProfit
-import com.titaniocorp.pos.app.ui.base.adapter.CategorySpinnerAdapter
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.app.ui.product.detail.DetailProductViewModel
-import com.titaniocorp.pos.app.ui.profit.initial.dialog.showInitialProfitDialog
-import com.titaniocorp.pos.databinding.FragmentInitialProfitDashboardBinding
 import com.titaniocorp.pos.databinding.FragmentProductAddPriceBinding
-import com.titaniocorp.pos.util.*
-import com.titaniocorp.pos.util.ui.DialogHelper
-import com.titaniocorp.pos.util.ui.showDefaultDialog
+import com.titaniocorp.pos.util.addMoneyTextWatcher
+import com.titaniocorp.pos.util.calculateTotalReal
 import com.titaniocorp.pos.util.validations.ValidateType
 import com.titaniocorp.pos.util.validations.ValidateUtil
 import com.titaniocorp.pos.util.validations.toValidate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import timber.log.Timber
 
 /**
  * Fragmento para agregar nuevo producto
@@ -65,17 +58,9 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
             lifecycleOwner = this@AddPriceProductFragment
             clickListener = this@AddPriceProductFragment
             mViewModel = viewModel
-            subscribeUi()
         }
 
-        if(args.position >= 0){
-            detailProductViewModel.getPrice(args.position).let{
-                viewModel.updatePrice(it)
-                binding.inputName.setText(it.name)
-                binding.inputSku.setText(it.sku)
-                binding.inputCost.setText(it.cost.toString())
-            }
-        }
+        subscribeUi()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId){
@@ -107,43 +92,61 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
 
     private fun subscribeUi(){
         viewModel.initialProfits.runLiveData({
-            context?.let{context ->
-                binding.spinnerInitialProfits.adapter = ArrayAdapter(
-                    context,
-                    android.R.layout.simple_spinner_dropdown_item,
-                    it.data?.map {item -> "${item.percent}% | ${item.name}" } ?: listOf()
-                )
 
-                if((viewModel.price.initialProfitId ?: 0) > 0){
-                    it.data?.forEachIndexed { index, initialProfit ->
-                        if(initialProfit.id == viewModel.price.initialProfitId){
-                            binding.spinnerInitialProfits.setSelection(index)
-                        }
-                    }
-                } else {
-                    binding.spinnerInitialProfits.setSelection(0)
-                }
-
-                binding.spinnerInitialProfits.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long){
-                        viewModel.selectInitialProfit(position)
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+            if(args.position >= 0){
+                detailProductViewModel.getPrice(args.position).let{price ->
+                    viewModel.updatePrice(price)
                 }
             }
-        })
 
-        binding.inputCost.addMoneyTextWatcher{cost ->
-            viewModel.setCost(cost)
-        }
+            var initialProfitPosition = 0
+
+            it.data?.forEachIndexed { index, initialProfit ->
+                if(initialProfit.id == viewModel.price.initialProfitId){
+                    initialProfitPosition = index
+                }
+            }
+
+            viewModel.selectInitialProfit(initialProfitPosition)
+
+            val realBill = viewModel.price.cost.calculateTotalReal(viewModel.price.initialProfitSelected?.percent)
+            viewModel.updateRealBill(realBill)
+
+            binding.inputName.setText(viewModel.price.name)
+            binding.inputSku.setText(viewModel.price.sku)
+
+            if(realBill > 0){
+                binding.inputRealBill.setText(viewModel.price.realBill.toString())
+            }
+
+            binding.spinnerInitialProfits.adapter = ArrayAdapter(
+                binding.root.context,
+                android.R.layout.simple_spinner_dropdown_item,
+                it.data?.map {item -> "${item.percent}% | ${item.name}" } ?: listOf()
+            )
+
+            binding.spinnerInitialProfits.setSelection(initialProfitPosition)
+
+            binding.spinnerInitialProfits.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long){
+                    viewModel.selectInitialProfit(position)
+                    viewModel.computePrice()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
+            binding.inputRealBill.addMoneyTextWatcher{cost ->
+                viewModel.updateRealBill(cost)
+            }
+        })
     }
 
     private fun validate(): Boolean{
         val isInputsSuccess = ValidateUtil.inputs(
             binding.inputName.toValidate(),
             binding.inputSku.toValidate(),
-            binding.inputCost.toValidate(ValidateType.MONEY)
+            binding.inputRealBill.toValidate(ValidateType.MONEY)
         )
 
         return isInputsSuccess && (viewModel.price.initialProfitId ?: 0) > 0

@@ -6,10 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.ErrorResource
 import com.titaniocorp.pos.app.model.Resource
