@@ -72,18 +72,23 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
                 app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
-            <Spinner
-                android:id="@+id/spinner_type_report"
+            <LinearLayout
+                android:id="@+id/linear_spinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_section"
-                android:drawSelectorOnTop="true"
-                android:overlapAnchor="false"
-                android:spinnerMode="dropdown"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/text_label_type_report" />
+                app:layout_constraintTop_toBottomOf="@+id/text_label_type_report">
+
+                <Spinner
+                    android:id="@+id/spinner_type_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/text_label_start_Date"
@@ -94,7 +99,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
                 app:layout_constraintEnd_toEndOf="@+id/button_start_date"
                 app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_type_report" />
+                app:layout_constraintTop_toBottomOf="@+id/linear_spinner" />
 
             <Button
                 android:id="@+id/button_start_date"
@@ -110,12 +115,11 @@
                 android:id="@+id/text_label_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="Fecha Final"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
                 app:layout_constraintEnd_toEndOf="@+id/button_end_date"
                 app:layout_constraintStart_toStartOf="@+id/button_end_date"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_type_report" />
+                app:layout_constraintTop_toTopOf="@+id/text_label_start_Date" />
 
             <Button
                 android:id="@+id/button_end_date"

@@ -76,4 +76,85 @@ class DashboardBillingViewModel @Inject constructor(
             .generateSalesReport(dates.first, dates.second)
             .asLiveData()
     }
+
+    fun sendMail(type: TypeEmail = TypeEmail.BILLING): LiveData<Resource<String>> {
+        val result = LiveEvent<Resource<String>>()
+
+        viewModelScope.launch(Dispatchers.Default){
+            result.postValue(Resource.loading(null))
+
+            try {
+                val billingFile = CSVUtil.getBillingFile(billing)
+
+                val purchasesFile = billing.purchases.let {
+                    if(it.isNotEmpty()){
+                        CSVUtil.getPurchasesFile(it)
+                    }else{
+                        null
+                    }}
+
+                val paymentsPurchasesFile = billing.paymentPurchases.let {
+                    if(it.isNotEmpty()){
+                        CSVUtil.getPaymentsPurchaseFile(it)
+                    }else{
+                        null
+                    }}
+
+                val stocksFile = billing.stocks.let {
+                    if(it.isNotEmpty()){
+                        CSVUtil.getStocksFile(it)
+                    }else{
+                        null
+                    }}
+
+                val paymentsFile = billing.paymentsList.let {
+                    if(it.isNotEmpty()){
+                        CSVUtil.getPaymentsFile(it)
+                    }else{
+                        null
+                    }}
+
+                when(type){
+                    TypeEmail.BILLING -> {
+                        val isSuccess = MailUtil.sendBilling(
+                            billing,
+                            billingFile,
+                            purchasesFile,
+                            paymentsPurchasesFile,
+                            stocksFile,
+                            paymentsFile
+                        )
+
+                        isSuccess?.let {
+                            result.postValue(Resource.error(isSuccess, 1))
+                        } ?: run {
+                            result.postValue(Resource.success(isSuccess))
+                        }
+                    }
+
+                    TypeEmail.REPORT -> {
+                        MailUtil.sendReport(
+                            startDate.time,
+                            endDate.time,
+                            billing,
+                            billingFile,
+                            purchasesFile,
+                            paymentsPurchasesFile,
+                            stocksFile,
+                            paymentsFile
+                        )
+
+                        result.postValue(Resource.success("Success"))
+                    }
+                }
+            }catch (exception: Exception){
+                Timber.tag(Constants.TAG_APP_DEBUG).e(exception)
+                result.postValue(Resource.error(null, -1))
+            }
+
+        }
+
+
+        return result
+    }
 }

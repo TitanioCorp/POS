@@ -90,9 +90,9 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
                             Configurations.setDirectory(FileUtil.getDirectory(activity).second)
                         }
 
-                        /*viewModel.sendMail().observe(viewLifecycleOwner, Observer{
+                        viewModel.sendMail().observe(viewLifecycleOwner, Observer{
                             it.processEmail()
-                        })*/
+                        })
                     }
                 }
             }
@@ -104,9 +104,9 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
                             Configurations.setDirectory(FileUtil.getDirectory(activity).second)
                         }
 
-                        /*viewModel.sendMail(TypeEmail.REPORT).observe(viewLifecycleOwner, Observer{
+                        viewModel.sendMail(TypeEmail.REPORT).observe(viewLifecycleOwner, Observer{
                             it.processEmail()
-                        })*/
+                        })
 
                     }
                 }
@@ -141,9 +141,6 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
 
             viewModel.updateDates()
         }
-    }
-
-    private fun subscribeUi(){
     }
 
     private fun Resource<String>.processEmail(){
