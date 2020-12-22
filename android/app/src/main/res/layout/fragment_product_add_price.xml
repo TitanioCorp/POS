@@ -136,7 +136,7 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_cost"
+                    android:id="@+id/input_layout_real_bill"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -147,13 +147,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_sku">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/input_cost"
+                        android:id="@+id/input_real_bill"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_money"
-                        android:hint="Costo"
+                        android:hint="@string/text_real_bill"
                         android:inputType="number|numberDecimal"
-                        android:maxLength="11" />
+                        android:maxLength="11"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -175,21 +175,24 @@
                     android:spinnerMode="dropdown" />
 
                 <TextView
-                    android:id="@+id/text_label_total_bill"
+                    android:id="@+id/text_label_cost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/medium_margin"
-                    android:text="Valor factura"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                    android:textAlignment="textEnd" />
+                    android:text="Costo"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
 
                 <TextView
-                    android:id="@+id/text_total_bill"
-                    asMoney="@{mViewModel.price.totalBill}"
+                    android:id="@+id/text_total_cost"
+                    asMoney="@{mViewModel.price.cost}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
+
+
 
             </LinearLayout>
 

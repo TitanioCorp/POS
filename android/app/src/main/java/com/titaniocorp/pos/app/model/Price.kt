@@ -18,13 +18,19 @@ data class Price(
     var createdDate: Date = Date()
 ){
     var initialProfitSelected: InitialProfit ?= null
-    var totalBill: Double = 0.0
+    var realBill: Double = 0.0
     var tax: Double = 0.0
     var totalUnit: Double = 0.0
     var total: Double = 0.0
 
+    fun updateRealBill(value: Double){
+        realBill = value
+        compute()
+    }
+
     fun compute(){
-        totalBill = cost.calculateTotalReal(initialProfitSelected?.percent)
+        val percent: Double = (initialProfitSelected?.percent ?: 0.0)/100.0
+        cost = (realBill * (1 - percent))
         tax = cost.calculateTax(initialProfitSelected?.percent)
         totalUnit = cost + tax
         total = (cost + tax) * stock

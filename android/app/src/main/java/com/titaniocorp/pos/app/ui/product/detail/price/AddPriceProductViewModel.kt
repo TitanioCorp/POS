@@ -21,12 +21,15 @@ class AddPriceProductViewModel @Inject constructor(
 
     fun updatePrice(price: Price){
         this.price = price
-        price.compute()
         notifyPropertyChanged(BR.price)
     }
 
-    fun setCost(cost: Double){
-        price.cost = cost
+    fun updateRealBill(value: Double){
+        price.updateRealBill(value)
+        notifyPropertyChanged(BR.price)
+    }
+
+    fun computePrice(){
         price.compute()
         notifyPropertyChanged(BR.price)
     }
@@ -35,7 +38,6 @@ class AddPriceProductViewModel @Inject constructor(
         initialProfits.value?.data?.get(position)?.let{
             price.initialProfitId = it.id
             price.initialProfitSelected = it
-            price.compute()
             notifyPropertyChanged(BR.price)
         }
     }
