@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import androidx.navigation.ui.onNavDestinationSelected
 import com.google.android.material.snackbar.Snackbar
 import com.titaniocorp.pos.R
@@ -39,7 +40,7 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentProductAddPriceBinding
     val viewModel: AddPriceProductViewModel by viewModels { viewModelFactory }
-    private val detailProductViewModel: DetailProductViewModel by viewModels ({requireActivity()}) { viewModelFactory }
+    private val detailProductViewModel: DetailProductViewModel by navGraphViewModels(R.id.nav_graph_detail_product) { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +66,11 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
             lifecycleOwner = this@AddPriceProductFragment
             clickListener = this@AddPriceProductFragment
             mViewModel = viewModel
+
+            inputCost.addMoneyTextWatcher{cost ->
+                viewModel.setCost(cost)
+            }
+
             subscribeUi()
         }
 
@@ -73,6 +79,7 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
                 viewModel.updatePrice(it)
                 binding.inputName.setText(it.name)
                 binding.inputSku.setText(it.sku)
+                binding.inputStock.setText(it.stock.toString())
                 binding.inputCost.setText(it.cost.toString())
             }
         }
@@ -133,10 +140,6 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
                 }
             }
         })
-
-        binding.inputCost.addMoneyTextWatcher{cost ->
-            viewModel.setCost(cost)
-        }
     }
 
     private fun validate(): Boolean{

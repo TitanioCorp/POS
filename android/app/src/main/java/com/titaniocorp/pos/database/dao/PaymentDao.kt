@@ -19,7 +19,10 @@ interface PaymentDao {
     fun getAll(): LiveData<List<PaymentEntity>>
 
     @Query("SELECT * FROM payment WHERE date BETWEEN :startDate AND :finishDate ORDER BY payment_id DESC")
-    fun getBetweenDates(startDate: Long, finishDate: Long): LiveData<List<PaymentEntity>>
+    suspend fun getBetweenDates(startDate: Long, finishDate: Long): List<PaymentEntity>
+
+    @Query("SELECT * FROM payment WHERE date BETWEEN :startDate AND :finishDate ORDER BY payment_id DESC")
+    fun getBetweenDatesLiveData(startDate: Long, finishDate: Long): LiveData<List<PaymentEntity>>
 
     /* INSERT */
     @Insert(onConflict = OnConflictStrategy.ABORT)

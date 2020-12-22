@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.navigation.ui.onNavDestinationSelected
 import com.google.android.material.snackbar.Snackbar
 import com.titaniocorp.pos.BR
@@ -43,7 +44,7 @@ class DetailProductFragment: BaseFragment(),
     DetailProductAdapter.DetailProductItemListener{
 
     private lateinit var binding: FragmentProductDetailBinding
-    val viewModel: DetailProductViewModel by viewModels ({requireActivity()}) { viewModelFactory }
+    val viewModel: DetailProductViewModel by navGraphViewModels(R.id.nav_graph_detail_product) { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

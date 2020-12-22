@@ -5,7 +5,7 @@ import java.io.File
 import java.util.*
 
 object CSVUtil {
-    private const val CSV_HEADER_PURCHASES = "id,\"Cliente Id\",Costo,ganancia,Ajustes,Reembolsos,Impuestos,Subtotal,Total,\"Es credito\""
+    private const val CSV_HEADER_PURCHASES = "id,\"Cliente Id\",Costo,Ganancias,Ajustes,Reembolsos,Impuestos,Subtotal,Total,\"Es credito\""
     private const val CSV_HEADER_PAYMENTS_PURCHASE = "id,\"Purchase Id\",\"Payment Category Id\",Valor,\"Es crédito\",Fecha"
     private const val CSV_HEADER_STOCKS = "id,\"Purchase Reference\",Costo,Impuestos,Total"
     private const val CSV_HEADER_PAYMENTS = "id,\"Payments Category Id\",Valor,Observacion"
@@ -16,7 +16,7 @@ object CSVUtil {
                 printWriter().use { out ->
                     with(billing){
                         out.println("Costos,${cost}")
-                        out.println("Ganacias,${profit}")
+                        out.println("Ganancias,${profit}")
                         out.println("Reembolsos,${refund}")
                         out.println("Abonos,${payments}")
                         out.println("Ajustes,${adjustment}")
@@ -25,7 +25,7 @@ object CSVUtil {
                         out.println("Otros egresos,${expenses}")
                         out.println("Otros ingresos,${income}")
                         out.println("Total ventas,${totalPurchase}")
-                        out.println("Total rgresos,${totalExpenses}")
+                        out.println("Total egresos,${totalExpenses}")
                         out.println("Total ingresos,${totalIncome}")
                         out.println("Total,${total}")
                         out.println("Fecha,${Date().toFormatString()}")

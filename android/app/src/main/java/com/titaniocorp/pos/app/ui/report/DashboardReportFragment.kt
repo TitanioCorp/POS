@@ -81,15 +81,15 @@ class DashboardReportFragment: BaseFragment(),
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun selectStartDate(){
-        DatePickerFragment(DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+        DatePickerFragment { _, year, month, dayOfMonth ->
             viewModel.selectStartDate(year, month, dayOfMonth)
-        }).show(parentFragmentManager, "startDateFragment")
+        }.show(parentFragmentManager, "startDateFragment")
     }
 
     private fun selectEndDate(){
-        DatePickerFragment(DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+        DatePickerFragment { _, year, month, dayOfMonth ->
             viewModel.selectEndDate(year, month, dayOfMonth)
-        }).show(parentFragmentManager, "endDateFragment")
+        }.show(parentFragmentManager, "endDateFragment")
     }
 
     private fun subscribeUi(){

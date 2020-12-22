@@ -29,8 +29,6 @@ interface PurchaseDao {
     @Query("SELECT purchase_id, customer_id, is_credit, total, created_date FROM purchase WHERE active = 1 ORDER BY created_date DESC")
     fun getLightAll(): LiveData<List<PurchaseDTO>>
 
-    @Query("SELECT * FROM purchase WHERE active = 1 AND created_date BETWEEN :startDate AND :finishDate ORDER BY created_date DESC")
-    fun getBetweenDates(startDate: Long, finishDate: Long): LiveData<List<PurchaseEntity>>
 
     @Query("SELECT purchase_id, customer_id, is_credit, total, created_date FROM purchase WHERE active = 1 AND created_date BETWEEN :startDate AND :finishDate ORDER BY created_date DESC")
     fun getLightBetweenDates(startDate: Long, finishDate: Long): LiveData<List<PurchaseDTO>>
@@ -67,7 +65,12 @@ interface PurchaseDao {
     @Update
     suspend fun update(vararg item: PurchaseEntity): Int
 
-    //Flow
+    @Query("SELECT * FROM purchase WHERE active = 1 AND created_date BETWEEN :startDate AND :finishDate ORDER BY created_date DESC")
+    suspend fun getBetweenDates(startDate: Long, finishDate: Long): List<PurchaseEntity>
+
+    @Query("SELECT * FROM purchase WHERE active = 1 AND created_date BETWEEN :startDate AND :finishDate ORDER BY created_date DESC")
+    fun getBetweenDatesLiveData(startDate: Long, finishDate: Long): LiveData<List<PurchaseEntity>>
+
     @Query("SELECT * FROM purchase WHERE active = 1 AND created_date BETWEEN :startDate AND :finishDate ORDER BY created_date DESC")
     fun getBetweenDatesFlow(startDate: Long, finishDate: Long): Flow<List<PurchaseEntity>>
 

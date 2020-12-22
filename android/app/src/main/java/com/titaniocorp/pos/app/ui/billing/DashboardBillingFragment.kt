@@ -11,9 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.Resource
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
+import com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPosFragmentArgs
 import com.titaniocorp.pos.databinding.FragmentBillingDashboardBinding
 import com.titaniocorp.pos.util.*
 import com.titaniocorp.pos.util.ui.DialogHelper
@@ -34,7 +36,9 @@ import javax.inject.Inject
  */
 class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
     private lateinit var binding: FragmentBillingDashboardBinding
-    val viewModel: DashboardBillingViewModel by viewModels { viewModelFactory }
+
+    private val args: DashboardBillingFragmentArgs by navArgs()
+    private val viewModel: DashboardBillingViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -45,29 +49,7 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch(Dispatchers.IO){
-            try {
-                val startDate: Calendar = fromJson(arguments?.getString(ARG_START_DATE) ?: "")
-                val endDate: Calendar = fromJson(arguments?.getString(ARG_END_DATE) ?: "")
-                val stringDates = "${startDate.get(Calendar.DAY_OF_MONTH)}/${startDate.get(Calendar.MONTH)}/${startDate.get(Calendar.YEAR)} - ${endDate.get(Calendar.DAY_OF_MONTH)}/${endDate.get(Calendar.MONTH)}/${endDate.get(Calendar.YEAR)}"
-
-                binding.textTitle.text = "Reporte"
-                binding.textDate.text = stringDates
-                binding.button.visibility = View.GONE
-
-                viewModel.selectStartDate(startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), startDate.get(Calendar.DAY_OF_MONTH))
-                viewModel.selectEndDate(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.get(Calendar.DAY_OF_MONTH))
-
-                binding.buttonGenerateReport.visibility = View.VISIBLE
-                binding.textBilling.visibility = View.GONE
-
-            }catch (exception: Exception){
-                Timber.tag(Constants.TAG_APP_DEBUG).e(exception.localizedMessage)
-                binding.textDate.text = Calendar.getInstance().time.toFormatString()
-            }
-
-            viewModel.updateDates()
-        }
+        setDates()
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner
@@ -82,13 +64,25 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
                 }
             )
 
-            subcribeUi()
+            viewModel.generateReport().observe(viewLifecycleOwner, {
+                it.process(
+                    onLoading = {boolean -> setLoading(boolean)},
+                    onSuccess = {
+                        it.data?.let{billing ->
+                            viewModel.updateBilling(billing)
+                        }
+                    },
+                    onError = {}
+                )
+            })
+
+            //subscribeUi()
         }
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.button_new_item -> { }
+
             R.id.button -> {
                 activity?.let{activity ->
                     lifecycleScope.launch{
@@ -96,9 +90,9 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
                             Configurations.setDirectory(FileUtil.getDirectory(activity).second)
                         }
 
-                        viewModel.sendMail().observe(viewLifecycleOwner, Observer{
+                        /*viewModel.sendMail().observe(viewLifecycleOwner, Observer{
                             it.processEmail()
-                        })
+                        })*/
                     }
                 }
             }
@@ -110,9 +104,9 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
                             Configurations.setDirectory(FileUtil.getDirectory(activity).second)
                         }
 
-                        viewModel.sendMail(TypeEmail.REPORT).observe(viewLifecycleOwner, Observer{
+                        /*viewModel.sendMail(TypeEmail.REPORT).observe(viewLifecycleOwner, Observer{
                             it.processEmail()
-                        })
+                        })*/
 
                     }
                 }
@@ -120,38 +114,36 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
         }
     }
 
-    private fun subcribeUi(){
-        viewModel.payments.observe(viewLifecycleOwner, Observer{
-            it.process(
-                onLoading = {boolean -> setLoading(boolean)},
-                onSuccess = {viewModel.computeBilling()},
-                onError = {}
-            )
-        })
+    private fun setDates(){
+        lifecycleScope.launch(Dispatchers.IO){
+            if(args.startDate > 0 && args.endDate > 0){
+                val startDate: Calendar = Calendar.getInstance().apply {
+                    timeInMillis = args.startDate
+                }
 
-        viewModel.stocks.observe(viewLifecycleOwner, Observer{
-            it.process(
-                onLoading = {boolean -> setLoading(boolean)},
-                onSuccess = {viewModel.computeBilling()},
-                onError = {}
-            )
-        })
+                val endDate: Calendar = Calendar.getInstance().apply {
+                    timeInMillis = args.endDate
+                }
 
-        viewModel.purchases.observe(viewLifecycleOwner, Observer{
-            it.process(
-                onLoading = {boolean -> setLoading(boolean)},
-                onSuccess = {viewModel.computeBilling()},
-                onError = {}
-            )
-        })
+                val stringDates = "${startDate.get(Calendar.DAY_OF_MONTH)}/${startDate.get(Calendar.MONTH) + 1}/${startDate.get(Calendar.YEAR)} - ${endDate.get(Calendar.DAY_OF_MONTH)}/${endDate.get(Calendar.MONTH)}/${endDate.get(Calendar.YEAR)}"
+                binding.textTitle.text = "Reporte"
+                binding.textDate.text = stringDates
+                binding.button.visibility = View.GONE
 
-        viewModel.paymentsPurchases.observe(viewLifecycleOwner, Observer{
-            it.process(
-                onLoading = {boolean -> setLoading(boolean)},
-                onSuccess = {viewModel.computeBilling()},
-                onError = {}
-            )
-        })
+                viewModel.selectStartDate(startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), startDate.get(Calendar.DAY_OF_MONTH))
+                viewModel.selectEndDate(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.get(Calendar.DAY_OF_MONTH))
+
+                binding.buttonGenerateReport.visibility = View.VISIBLE
+                binding.textBilling.visibility = View.GONE
+            } else {
+                binding.textDate.text = Calendar.getInstance().time.toFormatString()
+            }
+
+            viewModel.updateDates()
+        }
+    }
+
+    private fun subscribeUi(){
     }
 
     private fun Resource<String>.processEmail(){

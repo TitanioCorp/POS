@@ -50,10 +50,10 @@
                     android:id="@+id/input_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_money"
                     android:hint="Valor"
                     android:inputType="number|numberDecimal"
-                    android:maxLength="11"
-                    android:drawableStart="@drawable/ic_money"/>
+                    android:maxLength="15" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

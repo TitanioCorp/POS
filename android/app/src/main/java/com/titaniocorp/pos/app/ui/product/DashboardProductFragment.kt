@@ -75,7 +75,7 @@ class DashboardProductFragment: BaseFragment(),
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.button_new_item -> {
-                val direction = DashboardProductFragmentDirections.actionToDetailProductFragment()
+                val direction = DashboardProductFragmentDirections.toDetailProductFragment()
                 findNavController().navigate(direction)
             }
         }
