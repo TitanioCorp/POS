@@ -46,14 +46,10 @@ class DashboardProductFragment: BaseFragment(),
         with(binding){
             lifecycleOwner = viewLifecycleOwner
             clickListener = this@DashboardProductFragment
+
             searchView.apply {
                 setOnQueryTextListener(this@DashboardProductFragment)
-                onActionViewExpanded()
-                val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-                setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
             }
-            mSearchSrcTextView = searchView.findViewById(R.id.search_src_text)
-            mSearchSrcTextView?.setOnItemClickListener { _, _, _, _ -> }
 
             val toolbar = (activity as AppCompatActivity).appbar
             nestedScrollView.setOnScrollChangeListener(
@@ -68,7 +64,7 @@ class DashboardProductFragment: BaseFragment(),
             recycler.adapter = recyclerAdapter
 
 
-            subcribeUi(adapter)
+            subscribeUi(adapter)
         }
     }
 
@@ -90,11 +86,9 @@ class DashboardProductFragment: BaseFragment(),
         return false
     }
 
-    private fun subcribeUi(adapter: DashboardProductAdapter){
-        viewModel.products.observe(viewLifecycleOwner, Observer {
+    private fun subscribeUi(adapter: DashboardProductAdapter){
+        viewModel.products.observe(viewLifecycleOwner, {
             adapter.submitList(it)
-            val adapterSearch = ArrayAdapter(context!!, android.R.layout.simple_dropdown_item_1line, it.map {item -> item.name })
-            binding.mSearchSrcTextView?.setAdapter(adapterSearch)
         })
     }
 }

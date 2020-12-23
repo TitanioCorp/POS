@@ -7,9 +7,6 @@
             name="clickListener"
             type="android.view.View.OnClickListener"/>
         <variable
-            name="mSearchSrcTextView"
-            type="androidx.appcompat.widget.SearchView.SearchAutoComplete"/>
-        <variable
             name="recyclerAdapter"
             type="com.titaniocorp.pos.app.ui.product.DashboardProductAdapter"/>
         <import type="android.view.View" />
