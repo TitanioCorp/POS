@@ -98,9 +98,12 @@ class PurchasePosFragment: BaseFragment(), View.OnClickListener{
             }
 
             R.id.button_add_adjustment -> {
-                DialogHelper.addAdjustment(activity, {
-                    viewModel.setAdjustment(it)
-                }, total = viewModel.purchase.total)?.show()
+                DialogHelper.addAdjustment(
+                    activity,
+                    { viewModel.setAdjustment(it) },
+                    { viewModel.setAdjustment(0.0) },
+                    total = viewModel.purchase.getTotalReal()
+                )?.show()
             }
         }
     }

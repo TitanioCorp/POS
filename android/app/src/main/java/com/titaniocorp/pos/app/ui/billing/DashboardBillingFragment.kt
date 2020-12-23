@@ -49,8 +49,6 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setDates()
-
         with(binding){
             lifecycleOwner = viewLifecycleOwner
             clickListener = this@DashboardBillingFragment
@@ -64,7 +62,7 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
                 }
             )
 
-            viewModel.generateReport().observe(viewLifecycleOwner, {
+            viewModel.report.observe(viewLifecycleOwner, {
                 it.process(
                     onLoading = {boolean -> setLoading(boolean)},
                     onSuccess = {
@@ -76,7 +74,7 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
                 )
             })
 
-            //subscribeUi()
+            setDates()
         }
     }
 

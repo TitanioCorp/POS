@@ -20,7 +20,13 @@ class DashboardBillingViewModel @Inject constructor(
     private val reportRepository: ReportRepository
 ): ObservableViewModel() {
     @Bindable var billing = Billing()
-    private final val dates = MutableLiveData<Pair<Long, Long>>()
+    private val dates = MutableLiveData<Pair<Long, Long>>()
+
+    val report: LiveData<Resource<Billing>> = Transformations.switchMap(dates){ dates ->
+        reportRepository
+            .generateSalesReport(dates.first, dates.second)
+            .asLiveData()
+    }
 
     fun updateBilling(billing: Billing){
         Logger.d("[Report]: ${billing.toJson()}")
@@ -70,12 +76,6 @@ class DashboardBillingViewModel @Inject constructor(
         dates.postValue(Pair(startDate.timeInMillis, endDate.timeInMillis))
     }
     //endregion
-
-    fun generateReport(): LiveData<Resource<Billing>> = Transformations.switchMap(dates){ dates ->
-        reportRepository
-            .generateSalesReport(dates.first, dates.second)
-            .asLiveData()
-    }
 
     fun sendMail(type: TypeEmail = TypeEmail.BILLING): LiveData<Resource<String>> {
         val result = LiveEvent<Resource<String>>()

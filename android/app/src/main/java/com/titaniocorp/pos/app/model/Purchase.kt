@@ -35,6 +35,8 @@ data class Purchase(
         subtotal = cost + profit
         total = cost + profit + tax + adjustment
     }
+
+    fun getTotalReal() = cost + profit + tax
 }
 
 fun Purchase.asDatabaseModel(): PurchaseEntity {
