@@ -40,9 +40,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
  */
 @ExperimentalCoroutinesApi
 class DashboardDatabaseFragment: BaseFragment(), View.OnClickListener{
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentDatabaseDashboardBinding
     val viewModel: DashboardDatabaseViewModel by viewModels { viewModelFactory }
 
@@ -54,7 +51,6 @@ class DashboardDatabaseFragment: BaseFragment(), View.OnClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.clickListener = this
 

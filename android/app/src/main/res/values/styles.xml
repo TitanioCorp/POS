@@ -1,38 +1,45 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="BaseAppTheme" parent="Theme.MaterialComponents.Light" >
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="editTextStyle">@style/App.EditTextStyle</item>
+    <style name="Base.AppTheme" parent="Theme.MaterialComponents.Light">
 
-        <item name="android:windowBackground">@color/colorBackgroundPrimary</item>
-        <item name="android:statusBarColor">@color/colorBackgroundPrimary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+
+        <!-- Texts -->
+        <!-- <item name="android:textColorPrimary">@color/colorError</item> -->
+        <!-- <item name="android:textColor">@color/colorError</item> -->
+
+        <!-- Icons -->
+        <!-- <item name="colorControlNormal">@color/colorError</item> -->
+
+        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="appBarLayoutStyle">@style/AppTheme.AppBarLayout</item>
+        <item name="editTextStyle">@style/AppTheme.EditTextStyle</item>
+
     </style>
 
-    <style name="AppTheme" parent="BaseAppTheme"/>
-
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme" parent="Base.AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
-        <item name="colorPrimary">@color/colorBackgroundPrimary</item>
-        <item name="colorPrimaryDark">#333333</item>
-        <item name="colorAccent">#D81B60</item>
-
-        <item name="android:textColorPrimary">#333333</item>
-        <item name="android:textColorSecondary">#333333</item>
+    <style name="AppTheme.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Primary">
+        <item name="android:background">@color/colorBackground</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light">
-        <item name="android:textColor">#333333</item>
-    </style>
-
-    <style name="App.EditTextStyle" parent="@android:style/Widget.EditText">
+    <style name="AppTheme.EditTextStyle" parent="@android:style/Widget.EditText">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:padding">16dp</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
@@ -47,6 +54,15 @@
     <style name="Dialog.Progress" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.SearchView" parent="Widget.AppCompat.Light.SearchView">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Buttons -->
+    <style name="AppTheme.Button.View" parent="">
+        <item name="android:background">@drawable/bg_dialog_rounded_primary</item>
     </style>
 
 </resources>

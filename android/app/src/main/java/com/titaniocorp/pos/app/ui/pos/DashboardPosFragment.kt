@@ -12,30 +12,31 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.appbar.AppBarLayout
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentPosDashboardBinding
+import com.titaniocorp.pos.util.autoCleared
 import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogHelper
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
+import kotlin.math.abs
 
 /**
- * Fragmento que lista las peliculas
- * @version 1.0
+ * Fragmento que lista los arþiculos agregados
  * @author Juan Ortiz
  * @date 10/09/2019
  */
 
+@ExperimentalCoroutinesApi
 class DashboardPosFragment: BaseFragment(),
     View.OnClickListener,
     SearchView.OnQueryTextListener,
     DashboardPosAdapter.OnItemClickListener{
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private lateinit var binding: FragmentPosDashboardBinding
-    val viewModel: POSViewModel by viewModels { viewModelFactory }
+    private var binding: FragmentPosDashboardBinding by autoCleared()
+    private val viewModel: PurchasePosViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -45,39 +46,26 @@ class DashboardPosFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner
             mViewModel = viewModel
             clickListener = this@DashboardPosFragment
 
-            searchView.apply {
-                setOnQueryTextListener(this@DashboardPosFragment)
-                onActionViewExpanded()
-                val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-                setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
-            }
-            searchView.clearFocus()
-
-            mSearchSrcTextView = searchView.findViewById(R.id.search_src_text)
-            mSearchSrcTextView?.setOnItemClickListener { _, _, position, _ ->
-                val direction = DashboardPosFragmentDirections.toAddProductPOSFragment(position)
-                findNavController().navigate(direction)
-            }
+            setUpSearchView()
 
             val adapter = DashboardPosAdapter(this@DashboardPosFragment)
             adapter.submitList(viewModel.purchase.prices)
             recycler.adapter = adapter
 
-            subcribeUi(adapter)
+            subscribeUi(adapter)
         }
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.button_new_transaction -> {
-                val direction = DashboardPosFragmentDirections.toTransactionPOSFragment()
+                val direction = DashboardPosFragmentDirections.toTransactionPosFragment()
                 findNavController().navigate(direction)
             }
 
@@ -86,10 +74,36 @@ class DashboardPosFragment: BaseFragment(),
             }
         }
     }
+
+    //region Search
+    private fun setUpSearchView(){
+        binding.searchView.apply {
+            setOnQueryTextListener(this@DashboardPosFragment)
+            onActionViewExpanded()
+
+            val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+            setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+
+            clearFocus()
+        }
+
+        binding.mSearchSrcTextView = binding.searchView.findViewById(R.id.search_src_text)
+        binding.mSearchSrcTextView?.setOnItemClickListener { _, _, position, _ ->
+            val productSelected = viewModel.getProductByIndex(position)
+
+            val direction = DashboardPosFragmentDirections.toAddProductPOSFragment(
+                productSelected?.productId ?: 0,
+                productSelected?.priceId ?: 0
+            )
+
+            findNavController().navigate(direction)
+        }
+    }
+
     override fun onQueryTextChange(newText: String?): Boolean {
         newText?.let {
             if(it.isNotEmpty()){
-                viewModel.search(it)
+                viewModel.searchProducts(it)
             }
         }
         return false
@@ -97,40 +111,34 @@ class DashboardPosFragment: BaseFragment(),
 
     override fun onQueryTextSubmit(query: String?): Boolean = false
     override fun onClickItem(position: Int) {}
+    //endregion
 
-    override fun onClickRemoveItem(position: Int) {
-        DialogHelper.normal(
-            activity,
-            "Esta acción no podrá deshacerse.",
-            "Remover el producto de la lista",
-            "Remover",
-            "Cancelar",
-            { viewModel.removeProduct(position) },
-            {})?.show()
-    }
+    private fun subscribeUi(adapter: DashboardPosAdapter){
+        binding.appBar.addOnOffsetChangedListener(
+            AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                val shouldHideButtonTransaction = abs(verticalOffset) >= appBarLayout.totalScrollRange
 
-    private fun subcribeUi(adapter: DashboardPosAdapter){
+                binding.buttonNewTransaction.visibility = if(shouldHideButtonTransaction){
+                    View.GONE
+                }else{
+                    View.VISIBLE
+                }
+            }
+        )
+
         viewModel.searchedList.observe(viewLifecycleOwner, Observer {
             it.process(
                 {
                     context?.let {context ->
-                        it?.data?.let {list ->
-                            binding.mSearchSrcTextView?.setAdapter(
-                                ArrayAdapter(
-                                    context,
-                                    android.R.layout.simple_dropdown_item_1line,
-                                    list.map {item -> "${item.productName} - ${item.priceName}" }
-                                )
+                        binding.mSearchSrcTextView?.setAdapter(
+                            ArrayAdapter(
+                                context,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                it.data?.let {list ->
+                                    list.map{item -> "${item.productName} - ${item.priceName}"}
+                                } ?: run {listOf()}
                             )
-                        } ?: run {
-                            binding.mSearchSrcTextView?.setAdapter(
-                                ArrayAdapter(
-                                    context,
-                                    android.R.layout.simple_dropdown_item_1line,
-                                    listOf<String>()
-                                )
-                            )
-                        }
+                        )
                     }
                 }
             )
@@ -150,5 +158,16 @@ class DashboardPosFragment: BaseFragment(),
                 4 -> { adapter.notifyDataSetChanged() }
             }
         })
+    }
+
+    override fun onClickRemoveItem(position: Int) {
+        DialogHelper.normal(
+            activity,
+            "Esta acción no podrá deshacerse.",
+            "Remover el producto de la lista",
+            "Remover",
+            "Cancelar",
+            { viewModel.removeProduct(position) },
+            {})?.show()
     }
 }

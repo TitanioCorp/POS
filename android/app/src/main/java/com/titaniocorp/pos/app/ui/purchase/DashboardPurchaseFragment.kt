@@ -34,8 +34,6 @@ class DashboardPurchaseFragment: BaseFragment(),
     View.OnClickListener,
     DatePickerDialog.OnDateSetListener{
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentPurchaseDashboardBinding
     val viewModel: DashboardPurchaseViewModel by viewModels { viewModelFactory }
 
@@ -47,7 +45,6 @@ class DashboardPurchaseFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner

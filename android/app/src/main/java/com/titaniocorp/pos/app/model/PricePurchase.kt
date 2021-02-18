@@ -1,6 +1,8 @@
 package com.titaniocorp.pos.app.model
 
 import com.titaniocorp.pos.database.entity.PricePurchaseEntity
+import com.titaniocorp.pos.util.calculateTax
+import com.titaniocorp.pos.util.calculateTotalReal
 import java.util.*
 
 data class PricePurchase(
@@ -19,9 +21,18 @@ data class PricePurchase(
     var priceName: String = "",
     var profitName: String = ""
 ){
+    var maxStock = 1
+    var initialProfit: InitialProfit ?= null
+
     fun getCostProfit() = cost + profit
     fun getCostTotal() = cost + profit + tax
     fun getTotal() = (cost + profit + tax) * quantity
+
+    fun compute(profitPercent: Double){
+        if(maxStock <= quantity){ quantity = maxStock }
+        this.tax = cost.calculateTax( initialProfit?.percent ?: 0.0 )
+        profit = cost.calculateTotalReal(initialProfit?.percent ?: 0.0) * (profitPercent/100.0)
+    }
 }
 
 fun PricePurchase.asDatabaseModel(): PricePurchaseEntity {

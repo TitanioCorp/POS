@@ -120,7 +120,7 @@ object MailUtil {
 
                 MimeMessage(getSession(getProperties())).apply {
                     addRecipient(Message.RecipientType.TO, InternetAddress("juanortizbayona@gmail.com"))
-                    subject = "Rerporte - ${startDate.toFormatString()} a ${endDate.toFormatString()}"
+                    subject = "Reporte - ${startDate.toFormatString()} a ${endDate.toFormatString()}"
                     sentDate = date
                     setFrom(InternetAddress("titaniocorporate@gmail.com", "Titanio Corporate"))
 

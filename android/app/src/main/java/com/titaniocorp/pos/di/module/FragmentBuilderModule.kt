@@ -4,11 +4,13 @@ import com.titaniocorp.pos.app.ui.billing.DashboardBillingFragment
 import com.titaniocorp.pos.app.ui.category.DashboardCategoryFragment
 import com.titaniocorp.pos.app.ui.customer.DashboardCustomerFragment
 import com.titaniocorp.pos.app.ui.pos.DashboardPosFragment
-import com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPOSFragment
-import com.titaniocorp.pos.app.ui.pos.purchase.PurchasePOSFragment
+import com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPosFragment
+import com.titaniocorp.pos.app.ui.pos.purchase.PurchasePosFragment
 import com.titaniocorp.pos.app.ui.product.DashboardProductFragment
 import com.titaniocorp.pos.app.ui.product.detail.DetailProductFragment
+import com.titaniocorp.pos.app.ui.product.detail.price.AddPriceProductFragment
 import com.titaniocorp.pos.app.ui.profit.DashboardProfitFragment
+import com.titaniocorp.pos.app.ui.profit.initial.DashboardInitialProfitFragment
 import com.titaniocorp.pos.app.ui.purchase.DashboardPurchaseFragment
 import com.titaniocorp.pos.app.ui.purchase.detail.DetailPurchaseFragment
 import com.titaniocorp.pos.app.ui.report.DashboardReportFragment
@@ -20,6 +22,7 @@ import com.titaniocorp.pos.app.ui.stock.add.AddStockFragment
 import com.titaniocorp.pos.app.ui.stock.detail.DetailStockFragment
 import com.titaniocorp.pos.app.ui.warehouse.DashboardWarehouseFragment
 import com.titaniocorp.pos.app.ui.warehouse.add.AddPaymentWarehouseFragment
+import com.titaniocorp.pos.di.annotation.FragmentScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -33,10 +36,10 @@ abstract class FragmentBuildersModule {
     abstract fun dashboardPOSFragment(): DashboardPosFragment
 
     @ContributesAndroidInjector
-    abstract fun purchasePOSFragment(): PurchasePOSFragment
+    abstract fun purchasePosFragment(): PurchasePosFragment
 
     @ContributesAndroidInjector
-    abstract fun addProductPOSFragment(): AddProductPOSFragment
+    abstract fun addProductPOSFragment(): AddProductPosFragment
 
     @ContributesAndroidInjector
     abstract fun dashboardProductFragment(): DashboardProductFragment
@@ -85,4 +88,10 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun stockReportFragment(): StockReportFragment
+
+    @ContributesAndroidInjector
+    abstract fun dashboardInitialProfitFragment(): DashboardInitialProfitFragment
+
+    @ContributesAndroidInjector
+    abstract fun addPriceProductFragment(): AddPriceProductFragment
 }

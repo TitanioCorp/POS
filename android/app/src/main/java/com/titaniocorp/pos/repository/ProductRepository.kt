@@ -9,14 +9,16 @@ import com.titaniocorp.pos.database.dao.ProfitDao
 import com.titaniocorp.pos.database.entity.asDomainModel
 import com.titaniocorp.pos.repository.processor.*
 import com.titaniocorp.pos.util.AppCode
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
  * Maneja todos las ejecuciones con la base de datos o consumo de servicios de peliculas.
- * @version 1.0
  * @author Juan Ortiz
  * @date 10/09/2019
  */
+@ExperimentalCoroutinesApi
 class ProductRepository @Inject constructor(
     private val productDao: ProductDao,
     private val priceDao: PriceDao,
@@ -130,5 +132,27 @@ class ProductRepository @Inject constructor(
                 AppCode.ERROR_QUERY_DATABASE
             }
         }.asResult()
+    }
+
+    fun insertPrice(item: Price): Flow<Resource<Long>> {
+        return object : SingleFlowProcessor<Long, Long>(){
+            override fun query(): Long = priceDao.insert(item.asDatabaseModel())
+            override fun validate(response: Long): Int = if(response > 0){
+                AppCode.SUCCESS_QUERY_DATABASE
+            }else{
+                AppCode.ERROR_QUERY_DATABASE
+            }
+        }.process()
+    }
+
+    fun updatePrice(item: Price): Flow<Resource<Int>> {
+        return object : SingleFlowProcessor<Int, Int>(){
+            override fun query(): Int = priceDao.update(item.asDatabaseModel())
+            override fun validate(response: Int): Int = if(response > 0){
+                AppCode.SUCCESS_QUERY_DATABASE
+            }else{
+                AppCode.ERROR_QUERY_DATABASE
+            }
+        }.process()
     }
 }

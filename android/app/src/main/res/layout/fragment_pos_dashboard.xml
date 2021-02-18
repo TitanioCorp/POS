@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="android.view.View" />
-        <import type="com.titaniocorp.pos.util.MoneyUtilKt"/>
+
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener"/>
+
         <variable
             name="mSearchSrcTextView"
             type="androidx.appcompat.widget.SearchView.SearchAutoComplete"/>
+
         <variable
             name="mViewModel"
-            type="com.titaniocorp.pos.app.ui.pos.POSViewModel"/>
+            type="com.titaniocorp.pos.app.ui.pos.PurchasePosViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,15 +25,19 @@
         android:focusableInTouchMode="true">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <!-- Scrollable view here -->
 
             <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorBackgroundPrimary">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
@@ -64,50 +70,21 @@
                             android:orientation="vertical"
                             app:layout_constraintGuide_end="24dp" />
 
-                        <TextView
-                            android:id="@+id/text_title"
+                        <androidx.appcompat.widget.SearchView
+                            android:id="@+id/search_view"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
-                            android:text="@string/title_pos"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                            android:layout_marginTop="@dimen/default_margin"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_search"
+                            android:iconifiedByDefault="false"
+                            android:queryBackground="@android:color/transparent"
+                            android:theme="@style/AppTheme.SearchView"
+                            app:defaultQueryHint="@string/text_add_product"
                             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/text_subtitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/title_subtitle_pos"
-                            android:textAlignment="center"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                            app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                            app:layout_constraintTop_toBottomOf="@+id/text_title" />
-
-                        <LinearLayout
-                            android:id="@+id/search_linear"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="24dp"
-                            android:background="@drawable/bg_section"
-                            android:orientation="horizontal"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-                            app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                            app:layout_constraintTop_toBottomOf="@+id/text_subtitle">
-
-                            <androidx.appcompat.widget.SearchView
-                                android:id="@+id/search_view"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:iconifiedByDefault="false"
-                                android:queryBackground="@android:color/transparent"
-                                app:queryBackground="@android:color/transparent"
-                                app:queryHint="@string/text_add_product" />
-
-                        </LinearLayout>
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:queryBackground="@android:color/transparent" />
 
                         <LinearLayout
                             android:id="@+id/button_barcode"
@@ -116,6 +93,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
                             android:layout_marginEnd="32dp"
+                            android:background="@drawable/bg_barcode"
+                            android:onClick="@{clickListener}"
                             android:orientation="horizontal"
                             android:paddingStart="16dp"
                             android:paddingTop="16dp"
@@ -123,9 +102,7 @@
                             android:paddingBottom="16dp"
                             app:layout_constraintEnd_toStartOf="@+id/guideline_right"
                             app:layout_constraintStart_toStartOf="@+id/guideline_left"
-                            app:layout_constraintTop_toBottomOf="@+id/search_linear"
-                            android:background="@drawable/bg_subsection"
-                            android:onClick="@{clickListener}">
+                            app:layout_constraintTop_toBottomOf="@+id/search_view">
 
                             <ImageView
                                 android:id="@+id/imageView"
@@ -137,7 +114,7 @@
                                 android:id="@+id/text_barcode"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
+                                android:layout_marginStart="@dimen/default_margin"
                                 android:layout_weight="1"
                                 android:text="@string/text_barcode" />
                         </LinearLayout>
@@ -164,30 +141,69 @@
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_content"
+                android:background="@drawable/bg_recycler"
+                android:visibility="@{mViewModel.purchase.total > 0 ? View.VISIBLE : View.GONE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/item_list_stock_dashboard"
-                android:visibility="@{mViewModel.purchase.total > 0 ? View.VISIBLE : View.GONE}">
-            </androidx.recyclerview.widget.RecyclerView>
+                tools:listitem="@layout/item_list_pos_dashboard_product" />
 
             <include
                 android:id="@+id/view_empty_list"
                 layout="@layout/view_empty_list"
-                android:visibility="@{mViewModel.purchase.total > 0 ? View.GONE : View.VISIBLE}"/>
+                android:visibility="@{mViewModel.purchase.total > 0 ? View.GONE : View.VISIBLE}" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <Button
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/button_new_transaction"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_button_view"
             android:onClick="@{clickListener}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            asMoney="@{mViewModel.purchase.total}"/>
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/text_value"
+                asMoney="@{mViewModel.purchase.total}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_value"
+                asTotalProducts="@{mViewModel.purchase.prices.size}"/>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_right"
+                app:tint="@color/colorOnPrimary" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

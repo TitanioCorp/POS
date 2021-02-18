@@ -76,9 +76,14 @@ fun String.getValueMoney(): Double{
     }
 }
 
-fun Double.calculateTax(isInitialProfit: Boolean = true): Double =
-    if(isInitialProfit){
-        (this / (1 - Configurations.profitPercent)) * Configurations.taxPercent
-    }else{
-        this * Configurations.taxPercent
-    }
+fun Double.calculateTotalReal(initialProfit: Double? = 0.0): Double {
+    val percent: Double = initialProfit?.let {
+        1 - (it/100)
+    } ?: 1.0
+    return (this / percent)
+}
+
+fun Double.calculateTax(initialProfit: Double? = 0.0): Double =
+    this.calculateTotalReal(initialProfit) * Configurations.taxPercent
+
+

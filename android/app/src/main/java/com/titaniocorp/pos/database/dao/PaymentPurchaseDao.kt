@@ -20,7 +20,11 @@ interface PaymentPurchaseDao {
     fun getAll(id: Long): LiveData<List<PaymentPurchaseEntity>>
 
     @Query("SELECT * FROM payment_purchase WHERE created_date BETWEEN :startDate AND :finishDate")
-    fun getBetweenDates(startDate: Long, finishDate: Long): LiveData<List<PaymentPurchaseEntity>>
+    suspend fun getBetweenDates(startDate: Long, finishDate: Long): List<PaymentPurchaseEntity>
+
+    @Query("SELECT * FROM payment_purchase WHERE created_date BETWEEN :startDate AND :finishDate")
+    fun getBetweenDatesLiveData(startDate: Long, finishDate: Long): LiveData<List<PaymentPurchaseEntity>>
+
 
     @Query("SELECT * FROM payment_purchase WHERE purchase_id = :id")
     suspend fun getSimpleAll(id: Long): List<PaymentPurchaseEntity>

@@ -41,6 +41,11 @@
         <item>Todos</item>
     </string-array>
 
+    <!-- Fragment -->
+    <string name="fragment_pos">Punto de venta</string>
+    <string name="fragment_pos_add_product">Agregar artículo</string>
+    <string name="fragment_add_price_product">Punto de precio</string>
+
     <!-- Title -->
     <string name="title_settings_fragment">Configuraciones</string>
     <string name="title_information">Información</string>
@@ -49,9 +54,20 @@
     <string name="title_pos">Punto de venta</string>
     <string name="title_database">Base de datos</string>
 
+    <string name="title_info_product">Información del artículo</string>
+    <string name="title_prices">Precios</string>
+    <string name="title_profit">Ganancia</string>
+    <string name="title_quantity">Cantidad</string>
+    <string name="title_overview">Resumen</string>
+    <string name="title_initial_profit">Ganancia Inicial</string>
+    <string name="title_new_initial_profit">Nueva ganancia inicial</string>
+    <string name="title_info_price">Información del punto de precio</string>
+    <string name="title_cost">Costos</string>
+
     <!-- Subtitle -->
     <string name="title_subtitle_pos">Genera una nueva venta</string>
     <string name="title_subtitle_database">Exporta/importa la base de datos.</string>
+    <string name="subtitle_initial_profit">Listo de ganancias iniciales</string>
 
     <!-- Text -->
     <string name="text_results">Resultados</string>
@@ -60,6 +76,8 @@
     <string name="text_empty">Vacío</string>
     <string name="text_preferences_language">Defina el idioma de la aplicación</string>
     <string name="text_money">$%1$s</string>
+    <string name="text_as_percent">%1$s%%</string>
+    <string name="text_as_total_products">%1$s artículos</string>
     <string name="text_binding_tax">IVA $%1$s</string>
     <string name="text_quantity">x %1$s</string>
     <string name="text_new_price_init_profit">Ganancia inicial - %1$s%%</string>
@@ -80,6 +98,11 @@
     <string name="text_tax">Impuesto</string>
     <string name="text_total">Total</string>
     <string name="text_total_stock">Total stock</string>
+    <string name="text_pos_step_1">1. Agregue un producto</string>
+    <string name="text_name">Nombre</string>
+    <string name="text_percent">Porcentaje</string>
+    <string name="text_total_unit">Total por unidad</string>
+    <string name="text_real_bill">Costo factura</string>
 
     <!-- Success -->
     <string name="success_title">Exitoso</string>
@@ -95,6 +118,8 @@
     <string name="action_cancel">Cancelar</string>
     <string name="action_delete">Eliminar</string>
     <string name="action_delete_product">Eliminar producto</string>
+    <string name="action_add">Agregar</string>
+    <string name="action_new_initial_profit">Nueva ganancia inicial</string>
 
     <!-- Error -->
     <string name="error_title_error">Error</string>

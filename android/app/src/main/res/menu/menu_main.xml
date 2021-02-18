@@ -8,7 +8,7 @@
         android:id="@+id/menu_section_2">
 
         <item
-            android:id="@+id/dashboardProductFragment"
+            android:id="@+id/nav_graph_product"
             android:icon="@drawable/ic_product"
             android:title="Artículos"/>
 
@@ -26,6 +26,11 @@
             android:id="@+id/dashboardProfitFragment"
             android:icon="@drawable/ic_profit"
             android:title="Ganancias"/>
+
+        <item
+            android:id="@+id/dashboardInitialProfitFragment"
+            android:icon="@drawable/ic_coupon"
+            android:title="Ganancia Inicial"/>
 
         <item
             android:id="@+id/dashboardPurchaseFragment"

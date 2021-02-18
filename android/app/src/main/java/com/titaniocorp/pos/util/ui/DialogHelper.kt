@@ -50,8 +50,8 @@ object DialogHelper {
         activity: Activity?,
         positiveCallBack: ((Double)) -> Unit,
         negativeCallBack: (() -> Unit) ?= null,
-        item: Double = 0.0
-    ): AlertDialog? = DialogPOSHelper.addAdjustment(activity, positiveCallBack, negativeCallBack, item)
+        total: Double = 0.0,
+    ): AlertDialog? = DialogPOSHelper.addAdjustment(activity, positiveCallBack, negativeCallBack, total)
 
     fun newProfit(
         activity: Activity?,
@@ -101,109 +101,6 @@ object DialogHelper {
                             category?.let {category ->
                                 positiveCallBack(category)
                             }
-                        }
-                    }
-                }
-            }
-        }
-
-        dialog
-    }
-
-    fun showPrice(
-        activity: Activity?,
-        positiveCallBack: (Price) -> Unit,
-        negativeCallBack: (() -> Unit) ?= null,
-        price: Price ?= null
-    ): AlertDialog? = activity?.let {
-        val binding: DialogNewPriceBinding = DataBindingUtil.inflate(
-            it.layoutInflater,
-            R.layout.dialog_new_price,
-            it.findViewById(android.R.id.content),
-            false
-        )
-
-        val dialog = MaterialAlertDialogBuilder(activity)
-            .setBackground(it.getDrawable(R.drawable.bg_dialog_rounded))
-            .setView(binding.root)
-            .setTitle("Nuevo punto de precio")
-            .show()
-
-
-        with(binding){
-            switchProfitPercent.text = switchProfitPercent.context.getString(
-                R.string.text_new_price_init_profit,
-                (Configurations.profitPercent * 100).toString()
-            )
-            switchProfitPercent.isChecked = true
-
-            price?.let {
-                inputName.setText(price.name)
-                inputSku.setText(price.sku)
-                inputCost.setText(price.cost.asMoney())
-                inputStock.setText(price.stock.toString())
-
-                switchProfitPercent.isChecked = price.isInitialProfit
-
-                val tax: Double = price.cost.calculateTax(price.isInitialProfit)
-
-                val total = price.cost + tax
-                textTax.text = root.context.getString(R.string.text_money, tax.asMoney())
-                textTotal.text = root.context.getString(R.string.text_money, total.asMoney())
-            }
-
-            inputCost.addMoneyTextWatcher{cost ->
-                val tax: Double = if(switchProfitPercent.isChecked){
-                    cost.calculateTax()
-                }else{
-                    cost * Configurations.taxPercent
-                }
-
-                val total = cost + tax
-                textTax.text = root.context.getString(R.string.text_money, tax.asMoney())
-                textTotal.text = root.context.getString(R.string.text_money, total.asMoney())
-            }
-
-            switchProfitPercent.setOnCheckedChangeListener{_, isChecked ->
-                val cost = inputCost.text.toString().getValueMoney()
-                val tax: Double = if(isChecked){
-                    cost.calculateTax()
-                }else{
-                    cost * Configurations.taxPercent
-                }
-
-                val total = cost + tax
-                textTax.text = root.context.getString(R.string.text_money, tax.asMoney())
-                textTotal.text = root.context.getString(R.string.text_money, total.asMoney())
-            }
-
-            clickListener = View.OnClickListener { view ->
-                when(view.id){
-                    R.id.button_negative -> {
-                        dialog.dismiss()
-                        negativeCallBack?.invoke()
-                    }
-
-                    R.id.button_positive -> {
-                        if(ValidateUtil.inputs(
-                                inputName.toValidate(),
-                                inputSku.toValidate(),
-                                inputCost.toValidate(ValidateType.MONEY)
-                            )){
-                            dialog.dismiss()
-                            with(binding){
-                                positiveCallBack(Price(
-                                    price?.id ?: 0,
-                                    price?.productId ?: 0,
-                                    inputName.text.toString(),
-                                    inputSku.text.toString(),
-                                    inputCost.text.toString().getValueMoney(),
-                                    inputStock.text.toString().toInt(),
-                                    switchProfitPercent.isChecked,
-                                    price?.active ?: true)
-                                )
-                            }
-
                         }
                     }
                 }
