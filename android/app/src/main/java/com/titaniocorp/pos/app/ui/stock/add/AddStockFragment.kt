@@ -31,8 +31,6 @@ class AddStockFragment: BaseFragment(),
     View.OnClickListener ,
     SearchView.OnQueryTextListener{
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentStockAddBinding
     val viewModel: AddStockViewModel by viewModels { viewModelFactory }
 
@@ -49,7 +47,6 @@ class AddStockFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner

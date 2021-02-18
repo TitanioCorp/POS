@@ -37,13 +37,13 @@ class DialogAddProductAdapter(private val selectedPriceId: Long?, val listener: 
             currentList.find { it.price.id == selectedPriceId }?.let{
                 if(!isSelectedItem()){
                     it.isSelected = true
-                    listener.selectedPrice(it.price.id, it.price.cost, it.price.stock, it.price.isInitialProfit)
+                    listener.selectedPrice(it.price.id, it.price.cost, it.price.stock, it.price.initialProfitId)
                 }
             } ?: run{
                 if(position == 0){
                     if(!isSelectedItem()){
                         item.isSelected = true
-                        listener.selectedPrice(item.price.id, item.price.cost, item.price.stock, item.price.isInitialProfit)
+                        listener.selectedPrice(item.price.id, item.price.cost, item.price.stock, item.price.initialProfitId)
                     }
                 }
             }
@@ -82,7 +82,7 @@ class DialogAddProductAdapter(private val selectedPriceId: Long?, val listener: 
                         if(item.price.id == currentList[position].price.id){
                             item.isSelected = !item.isSelected
                             if(item.isSelected){
-                                listener.selectedPrice(item.price.id, item.price.cost, item.price.stock, item.price.isInitialProfit)
+                                listener.selectedPrice(item.price.id, item.price.cost, item.price.stock, item.price.initialProfitId)
                             }
                         }
                     }
@@ -116,6 +116,6 @@ class DialogAddProductAdapter(private val selectedPriceId: Long?, val listener: 
     }
 
     interface DialogAddProductListener{
-        fun selectedPrice(priceId: Long, cost: Double, stock: Int, isInitialProfit: Boolean)
+        fun selectedPrice(priceId: Long, cost: Double, stock: Int, initialProfitId: Long?)
     }
 }

@@ -25,9 +25,6 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class StockReportFragment: BaseFragment(),
     View.OnClickListener{
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentStockReportBinding
     val mViewModel: StockReportViewModel by viewModels { viewModelFactory }
 
@@ -39,7 +36,6 @@ class StockReportFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(mViewModel)
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner

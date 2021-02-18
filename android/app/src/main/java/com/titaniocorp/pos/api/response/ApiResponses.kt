@@ -14,7 +14,7 @@ import java.net.HttpURLConnection
 sealed class ApiResponse<T>{
     companion object {
         fun <T> create(response: Response<T>): ApiResponse<T> {
-            Timber.i("URL: ${response.raw().request().url()}")
+            Timber.i("URL: ${response.raw().request.url}")
             Timber.i( "CODE: ${response.code()}")
             Timber.i("MESSAGE: ${response.message()}")
 

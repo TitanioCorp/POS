@@ -11,4 +11,8 @@
     <dimen name="extra_large_padding">32dp</dimen>
 
     <dimen name="corner_radius_button">16dp</dimen>
+    <dimen name="corner_small">8dp</dimen>
+    <dimen name="corner_medium">16dp</dimen>
+    <dimen name="corner_large">24dp</dimen>
+    <dimen name="corner_extra_large">32dp</dimen>
 </resources>

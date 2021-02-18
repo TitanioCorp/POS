@@ -20,6 +20,7 @@ import com.titaniocorp.pos.database.entity.*
         ProductEntity::class,
         PriceEntity::class,
         ProfitEntity::class,
+        InitialProfitEntity::class,
         PurchaseEntity::class,
         PaymentPurchaseEntity::class,
         PricePurchaseEntity::class,
@@ -30,7 +31,7 @@ import com.titaniocorp.pos.database.entity.*
         PaymentEntity::class,
         PaymentCategoryEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
@@ -38,6 +39,7 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun productDao(): ProductDao
     abstract fun priceDao(): PriceDao
     abstract fun profitDao(): ProfitDao
+    abstract fun initialProfitDao(): InitialProfitDao
     abstract fun customerDao(): CustomerDao
     abstract fun purchaseDao(): PurchaseDao
     abstract fun paymentPurchaseDao(): PaymentPurchaseDao
@@ -62,9 +64,24 @@ abstract class AppDatabase: RoomDatabase() {
             }
         }
 
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE IF NOT EXISTS `initial_profit`(`initial_profit_id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `percent` REAL NOT NULL);")
+
+                database.execSQL("ALTER TABLE `price` ADD COLUMN `initial_profit_id` INTEGER DEFAULT 2")
+
+                database.execSQL("INSERT INTO `initial_profit` (`name`, `percent`) VALUES ('Default',0.0);")
+                database.execSQL("INSERT INTO `initial_profit` (`name`, `percent`) VALUES ('Kenda',16.7);")
+
+                database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_initial_profit_initial_profit_id` ON `initial_profit` (`initial_profit_id`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_price_initial_profit_id` ON `price` (`initial_profit_id`)")
+            }
+        }
+
         fun getMigrations(): MutableList<Migration>{
             return mutableListOf<Migration>().apply {
                 add(MIGRATION_1_2)
+                add(MIGRATION_2_3)
             }
         }
     }

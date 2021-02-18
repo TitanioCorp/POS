@@ -20,7 +20,10 @@ interface StockDao {
     fun getAll(): LiveData<List<StockEntity>>
 
     @Query("SELECT * FROM stock WHERE date BETWEEN :startDate AND :finishDate")
-    fun getBetweenDates(startDate: Long, finishDate: Long): LiveData<List<StockEntity>>
+    suspend fun getBetweenDates(startDate: Long, finishDate: Long): List<StockEntity>
+
+    @Query("SELECT * FROM stock WHERE date BETWEEN :startDate AND :finishDate")
+    fun getBetweenDatesLiveData(startDate: Long, finishDate: Long): LiveData<List<StockEntity>>
 
     /* INSERT */
     @Insert(onConflict = OnConflictStrategy.ABORT)

@@ -3,7 +3,9 @@ package com.titaniocorp.pos.app.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
@@ -17,18 +19,20 @@ import com.titaniocorp.pos.app.ui.settings.SettingsFragmentDirections
 import com.titaniocorp.pos.databinding.ActivityMainBinding
 import com.titaniocorp.pos.util.Configurations
 import com.titaniocorp.pos.util.Constants
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 
 /**
  * Actividad principal de la aplicación
- * @version 1.0
  * @author Juan Ortiz
  * @date 10/09/2019
  */
+@ExperimentalCoroutinesApi
 class MainActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
+    private val viewModel: MainActivityViewModel by viewModels{ viewModelFactory }
 
     //region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +57,12 @@ class MainActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartF
         binding.navigationView.setupWithNavController(navController)
 
         binding.navigationView.getHeaderView(0).findViewById<TextView>(R.id.text_app_version).text = BuildConfig.VERSION_NAME
+
+        if (BuildConfig.DEBUG){
+            binding.watermark.visibility = View.VISIBLE
+        }
+
+        viewModel.setInitialProfitsConfigurations()
     }
 
     override fun onSupportNavigateUp(): Boolean {

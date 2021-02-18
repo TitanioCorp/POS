@@ -10,11 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.navigation.ui.onNavDestinationSelected
 import com.google.android.material.snackbar.Snackbar
 import com.titaniocorp.pos.BR
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.Category
+import com.titaniocorp.pos.app.model.Product
 import com.titaniocorp.pos.app.ui.base.adapter.CategorySpinnerAdapter
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentProductDetailBinding
@@ -26,27 +28,33 @@ import com.titaniocorp.pos.util.ui.DialogHelper
 import com.titaniocorp.pos.util.validations.ValidateUtil
 import com.titaniocorp.pos.util.validations.toValidate
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 import javax.inject.Inject
 
 /**
- * Fragmento que lista las peliculas
+ * Fragmento que muestra el detalle  de un producto
  * @author Juan Ortiz
  * @date 19/12/2019
  */
+@ExperimentalCoroutinesApi
 class DetailProductFragment: BaseFragment(),
     View.OnClickListener,
     AdapterView.OnItemSelectedListener,
     DetailProductAdapter.DetailProductItemListener{
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentProductDetailBinding
-    val viewModel: DetailProductViewModel by viewModels { viewModelFactory }
+    val viewModel: DetailProductViewModel by navGraphViewModels(R.id.nav_graph_detail_product) { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.menu_options_detail_item, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,14 +65,6 @@ class DetailProductFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
-
-        arguments?.let {
-            val productId = it.getLong("productId", 0)
-            if(productId > 0){
-                viewModel.mProductId.value = arguments?.getLong("productId")
-            }
-        }
 
         with(binding){
 
@@ -85,14 +85,8 @@ class DetailProductFragment: BaseFragment(),
 
             binding.recycler.adapter = adapter
 
-            subcribeUi(adapter)
+            subscribeUi(adapter)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.menu_options_detail_item, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId){
@@ -117,32 +111,11 @@ class DetailProductFragment: BaseFragment(),
         }
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        viewModel.product.categoryId =
-            (binding.spinnerCategory.adapter.getItem(position) as Category).id ?: 0
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-    override fun onClickItem(position: Int) {
-        DialogHelper.showPrice(activity, {price ->
-            viewModel.updatePrice(position, price)
-            binding.recycler.adapter?.notifyDataSetChanged()
-        },
-            price = viewModel.getPrice(position)
-        )
-    }
-
-    override fun onRemoveItem(position: Int) {
-        viewModel.removePrice(position)
-        binding.recycler.adapter?.notifyDataSetChanged()
-    }
-
-    private fun subcribeUi(adapter: DetailProductAdapter){
-        viewModel.getProduct().observe(viewLifecycleOwner, Observer {
-            it.process(
-                onLoading = {boolean -> setLoading(boolean)},
-                onSuccess = {
+    private fun subscribeUi(adapter: DetailProductAdapter){
+        arguments?.let {arguments ->
+            val productId = arguments.getLong("productId", 0)
+            if(productId > 0){
+                viewModel.getProduct(productId).runLiveData({
                     it.data?.let{ data ->
                         viewModel.product = data
                         adapter.submitList(viewModel.product.prices)
@@ -157,9 +130,11 @@ class DetailProductFragment: BaseFragment(),
 
                         (activity as AppCompatActivity).toolbar.title = viewModel.product.name
                     }
-                }
-            )
-        })
+                })
+            } else {
+                viewModel.product = Product()
+            }
+        }
 
         viewModel.getAllCategory().observe(viewLifecycleOwner, Observer {
             it.process(
@@ -183,6 +158,7 @@ class DetailProductFragment: BaseFragment(),
         })
     }
 
+    //Category Spinner
     private fun actionNewCategory(){
         DialogHelper.newCategory(
             activity,
@@ -201,11 +177,27 @@ class DetailProductFragment: BaseFragment(),
         )?.show()
     }
 
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        viewModel.product.categoryId =
+            (binding.spinnerCategory.adapter.getItem(position) as Category).id ?: 0
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    //Price
     private fun actionNewPrice(){
-        DialogHelper.showPrice(activity, { price ->
-            viewModel.addPrice(price)
-            binding.recycler.adapter?.notifyDataSetChanged()
-        })
+        val direction = DetailProductFragmentDirections.toAddPriceProductFragment()
+        findNavController().navigate(direction)
+    }
+
+    override fun onClickItem(position: Int) {
+        val direction = DetailProductFragmentDirections.toAddPriceProductFragment(position)
+        findNavController().navigate(direction)
+    }
+
+    override fun onRemoveItem(position: Int) {
+        viewModel.removePrice(position)
+        binding.recycler.adapter?.notifyDataSetChanged()
     }
 
     private fun validate(): Boolean{
@@ -238,6 +230,7 @@ class DetailProductFragment: BaseFragment(),
         }
     }
 
+    //Product
     private fun addProduct(){
         viewModel.addProduct().observe(viewLifecycleOwner, Observer {
             it.process(

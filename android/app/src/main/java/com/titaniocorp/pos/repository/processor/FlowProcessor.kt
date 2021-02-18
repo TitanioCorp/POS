@@ -4,6 +4,7 @@ import com.titaniocorp.pos.app.model.Resource
 import com.titaniocorp.pos.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import timber.log.Timber
 
@@ -13,28 +14,39 @@ import timber.log.Timber
  * @date 07/05/2020
  */
 
-@ExperimentalCoroutinesApi
+
 @Suppress("UNCHECKED_CAST")
+@ExperimentalCoroutinesApi
 abstract class FlowProcessor<Result, Query> {
     protected abstract fun query(): Flow<Query>
-    protected abstract fun validate(response: Result): Int
-    protected open suspend fun onResult(response: Result){}
+    protected open fun validate(response: Query): Int = AppCode.SUCCESS_QUERY_DATABASE
+    protected open suspend fun onResult(response: Query): Result {
+        (response as? Result)?.let {result ->
+            return result
+        } ?: run {
+            throw EmptyQueryResultException("Query cannot be cast to Result type!")
+        }
+    }
 
     fun process(): Flow<Resource<Result>> = query()
         .map {
-            (it as? Result)?.let {result ->
+            //Logger.d("[${Constants.TAG_DATABASE}]: ${it?.toJson()}")
 
-                val code = validate(result)
-                code.validateCode()
-                onResult(result)
-                Resource.success<Result>(it, code).also {resource ->
-                    Timber.tag(Constants.TAG_APP_DEBUG).d("%s: %s", Constants.TAG_DATABASE, resource.toJson())
+            validate(it).let{code ->
+                if(code > 0) {
+                    val result = onResult(it)
+
+                    Resource.success<Result>(result, 0).also {resource ->
+                        Logger.d("[${Constants.TAG_DATABASE}]: ${resource?.toJson()}")
+                    }
+                } else {
+                    Resource.error<Result>(null, code)
                 }
-
-            } ?: run { throw EmptyQueryResultException("Query to result failed..") }
-
+            }
         }
-        .onStart { emit(Resource.loading<Result>(null)) }
+        .onStart {
+            emit(Resource.loading<Result>(null))
+        }
         .catch {exception ->
             with(exception){
                 emit(Resource.error<Result>(null, getCode(), message))

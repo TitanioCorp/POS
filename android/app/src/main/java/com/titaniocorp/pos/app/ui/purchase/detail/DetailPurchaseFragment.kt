@@ -34,8 +34,6 @@ import javax.inject.Inject
 class DetailPurchaseFragment: BaseFragment(),
     View.OnClickListener {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentPurchaseDetailBinding
     val viewModel: DetailPurchaseViewModel by viewModels { viewModelFactory }
 
@@ -47,7 +45,6 @@ class DetailPurchaseFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner

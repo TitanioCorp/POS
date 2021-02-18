@@ -24,7 +24,7 @@ interface PriceDao {
 
     /* INSERT */
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(item: PriceEntity): Long
+    fun insert(item: PriceEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg items: PriceEntity): List<Long>
@@ -36,5 +36,5 @@ interface PriceDao {
     suspend fun addStock(priceId: Long, quantity: Int): Int
 
     @Update
-    suspend fun update(vararg item: PriceEntity): Int
+    fun update(vararg item: PriceEntity): Int
 }

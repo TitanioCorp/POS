@@ -94,7 +94,7 @@ class StockRepository @Inject constructor(
 
     fun getBetweenDates(startDate: Long, finishDate: Long): LiveData<Resource<List<Stock>>>{
         return object : Processor<List<Stock>, LiveData<List<Stock>>>(){
-            override suspend fun query():  LiveData<List<Stock>> = Transformations.map(stockDao.getBetweenDates(startDate, finishDate)){ it.asDomainModel() }
+            override suspend fun query():  LiveData<List<Stock>> = Transformations.map(stockDao.getBetweenDatesLiveData(startDate, finishDate)){ it.asDomainModel() }
             override fun validate(response: List<Stock>): Int = if(response.isNotEmpty()){
                 AppCode.SUCCESS_QUERY_DATABASE
 

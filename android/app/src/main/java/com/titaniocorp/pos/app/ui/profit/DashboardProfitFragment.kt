@@ -31,8 +31,6 @@ class DashboardProfitFragment: BaseFragment(),
     View.OnClickListener,
     DashboardProfitAdapter.OnItemClickListener{
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentProfitDashboardBinding
     val viewModel: DashboardProfitViewModel by viewModels { viewModelFactory }
 
@@ -44,7 +42,6 @@ class DashboardProfitFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner

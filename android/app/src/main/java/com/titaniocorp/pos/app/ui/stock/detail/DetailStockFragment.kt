@@ -19,8 +19,6 @@ import javax.inject.Inject
  */
 class DetailStockFragment: BaseFragment(){
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var binding: FragmentStockDetailBinding
     val viewModel: DetailStockViewModel by viewModels { viewModelFactory }
 
@@ -32,7 +30,6 @@ class DetailStockFragment: BaseFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeFragment(viewModel)
 
         with(binding){
             lifecycleOwner = viewLifecycleOwner

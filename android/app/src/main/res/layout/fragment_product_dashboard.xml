@@ -7,9 +7,6 @@
             name="clickListener"
             type="android.view.View.OnClickListener"/>
         <variable
-            name="mSearchSrcTextView"
-            type="androidx.appcompat.widget.SearchView.SearchAutoComplete"/>
-        <variable
             name="recyclerAdapter"
             type="com.titaniocorp.pos.app.ui.product.DashboardProductAdapter"/>
         <import type="android.view.View" />
@@ -128,21 +125,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/search_linear" />
 
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="32dp"
-                    android:background="@drawable/bg_section"
-                    android:nestedScrollingEnabled="false"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:listitem="@layout/item_list_product_dashboard_product">
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_recycler"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                app:layout_constraintVertical_bias="0.0"
+                tools:listitem="@layout/item_list_product_dashboard_product">
 
             </androidx.recyclerview.widget.RecyclerView>
 

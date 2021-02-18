@@ -36,6 +36,10 @@ class DashboardReportViewModel @Inject constructor(): ObservableViewModel() {
             set(Calendar.YEAR, year)
             set(Calendar.MONTH, month)
             set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
         }
         notifyPropertyChanged(BR.startDate)
     }
@@ -53,9 +57,8 @@ class DashboardReportViewModel @Inject constructor(): ObservableViewModel() {
         notifyPropertyChanged(BR.endDate)
     }
 
-    suspend fun getDates(): Pair<String, String> = withContext(Dispatchers.IO){
-        val gson = Gson()
-        Pair(gson.toJson(startDate), gson.toJson(endDate))
+    suspend fun getDates(): Pair<Long, Long> = withContext(Dispatchers.IO){
+        Pair(startDate.timeInMillis, endDate.timeInMillis)
     }
 
     fun navigate(){

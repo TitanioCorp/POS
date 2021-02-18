@@ -12,7 +12,8 @@ data class PriceStock(
     var priceCost: Double = 0.0,
     var priceTax: Double = 0.0,
     var productName: String = "",
-    var priceName: String = ""
+    var priceName: String = "",
+    var initialProfitId: Long = 0,
 )
 
 fun PriceStock.asDatabaseModel(): PriceStockEntity {

@@ -3,6 +3,7 @@ package com.titaniocorp.pos.app.model.domain
 import androidx.room.ColumnInfo
 import androidx.room.Ignore
 import com.titaniocorp.pos.util.calculateTax
+import com.titaniocorp.pos.util.getInitialProfit
 
 data class StockReportItem(
     @ColumnInfo(name = "price_id")
@@ -21,10 +22,13 @@ data class StockReportItem(
     val stock: Int,
 
     @ColumnInfo(name = "initial_profit")
-    val isInitialProfit: Boolean
+    val isInitialProfit: Boolean,
+
+    @ColumnInfo(name = "initial_profit_id")
+    val initialProfitId: Long
 ){
     @Ignore
-    val tax = cost.calculateTax(isInitialProfit)
+    val tax = cost.calculateTax(initialProfitId.getInitialProfit().percent)
 
     @Ignore
     val total = (cost + tax) * stock
