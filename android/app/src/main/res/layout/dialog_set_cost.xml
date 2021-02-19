@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="finalCost"
+            type="Double"/>
+
+        <variable
+            name="percent"
+            type="Double"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tag="layout/dialog_new_category">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_cost"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_money"
+                android:hint="@string/text_cost"
+                android:inputType="number|numberDecimal"
+                android:maxLength="11" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/text_label_percent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_percent"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+            app:layout_constraintEnd_toEndOf="@+id/input_layout_cost"
+            app:layout_constraintStart_toStartOf="@+id/input_layout_cost"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_cost" />
+
+        <Spinner
+            android:id="@+id/spinner_percent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/input_layout_cost"
+            app:layout_constraintStart_toStartOf="@+id/input_layout_cost"
+            app:layout_constraintTop_toBottomOf="@+id/text_label_percent" />
+
+        <TextView
+            android:id="@+id/text_label_cost"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Costo"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+            app:layout_constraintEnd_toEndOf="@+id/spinner_percent"
+            app:layout_constraintStart_toStartOf="@+id/spinner_percent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_percent" />
+
+        <TextView
+            android:id="@+id/text_total_cost"
+            asMoney="@{finalCost}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/text_label_cost"
+            app:layout_constraintStart_toStartOf="@+id/text_label_cost"
+            app:layout_constraintTop_toBottomOf="@+id/text_label_cost" />
+
+        <Button
+            android:id="@+id/button_positive"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:onClick="@{clickListener}"
+            android:text="@string/action_accept"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_total_cost" />
+
+        <Button
+            android:id="@+id/button_negative"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{clickListener}"
+            android:text="@string/action_cancel"
+            app:layout_constraintBottom_toBottomOf="@+id/button_positive"
+            app:layout_constraintEnd_toStartOf="@+id/button_positive" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

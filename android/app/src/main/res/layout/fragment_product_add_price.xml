@@ -135,16 +135,27 @@
                     android:text="@string/title_cost"
                     android:textStyle="bold" />
 
+                <Button
+                    android:id="@+id/button_set_cost"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="@{clickListener}"
+                    android:text="@string/action_set_cost" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_real_bill"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin"
+                    android:layout_weight="1"
                     app:boxBackgroundColor="@android:color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/input_layout_sku">
+                    app:layout_constraintTop_toBottomOf="@+id/input_layout_sku"
+                    android:enabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_real_bill"
@@ -153,7 +164,7 @@
                         android:drawableStart="@drawable/ic_money"
                         android:hint="@string/text_real_bill"
                         android:inputType="number|numberDecimal"
-                        android:maxLength="11"/>
+                        android:maxLength="11" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
