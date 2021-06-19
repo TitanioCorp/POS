@@ -13,6 +13,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.app.ui.product.detail.DetailProductViewModel
+import com.titaniocorp.pos.app.ui.product.detail.price.dialog.showSetCostDialog
 import com.titaniocorp.pos.databinding.FragmentProductAddPriceBinding
 import com.titaniocorp.pos.util.addMoneyTextWatcher
 import com.titaniocorp.pos.util.calculateTotalReal
@@ -29,7 +30,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
-    val args: AddPriceProductFragmentArgs by navArgs()
+    private val args: AddPriceProductFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentProductAddPriceBinding
     val viewModel: AddPriceProductViewModel by viewModels { viewModelFactory }
@@ -92,6 +93,13 @@ class AddPriceProductFragment: BaseFragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id){
+            R.id.button_set_cost -> {
+                context?.showSetCostDialog(
+                    {
+                        binding.inputRealBill.setText(it.toString())
+                    },
+                    viewModel.price.realBill)
+            }
         }
     }
 

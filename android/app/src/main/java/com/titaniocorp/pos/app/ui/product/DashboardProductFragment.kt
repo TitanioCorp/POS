@@ -16,9 +16,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.titaniocorp.pos.R
+import com.titaniocorp.pos.app.ui.MainActivity
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentProductDashboardBinding
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 /**
@@ -51,7 +51,7 @@ class DashboardProductFragment: BaseFragment(),
                 setOnQueryTextListener(this@DashboardProductFragment)
             }
 
-            val toolbar = (activity as AppCompatActivity).appbar
+            val toolbar = (activity as MainActivity).binding.appbar
             nestedScrollView.setOnScrollChangeListener(
                 NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
                     val shouldShowToolbar = scrollY > toolbar.height

@@ -16,6 +16,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.InitialProfit
 import com.titaniocorp.pos.app.model.PriceAddProductAdapter
+import com.titaniocorp.pos.app.ui.MainActivity
 import com.titaniocorp.pos.app.ui.base.adapter.DialogAddProductAdapter
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.app.ui.pos.PurchasePosViewModel
@@ -23,7 +24,6 @@ import com.titaniocorp.pos.databinding.FragmentPosAddProductBinding
 import com.titaniocorp.pos.util.AppCode
 import com.titaniocorp.pos.util.AppCode.Companion.ERROR_EMPTY_PROFIT_LIST
 import com.titaniocorp.pos.util.process
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
@@ -105,7 +105,7 @@ class AddProductPosFragment: BaseFragment(), View.OnClickListener{
     }
 
     private fun subscribeUi(adapter: DialogAddProductAdapter){
-        val toolbar = (activity as AppCompatActivity).appbar
+        val toolbar = (activity as MainActivity).binding.appbar
         binding.nestedScrollView.setOnScrollChangeListener(
             NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
                 val shouldShowToolbar = scrollY > toolbar.height

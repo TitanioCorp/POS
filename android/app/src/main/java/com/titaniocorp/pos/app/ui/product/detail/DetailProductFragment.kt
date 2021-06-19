@@ -6,10 +6,9 @@ import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import androidx.navigation.ui.onNavDestinationSelected
 import com.google.android.material.snackbar.Snackbar
@@ -17,6 +16,7 @@ import com.titaniocorp.pos.BR
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.Category
 import com.titaniocorp.pos.app.model.Product
+import com.titaniocorp.pos.app.ui.MainActivity
 import com.titaniocorp.pos.app.ui.base.adapter.CategorySpinnerAdapter
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentProductDetailBinding
@@ -27,10 +27,8 @@ import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogHelper
 import com.titaniocorp.pos.util.validations.ValidateUtil
 import com.titaniocorp.pos.util.validations.toValidate
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Fragmento que muestra el detalle  de un producto
@@ -43,6 +41,7 @@ class DetailProductFragment: BaseFragment(),
     AdapterView.OnItemSelectedListener,
     DetailProductAdapter.DetailProductItemListener{
 
+    private val args: DetailProductFragmentArgs by navArgs()
     private lateinit var binding: FragmentProductDetailBinding
     val viewModel: DetailProductViewModel by navGraphViewModels(R.id.nav_graph_detail_product) { viewModelFactory }
 
@@ -72,7 +71,7 @@ class DetailProductFragment: BaseFragment(),
             this.viewModel = this@DetailProductFragment.viewModel
             clickListener = this@DetailProductFragment
 
-            val toolbar = (activity as AppCompatActivity).appbar
+            val toolbar = (activity as MainActivity).binding.appbar
             nestedScrollView.setOnScrollChangeListener(
                 NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
                     val shouldShowToolbar = scrollY > toolbar.height
@@ -112,31 +111,26 @@ class DetailProductFragment: BaseFragment(),
     }
 
     private fun subscribeUi(adapter: DetailProductAdapter){
-        arguments?.let {arguments ->
-            val productId = arguments.getLong("productId", 0)
-            if(productId > 0){
-                viewModel.getProduct(productId).runLiveData({
-                    it.data?.let{ data ->
-                        viewModel.product = data
-                        adapter.submitList(viewModel.product.prices)
-                        viewModel.notifyPropertyChanged(BR.product)
+        if(args.productId > 0){
+            viewModel.getProduct(args.productId).runLiveData({
+                it.data?.let{ data ->
+                    viewModel.product = data
+                    adapter.submitList(viewModel.product.prices)
+                    viewModel.notifyPropertyChanged(BR.product)
 
-                        for((index, category) in viewModel.categories.withIndex()){
-                            if(category.id == viewModel.product.categoryId){
-                                binding.spinnerCategory.setSelection(index, true)
-                                break
-                            }
+                    for((index, category) in viewModel.categories.withIndex()){
+                        if(category.id == viewModel.product.categoryId){
+                            binding.spinnerCategory.setSelection(index, true)
+                            break
                         }
-
-                        (activity as AppCompatActivity).toolbar.title = viewModel.product.name
                     }
-                })
-            } else {
-                viewModel.product = Product()
-            }
+
+                    (activity as MainActivity).binding.toolbar.title = viewModel.product.name
+                }
+            })
         }
 
-        viewModel.getAllCategory().observe(viewLifecycleOwner, Observer {
+        viewModel.getAllCategory().observe(viewLifecycleOwner, {
             it.process(
                 onLoading = {boolean -> setLoading(boolean)},
                 onSuccess = {

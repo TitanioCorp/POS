@@ -41,6 +41,14 @@
         <item>Todos</item>
     </string-array>
 
+    <string-array name="percents">
+        <item>0%</item>
+        <item>5%</item>
+        <item>10%</item>
+        <item>15%</item>
+        <item>20%</item>
+    </string-array>
+
     <!-- Fragment -->
     <string name="fragment_pos">Punto de venta</string>
     <string name="fragment_pos_add_product">Agregar artículo</string>
@@ -120,6 +128,7 @@
     <string name="action_delete_product">Eliminar producto</string>
     <string name="action_add">Agregar</string>
     <string name="action_new_initial_profit">Nueva ganancia inicial</string>
+    <string name="action_set_cost">Establecer</string>
 
     <!-- Error -->
     <string name="error_title_error">Error</string>
