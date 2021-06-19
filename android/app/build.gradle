@@ -1,15 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-allopen'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
-
-allOpen {
-    annotation 'com.titaniocorp.pos.testing.OpenClass'
-}
+apply plugin: 'com.google.firebase.crashlytics'
 
 def credentialsPropertiesFile = rootProject.file("app/credentials.properties")
 def credentialsProperties = new Properties()
@@ -25,13 +19,13 @@ android {
         }
     }
 
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.titaniocorp.pos"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.9.3"
         testInstrumentationRunner "com.titaniocorp.pos.util.AppTestRunner"
@@ -175,7 +169,7 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     /* Room */
-    def room_version = "2.2.6"
+    def room_version = "2.3.0"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
@@ -198,11 +192,8 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
 
     /* Firebase */
-    def firebase_analytics_version = "17.5.0"
-    def firebase_crashlytics_version = "17.2.1"
-    def firebase_storage_version = "19.2.0"
-
-    implementation platform('com.google.firebase:firebase-bom:26.0.0')
+    def firebase_version = "28.0.1"
+    implementation platform("com.google.firebase:firebase-bom:$firebase_version")
 
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'

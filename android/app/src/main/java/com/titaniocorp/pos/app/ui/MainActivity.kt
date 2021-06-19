@@ -29,7 +29,7 @@ import timber.log.Timber
  */
 @ExperimentalCoroutinesApi
 class MainActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private val viewModel: MainActivityViewModel by viewModels{ viewModelFactory }

@@ -14,14 +14,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.Resource
+import com.titaniocorp.pos.app.ui.MainActivity
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.app.ui.pos.addProduct.AddProductPosFragmentArgs
 import com.titaniocorp.pos.databinding.FragmentBillingDashboardBinding
 import com.titaniocorp.pos.util.*
 import com.titaniocorp.pos.util.ui.DialogHelper
 import com.titaniocorp.pos.util.ui.DialogUtil
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -34,6 +35,7 @@ import javax.inject.Inject
  * @author Juan Ortiz
  * @date 10/09/2019
  */
+@ExperimentalCoroutinesApi
 class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
     private lateinit var binding: FragmentBillingDashboardBinding
 
@@ -54,7 +56,7 @@ class DashboardBillingFragment: BaseFragment(), View.OnClickListener{
             clickListener = this@DashboardBillingFragment
             mViewModel = viewModel
 
-            val toolbar = (activity as AppCompatActivity).appbar
+            val toolbar = (activity as MainActivity).binding.appbar
             binding.nestedScrollView.setOnScrollChangeListener(
                 NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
                     val shouldShowToolbar = scrollY > toolbar.height

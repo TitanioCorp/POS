@@ -16,6 +16,7 @@ import com.titaniocorp.pos.BR
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.Category
 import com.titaniocorp.pos.app.model.Product
+import com.titaniocorp.pos.app.ui.MainActivity
 import com.titaniocorp.pos.app.ui.base.adapter.CategorySpinnerAdapter
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentProductDetailBinding
@@ -26,7 +27,6 @@ import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogHelper
 import com.titaniocorp.pos.util.validations.ValidateUtil
 import com.titaniocorp.pos.util.validations.toValidate
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 
@@ -71,7 +71,7 @@ class DetailProductFragment: BaseFragment(),
             this.viewModel = this@DetailProductFragment.viewModel
             clickListener = this@DetailProductFragment
 
-            val toolbar = (activity as AppCompatActivity).appbar
+            val toolbar = (activity as MainActivity).binding.appbar
             nestedScrollView.setOnScrollChangeListener(
                 NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
                     val shouldShowToolbar = scrollY > toolbar.height
@@ -125,7 +125,7 @@ class DetailProductFragment: BaseFragment(),
                         }
                     }
 
-                    (activity as AppCompatActivity).toolbar.title = viewModel.product.name
+                    (activity as MainActivity).binding.toolbar.title = viewModel.product.name
                 }
             })
         }

@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
 import com.titaniocorp.pos.R
+import com.titaniocorp.pos.app.ui.MainActivity
 import com.titaniocorp.pos.database.entity.CustomerEntity
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.app.ui.pos.PurchasePosViewModel
@@ -20,7 +21,6 @@ import com.titaniocorp.pos.util.addMoneyTextWatcher
 import com.titaniocorp.pos.util.getValueMoney
 import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogHelper
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
@@ -109,7 +109,7 @@ class PurchasePosFragment: BaseFragment(), View.OnClickListener{
     }
 
     private fun subscribeUi(){
-        val toolbar = (activity as AppCompatActivity).appbar
+        val toolbar = (activity as MainActivity).binding.appbar
         binding.nestedScrollView.setOnScrollChangeListener(
             NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
                 val shouldShowToolbar = scrollY > toolbar.height

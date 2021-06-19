@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.titaniocorp.pos.R
 import com.titaniocorp.pos.app.model.dto.DetailPurchaseAdapterDto
+import com.titaniocorp.pos.app.ui.MainActivity
 import com.titaniocorp.pos.app.ui.base.fragment.BaseFragment
 import com.titaniocorp.pos.databinding.FragmentPurchaseDetailBinding
 import com.titaniocorp.pos.util.AppCode
@@ -20,7 +21,6 @@ import com.titaniocorp.pos.util.Constants.Companion.TAG_APP_DEBUG
 import com.titaniocorp.pos.util.process
 import com.titaniocorp.pos.util.ui.DialogPurchaseHelper
 import com.titaniocorp.pos.util.ui.SnackbarUtil
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -51,7 +51,7 @@ class DetailPurchaseFragment: BaseFragment(),
             clickListener = this@DetailPurchaseFragment
             viewModel = this@DetailPurchaseFragment.viewModel
 
-            val toolbar = (activity as AppCompatActivity).appbar
+            val toolbar = (activity as MainActivity).binding.appbar
             binding.nestedScrollView.setOnScrollChangeListener(
                 NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
                     val shouldShowToolbar = scrollY > toolbar.height
